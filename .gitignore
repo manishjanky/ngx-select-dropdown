@@ -1,0 +1,24 @@
+# Node generated files
+node_modules
+npm-debug.log
+# OS generated files
+Thumbs.db
+.DS_Store
+# Ignored files
+
+*.map
+*.d.ts
+/dist/
+/example/*
+
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+#tmp files
+/tmp/
+
+#coverage
+/coverage
