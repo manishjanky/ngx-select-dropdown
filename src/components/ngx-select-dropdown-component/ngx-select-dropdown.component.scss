@@ -1,0 +1,75 @@
+.ngx-dorpdown-container {
+       width: 100%;
+       position: relative;
+       button {
+         display: inline-block;
+         padding: 6px 12px;
+         margin-bottom: 0;
+         font-size: 14px;
+         font-weight: 400;
+         line-height: 1.42857143;
+         text-align: center;
+         vertical-align: middle;
+         -ms-touch-action: manipulation;
+         touch-action: manipulation;
+         cursor: pointer;
+         -webkit-user-select: none;
+         -moz-user-select: none;
+         -ms-user-select: none;
+         user-select: none;
+         border: 1px solid transparent;
+         border-radius: 4px;
+         color: #333;
+         background-color: #fff;
+         border-color: #ccc;
+         white-space: nowrap;
+         overflow-x: hidden;
+         text-overflow: ellipsis;
+       }
+       .ngx-dropdown-button {
+         width: 100%;
+         min-height: 30px;
+         padding: 5px;
+         background-color: white;
+       }
+       .ngx-dropdown-list-container {
+         box-sizing: border-box;
+         border: 1px solid rgba(0, 0, 0, 0.15);
+         border-radius: 4px;
+         padding-left: 10px;
+         padding-right:10px;
+         z-index: 999999999;
+         width: 100%;
+         background-clip: padding-box;
+         position: absolute;
+         -webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.21);
+         -moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.21);
+         box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.21);
+         ul {
+           list-style-type: none;
+           padding-left: 0px;
+           &.selected-items{
+             li{
+                background-color: #337ab7;
+               color: white;
+               margin-bottom:2px;
+             }
+           }
+           li {
+              font-size: inherit;
+             cursor: pointer;
+             display: block;
+             padding: 3px 20px;
+             clear: both;
+             font-weight: 400;
+             line-height: 1.42857143;
+             color: #333;
+             white-space: nowrap;
+             span::before{
+              vertical-align: middle;
+             }
+           }
+         }
+       }
+     }
+     

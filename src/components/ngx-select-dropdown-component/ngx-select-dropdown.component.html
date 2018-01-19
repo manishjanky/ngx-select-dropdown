@@ -1,0 +1,16 @@
+<div class="ngx-dorpdown-container">
+       <button class="ngx-dropdown-button">
+              <span>Select</span><span class=""></span>
+       </button>
+       <div class="ngx-dropdown-list-container">
+              <ul class="selected-items">
+                     <li *ngFor="let selected of selectedItems;let i = index" (click)="deselectItem(selected,i)">
+                            <span class="icon-close"> {{selected}}</span>
+                     </li>
+              </ul>
+              <hr *ngIf="selectedItems.length > 0"/>
+              <ul class="available-items">
+                     <li *ngFor="let item of availableItems;let i = index" (click)="selectItem(item,i)"> {{item}}</li>
+              </ul>
+       </div>
+</div>
