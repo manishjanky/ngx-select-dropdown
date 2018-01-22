@@ -18,6 +18,7 @@ describe('SelectDropDownComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SelectDropDownComponent);
     component = fixture.componentInstance;
+    component.options = ["Option 1","Option 2","Option 3"];
     fixture.detectChanges();
   });
 

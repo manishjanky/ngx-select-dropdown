@@ -1,16 +1,16 @@
 <div class="ngx-dorpdown-container">
-       <button class="ngx-dropdown-button" (click)="toggleSelectDropdown()">
+       <button class="ngx-dropdown-button" (click)="toggleSelectDropdown($event)">
               <span>{{selectedDisplayText}} </span><span class="icon-angle-down"></span>
        </button>
        <div class="ngx-dropdown-list-container" *ngIf="toggleDropdown">
               <ul class="selected-items">
-                     <li *ngFor="let selected of selectedItems;let i = index" (click)="deselectItem(selected,i)">
-                            <span class="icon-close"> {{selected}}</span>
+                     <li *ngFor="let selected of selectedItems;let i = index" (click)="deselectItem(selected,i,$event)">
+                            <span class="icon-close"> {{selected[config.displayKey] || selected}}</span>
                      </li>
               </ul>
-              <hr *ngIf="selectedItems.length > 0"/>
+              <hr *ngIf="selectedItems.length > 0 && availableItems.length > 0"/>
               <ul class="available-items">
-                     <li *ngFor="let item of availableItems;let i = index" (click)="selectItem(item,i)"> {{item}}</li>
+                     <li *ngFor="let item of availableItems;let i = index" (click)="selectItem(item,i,$event)"> {{item[config.displayKey] || item}}</li>
               </ul>
        </div>
 </div>

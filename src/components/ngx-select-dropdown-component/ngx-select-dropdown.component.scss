@@ -3,11 +3,9 @@
   position: relative;
   button {
     display: inline-block;
-    padding: 6px 12px;
     margin-bottom: 0;
     font-weight: 400;
     line-height: 1.42857143;
-    text-align: center;
     vertical-align: middle;
     touch-action: manipulation;
     cursor: pointer;
@@ -21,17 +19,18 @@
     text-overflow: ellipsis;
     span {
       vertical-align: middle;
+      float: left;
     }
     .icon-angle-down {
       position: relative;
-      top: 2px;
       font-size: large;
+      float: right;
     }
   }
   .ngx-dropdown-button {
     width: 100%;
     min-height: 30px;
-    padding: 5px;
+    padding: 5px 10px 5px 10px;
     background-color: white;
   }
   .ngx-dropdown-list-container {
@@ -43,6 +42,7 @@
     z-index: 999999999;
     width: 100%;
     background-clip: padding-box;
+    background: white;
     position: absolute;
     -webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.21);
     -moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.21);
