@@ -9,7 +9,7 @@ describe('SelectDropDownComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [FormsModule],
+      imports: [],
       declarations: [ SelectDropDownComponent ]
     })
     .compileComponents();
