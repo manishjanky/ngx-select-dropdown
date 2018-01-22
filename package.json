@@ -18,7 +18,16 @@
     "select",
     "dropdown",
     "multiselect",
-    "multi-select"
+    "multi-select",
+    "dropdown",
+    "custom",
+    "combobox",
+    "ng-select",
+    "ngx-select",
+    "ng2-select",
+    "ng-dropdown",
+    "ngx-dropdown",
+    "ng2-dropdown"
   ],
   "author": {
     "name": "Manish Kumar",
