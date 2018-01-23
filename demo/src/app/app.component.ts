@@ -11,9 +11,28 @@ export class AppComponent {
   tab=1;
   singleSelect: any=[];
   multiSelect: any=[];
+  stringArray: any=[];
+  objectsArray: any=[];
+  stringOptions = [
+      "Burns Dalton","Mcintyre Lawson","Amie Franklin","Jocelyn Horton","Fischer Erickson", "Medina Underwood","Goldie Barber"
+  ]
   config = {
     displayKey:"name" //if objects array passed which key to be displayed defaults to description
   };
+  selectedOptions=[{
+    "_id": "5a66d6c31d5e4e36c7711b7a",
+    "index": 0,
+    "balance": "$2,806.37",
+    "picture": "http://placehold.it/32x32",
+    "name": "Burns Dalton"
+  },
+  {
+    "_id": "5a66d6c3657e60c6073a2d22",
+    "index": 1,
+    "balance": "$2,984.98",
+    "picture": "http://placehold.it/32x32",
+    "name": "Mcintyre Lawson"
+  }];
   options=[
     {
       "_id": "5a66d6c31d5e4e36c7711b7a",

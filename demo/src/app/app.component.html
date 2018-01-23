@@ -1,9 +1,9 @@
 <div class="container pt-1">
   <div class="row white mb-0">
-    <div class="col s6">
+    <div class="col s12 l6">
       <h5>ngx-select-dropdown demo</h5>
     </div>
-    <div class="col s6">
+    <div class="col s12 l6">
       <a href="https://manishjanky.github.io/#/" class="blue-text right credits" target="_blank">Developed By:Manish</a>
     </div>
   </div>
@@ -121,21 +121,55 @@
       <h3>Demos</h3>
       <h5>Single Select Dropdown</h5>
       <div class="row">
-        <div class="col s6">
+        <div class="col s12 l6">
             <ngx-select-dropdown [multiple]="false" [(value)]="singleSelect" [config]="config" [options]="options"></ngx-select-dropdown>
         </div>
-        <div class="col s6 flow-text" >
+        <div class="col s12 l6 flow-text" >
           <p style="margin: 0;">Balance of selected user: {{singleSelect[0]?.balance}}</p>
         </div>
       </div>
 
       <h5>Multi Select Dropdown</h5>
       <div class="row">
-        <div class="col s6">
+        <div class="col s12 l6">
             <ngx-select-dropdown [multiple]="true" [(value)]="multiSelect" [config]="config" [options]="options"></ngx-select-dropdown>
         </div>
-        <div class="col s6 flow-text" >
+        <div class="col s12 l6 flow-text" >
+          <p style="margin: 0;">Selected Options:-</p>
           <p style="margin: 0;" *ngFor="let user of multiSelect"><strong>Name:</strong> {{user.name}} , <strong>Balance:</strong> {{user.balance}}</p>
+        </div>
+      </div>
+
+      <h5>Options as array of string</h5>
+      <div class="row">
+        <div class="col s12 l6">
+            <ngx-select-dropdown [multiple]="true" [(value)]="stringArray" [options]="stringOptions"></ngx-select-dropdown>
+        </div>
+        <div class="col s12 l6 flow-text" >
+            <p style="margin: 0;">Selected Options:-</p>
+          <p style="margin: 0;" *ngFor="let user of stringArray">{{user}}</p>
+        </div>
+      </div>
+
+      <h5>Options as array of Objects</h5>
+      <div class="row">
+        <div class="col s12 l6">
+            <ngx-select-dropdown [multiple]="true" [(value)]="objectsArray" [options]="options" [config]="config"></ngx-select-dropdown>
+        </div>
+        <div class="col s12 l6 flow-text" >
+            <p style="margin: 0;">Selected Options:-</p>
+          <p style="margin: 0;" *ngFor="let user of objectsArray">{{user | json}}</p>
+        </div>
+      </div>
+
+      <h5>Already selected options passed as value</h5>
+      <div class="row">
+        <div class="col s12 l6">
+            <ngx-select-dropdown [multiple]="true" [(value)]="selectedOptions" [options]="options" [config]="config"></ngx-select-dropdown>
+        </div>
+        <div class="col s12 l6 flow-text" >
+            <p style="margin: 0;">Selected Options:-</p>
+          <p style="margin: 0;" *ngFor="let user of selectedOptions"><strong>Name:</strong> {{user.name}} , <strong>Balance:</strong> {{user.balance}}</p>
         </div>
       </div>
       </div>
