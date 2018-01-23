@@ -22,6 +22,7 @@ Desktop.ini
 coverage/
 docs
 tmp
+demo
 
 # Library files
 src/
