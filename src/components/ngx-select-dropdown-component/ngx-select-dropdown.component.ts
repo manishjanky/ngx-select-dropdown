@@ -52,7 +52,7 @@ export class SelectDropDownComponent implements OnInit {
         "Not Defined: ngx-select-dropdown requires options. But got empty or undefined."
       );
     }
-    this.availableItems = this.options.sort();
+    this.availableItems = JSON.parse(JSON.stringify(this.options.sort()));
     this.initDropdownValuesAndOptions();
   }
 

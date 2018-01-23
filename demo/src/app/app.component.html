@@ -1,0 +1,143 @@
+<div class="container pt-1">
+  <div class="row white mb-0">
+    <div class="col s6">
+      <h5>ngx-select-dropdown demo</h5>
+    </div>
+    <div class="col s6">
+      <a href="https://manishjanky.github.io/#/" class="blue-text right credits" target="_blank">Developed By:Manish</a>
+    </div>
+  </div>
+  <div class="center row">
+    <h1 class="blue-text">ngx-select-dropdown</h1>
+
+    <h5 class="blue-text">A Bootstrap(4) based pagination module for angulat(2+) applications.</h5>
+    <div>
+      <a href="https://github.com/manishjanky/ngx-select-dropdown" class="btn blue" style="margin:10px;">
+        <span class="fa fa-github"> Github</span>
+      </a>
+      <a href="https://github.com/manishjanky/ngx-select-dropdown/issues" class="btn blue" style="margin:10px;">
+        <span class="fa fa-bug"> Report a bug</span>
+      </a>
+    </div>
+  </div>
+  <div class="row nav-tabs white">
+      <div class="col s12">
+        <ul class="tabs">
+            <li class="tab col s2">
+                <a class="nav-link" [ngClass]="{'active':tab==1}" (click)="tab=1">Documentation</a>
+              </li>
+              <li class="tab col s2">
+                <a class="nav-link" [ngClass]="{'active':tab==2}" (click)="tab=2">Demo</a>
+              </li>
+        </ul>
+      </div>
+    </div>
+  <div class="row white content" *ngIf="tab==1">
+    <div class="col s12 pt-1">
+      <h4>1.Installation</h4>
+      <pre class="codeBlock">
+        //using npm
+        <strong> npm install ngx-select-dropdown</strong>
+
+        //using yarn
+        <strong> yarn add ngx-select-dropdown</strong>
+        <strong> yarn install</strong></pre>
+      <ul>
+        <li>include styles in you angular-cli.json.</li>
+      </ul>
+
+      <pre class="codeBlock">
+        //in angular-cli.json
+         <strong>"styles": [
+            "../node_modules/ngx-select-dropdown/dist/css/style.css"
+          ]</strong></pre>
+    </div>
+    <div class="col s12 pt-1">
+      <h4>2.Using with webpack and tsc builds/ angular-cli builds</h4>
+      <ul>
+        <li>import SelectDropdownModule from ngx-select-dropdown</li>
+        <li>add SelectDropdownModule to the imports of your NgModule</li>
+      </ul>
+      <pre class="codeBlock">
+        <strong>
+          import {{'{'}} SelectDropdownModule {{'}'}} from 'ngx-select-dropdown'
+        
+          @NgModule({{'{'}}
+            imports: [
+              ...,
+          
+              SelectDropdownModule
+            ],
+            ...
+          })
+          class YourModule {{'{'}} ... {{'}'}}</strong></pre>
+    </div>
+    <div class="col s12 pt-1">
+      <ul>
+        <li>
+          use
+          <strong>&lt;ngx-select-dropdown&gt;&lt;/ngx-select-dropdown&gt;</strong> in your templates to add select dropdown in your view like below
+        </li>
+        <li>a tag in you html will look like below with all the config</li>
+      </ul>
+
+      <pre class="codeBlock">
+          <strong>&lt;ngx-select-dropdown [config]="config" [options]="dropdownOptions" 
+            [(value)]="dataModel" [multiple]="true" &gt;&lt;/ngx-select-dropdown&gt;</strong></pre>
+    </div>
+    <div class="col s12 pt-1">
+      <h4>3.Config</h4>
+      <h6>Input</h6>
+      <ul>
+        <li>
+          <strong>multiple: boolean</strong> - true/false beased if multiple selection required or not Defaults to false
+        </li>
+        <li>
+          <strong>options: Array</strong> - Array of string/objects that are to be the dropdown options.
+        </li>
+        <li>
+          <strong>value: any</strong> -  the model variable in which you want to save the selected options.
+        </li>
+        <li>
+          <strong>config: Object </strong> - configuration object.
+        </li>
+      </ul>
+      <pre class="codeBlock">
+          config = {{'{'}}
+            displayKey:"description" //if objects array passed which key to be displayed defaults to description
+            {{'}'}}</pre>
+      <h6>Output</h6>
+      <ul>
+        <li>
+          <strong>value: any</strong> - array of selected options.
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="row white content" *ngIf="tab==2">
+    <div class="col s12">
+      <h3>Demos</h3>
+      <h5>Single Select Dropdown</h5>
+      <div class="row">
+        <div class="col s6">
+            <ngx-select-dropdown [multiple]="false" [(value)]="singleSelect" [config]="config" [options]="options"></ngx-select-dropdown>
+        </div>
+        <div class="col s6 flow-text" >
+          <p style="margin: 0;">Balance of selected user: {{singleSelect[0]?.balance}}</p>
+        </div>
+      </div>
+
+      <h5>Multi Select Dropdown</h5>
+      <div class="row">
+        <div class="col s6">
+            <ngx-select-dropdown [multiple]="true" [(value)]="multiSelect" [config]="config" [options]="options"></ngx-select-dropdown>
+        </div>
+        <div class="col s6 flow-text" >
+          <p style="margin: 0;" *ngFor="let user of multiSelect"><strong>Name:</strong> {{user.name}} , <strong>Balance:</strong> {{user.balance}}</p>
+        </div>
+      </div>
+      </div>
+  </div>
+</div>
