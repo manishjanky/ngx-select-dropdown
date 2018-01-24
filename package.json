@@ -63,7 +63,9 @@
     "test:watch": "karma start --auto-watch --no-single-run",
     "tslint": "tslint"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@angular/forms": "^5.0.0"
+  },
   "peerDependencies": {
     "@angular/common": "^5.0.0",
     "@angular/core": "^5.0.0"

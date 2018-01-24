@@ -28,7 +28,7 @@ export class SelectDropDownComponent implements OnInit {
   /* Value */
   @Input() public value: any;
 
-  /* event when value changes */
+  /* event when value changes to update in the UI*/
   @Output() public valueChange = new EventEmitter();
 
   public toggleDropdown: boolean = false;
@@ -41,6 +41,9 @@ export class SelectDropDownComponent implements OnInit {
 
   /* Selction text to be Displayed*/
   public selectedDisplayText: string = "Select";
+
+  /* Search text */
+  public searchText: string;
 
   constructor() {
     this.multiple = false;
@@ -88,6 +91,15 @@ export class SelectDropDownComponent implements OnInit {
     this.toggleDropdown = !this.toggleDropdown;
     $event.stopPropagation();
   }
+
+  public search(){
+    //search algo to search for all keys
+  }
+
+  public clickHandler($event: any) {
+    $event.stopPropagation();
+  }
+
   private initDropdownValuesAndOptions() {
     if (typeof this.config === "undefined") {
       this.config = {
@@ -120,4 +132,5 @@ export class SelectDropDownComponent implements OnInit {
       }
     }
   }
+
 }

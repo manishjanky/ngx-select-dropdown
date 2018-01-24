@@ -47,6 +47,54 @@
     -webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.21);
     -moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.21);
     box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.21);
+    .search-container {
+      position: relative;
+      padding-top: 10px;
+      margin-top: 5px;
+      input {
+        background-color: transparent;
+        border: none;
+        border-bottom: 1px solid #9e9e9e;
+        border-radius: 0;
+        outline: none;
+        height: 2rem;
+        width: 100%;
+        font-size: 13px;
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+        box-sizing: content-box;
+        transition: all 0.3s;
+        &:focus{
+          border-bottom: 1px solid #26a69a;
+        }
+        &:focus + label{
+          transform: translateY(-2px) scale(0.8);
+          transform-origin: 0 0;
+        }
+      }
+      label {
+        color: #9e9e9e;
+        position: absolute;
+        top: 0;
+        height: 100%;
+        font-size: 1rem;
+        cursor: text;
+        -webkit-transition: -webkit-transform 0.2s ease-out;
+        transition: -webkit-transform 0.2s ease-out;
+        transition: transform 0.2s ease-out;
+        transition: transform 0.2s ease-out, -webkit-transform 0.2s ease-out;
+        -webkit-transform-origin: 0% 100%;
+        transform-origin: 0% 100%;
+        text-align: initial;
+        transform: translateY(12px);
+        pointer-events: none;
+        &.active {
+          transform: translateY(-2px) scale(0.8);
+          transform-origin: 0 0;
+        }
+      }
+    }
     ul {
       list-style-type: none;
       padding-left: 0px;

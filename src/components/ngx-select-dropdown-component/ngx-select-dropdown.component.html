@@ -1,8 +1,12 @@
-<div class="ngx-dorpdown-container">
+<div class="ngx-dorpdown-container" (click)="clickHandler($event)">
        <button class="ngx-dropdown-button" (click)="toggleSelectDropdown($event)">
               <span>{{selectedDisplayText}} </span><span class="icon-angle-down"></span>
        </button>
        <div class="ngx-dropdown-list-container" *ngIf="toggleDropdown">
+              <div class="search-container" *ngIf="config.search">
+                     <input name="search" [(ngModel)]="searchText"/>
+                     <label [ngClass]="{'active': searchText}"><span class="icon-search"></span> Search</label>
+              </div>
               <ul class="selected-items">
                      <li *ngFor="let selected of selectedItems;let i = index" (click)="deselectItem(selected,i,$event)">
                             <span class="icon-close"> {{selected[config.displayKey] || selected}}</span>
