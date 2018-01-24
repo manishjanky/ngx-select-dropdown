@@ -1,3 +1,4 @@
+import { FormsModule } from '@angular/forms';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SelectDropDownComponent } from './ngx-select-dropdown.component';
@@ -8,7 +9,7 @@ describe('SelectDropDownComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [],
+      imports: [FormsModule],
       declarations: [ SelectDropDownComponent ]
     })
     .compileComponents();
