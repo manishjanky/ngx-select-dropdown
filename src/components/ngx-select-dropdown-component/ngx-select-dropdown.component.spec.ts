@@ -30,7 +30,7 @@ describe("SelectDropDownComponent", () => {
 
   it("should trow error", () => {
     component.options = undefined;
-    expect(function() {
+    expect(() => {
       component.ngOnInit();
     }).toThrow();
   });
