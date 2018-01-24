@@ -28,7 +28,7 @@ describe("SelectDropDownComponent", () => {
   });
 
   it("Should Toggle Dropdown", () => {
-    let $event = new Event("click");
+    const $event = new Event("click");
     component.toggleSelectDropdown($event);
     expect(component.toggleDropdown).toBeTruthy();
   });
