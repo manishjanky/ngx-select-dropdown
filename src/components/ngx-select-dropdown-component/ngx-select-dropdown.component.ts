@@ -92,8 +92,8 @@ export class SelectDropDownComponent implements OnInit {
     $event.stopPropagation();
   }
 
-  public search(){
-    //search algo to search for all keys
+  public search() {
+    // search algo to search for all keys
   }
 
   public clickHandler($event: any) {
