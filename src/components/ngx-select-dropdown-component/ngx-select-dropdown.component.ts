@@ -6,6 +6,8 @@ import {
   Output,
   HostListener
 } from "@angular/core";
+import { Subject } from 'rxjs/Subject';
+import "rxjs/Rx";
 
 @Component({
   selector: "ngx-select-dropdown",
@@ -45,8 +47,14 @@ export class SelectDropDownComponent implements OnInit {
   /* Search text */
   public searchText: string;
 
+  public searchTextChanged: Subject<string> = new Subject<string>();;
+
   constructor() {
     this.multiple = false;
+    this.searchTextChanged.debounceTime(300).distinctUntilChanged().subscribe((searchText) => {
+      this.searchText = searchText
+      this.search();
+    });
   }
 
   public ngOnInit() {
@@ -59,6 +67,10 @@ export class SelectDropDownComponent implements OnInit {
     this.initDropdownValuesAndOptions();
   }
 
+  public changed($event : any){
+    this.searchTextChanged.next($event);
+  }
+  
   public deselectItem(item: string, index: number, $event: Event) {
     this.selectedItems.splice(index, 1);
     this.availableItems.push(item);
@@ -93,7 +105,27 @@ export class SelectDropDownComponent implements OnInit {
   }
 
   public search() {
-    // search algo to search for all keys
+    // search algo to search for all keys\
+    let searchResults = [];
+    if(this.searchText === ""){
+      this.availableItems = this.options;
+      return;
+    }
+    for(let i = 0;i<this.options.length;i++){
+      let item = this.options[i];
+      if(typeof item !== "object"){
+        if (item.indexOf(this.searchText) > -1){
+          searchResults.push(item)
+        }
+        continue;
+      }
+      for(let key in item){
+        if(item[key].toString().indexOf(this.searchText) > -1){
+          searchResults.push(item);
+        }
+      }
+    }
+    this.availableItems = searchResults;
   }
 
   public clickHandler($event: any) {
@@ -123,12 +155,9 @@ export class SelectDropDownComponent implements OnInit {
     if (this.multiple && this.selectedItems.length > 0) {
       this.selectedDisplayText = this.selectedItems.length + " selected";
     } else {
-      this.selectedDisplayText =
-        this.selectedItems.length === 0 ? "Select" : this.selectedItems[0];
+      this.selectedDisplayText = this.selectedItems.length === 0 ? "Select" : this.selectedItems[0];
       if (typeof this.selectedDisplayText === "object") {
-        this.selectedDisplayText = this.selectedItems[0][
-          this.config.displayKey
-        ];
+        this.selectedDisplayText = this.selectedItems[0][this.config.displayKey];
       }
     }
   }
