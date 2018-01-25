@@ -61,7 +61,8 @@
     "prebuild:watch": "rimraf dist tmp",
     "test": "karma start",
     "test:watch": "karma start --auto-watch --no-single-run",
-    "tslint": "tslint"
+    "tslint": "tslint",
+    "compodoc": "compodoc -p tsconfig.json"
   },
   "dependencies": {
     "@angular/forms": "^5.0.0"

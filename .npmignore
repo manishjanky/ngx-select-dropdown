@@ -23,6 +23,7 @@ coverage/
 docs
 tmp
 demo
+documentation
 
 # Library files
 src/

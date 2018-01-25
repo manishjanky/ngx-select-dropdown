@@ -18,35 +18,59 @@ import "rxjs/Rx";
   }
 })
 export class SelectDropDownComponent implements OnInit {
-  /*Get the required inputs*/
+  /**
+   * Get the required inputs
+   */
   @Input() public options: any;
 
-  /* configuration options */
+  /**
+   * configuration options
+   */
   @Input() public config: any;
 
-  /* Whether multiple selection or single selection allowed*/
+  /**
+   * Whether multiple selection or single selection allowed
+   */
   @Input() public multiple: boolean = false;
 
-  /* Value */
+  /**
+   * Value
+   */
   @Input() public value: any;
 
-  /* event when value changes to update in the UI*/
+  /**
+   * event when value changes to update in the UI
+   */
   @Output() public valueChange = new EventEmitter();
 
+  /**
+   * Toogle the dropdown list
+   */
   public toggleDropdown: boolean = false;
 
-  /* Available items for selection*/
+  /**
+   * Available items for selection
+   */
   public availableItems: any = [];
 
-  /* Selected Items*/
+  /**
+   * Selected Items
+   */
   public selectedItems: any = [];
 
-  /* Selction text to be Displayed*/
+  /**
+   * Selction text to be Displayed
+   */
   public selectedDisplayText: string = "Select";
 
-  /* Search text */
+  /**
+   * Search text
+   */
   public searchText: string;
 
+  /**
+   * Observable for debouncing the search text change (300ms)
+   */
   public searchTextChanged: Subject<string> = new Subject<string>();
 
   constructor() {
@@ -60,6 +84,9 @@ export class SelectDropDownComponent implements OnInit {
       });
   }
 
+  /**
+   * Component onInit
+   */
   public ngOnInit() {
     if (typeof this.options === "undefined" || this.options.length === 0) {
       throw Error(
@@ -70,10 +97,16 @@ export class SelectDropDownComponent implements OnInit {
     this.initDropdownValuesAndOptions();
   }
 
+   /**
+   * When user changes search changes trigger the model change
+   */
   public changed($event: any) {
     this.searchTextChanged.next($event);
   }
 
+   /**
+   * Deselct a selected item
+   */
   public deselectItem(item: string, index: number, $event: Event) {
     this.selectedItems.splice(index, 1);
     this.availableItems.push(item);
@@ -81,6 +114,9 @@ export class SelectDropDownComponent implements OnInit {
     this.valueChanged($event);
   }
 
+  /**
+   * Select an item
+   */
   public selectItem(item: string, index: number, $event: Event) {
     if (!this.multiple) {
       if (this.selectedItems.length > 0) {
@@ -95,6 +131,9 @@ export class SelectDropDownComponent implements OnInit {
     this.valueChanged($event);
   }
 
+  /**
+   * When selected items changes trigger the chaange back to parent
+   */
   public valueChanged($event: Event) {
     this.value = this.selectedItems;
     this.valueChange.emit(this.value);
@@ -102,11 +141,17 @@ export class SelectDropDownComponent implements OnInit {
     $event.stopPropagation();
   }
 
+  /**
+   * Toggle the dropdownlist on/off
+   */
   public toggleSelectDropdown($event: any) {
     this.toggleDropdown = !this.toggleDropdown;
     $event.stopPropagation();
   }
 
+  /**
+   * search for an item in the available items list
+   */
   public search() {
     const searchResults = [];
     if (this.searchText === "") {
@@ -129,10 +174,16 @@ export class SelectDropDownComponent implements OnInit {
     this.availableItems = searchResults;
   }
 
+  /**
+   * Avoid closing the dropdown list when selecting items
+   */
   public clickHandler($event: any) {
     $event.stopPropagation();
   }
 
+  /**
+   * initialize the config and other properties
+   */
   private initDropdownValuesAndOptions() {
     if (typeof this.config === "undefined") {
       this.config = {
@@ -148,10 +199,16 @@ export class SelectDropDownComponent implements OnInit {
     }
   }
 
+  /**
+   * Close the dropdown on click on the document
+   */
   private onClick($event: Event) {
     this.toggleDropdown = false;
   }
 
+  /**
+   * set the text to be displayed 
+   */
   private setSelectedDisplayText() {
     if (this.multiple && this.selectedItems.length > 0) {
       this.selectedDisplayText = this.selectedItems.length + " selected";
