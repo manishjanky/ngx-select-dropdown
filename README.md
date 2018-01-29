@@ -13,6 +13,11 @@
 
 `ngx-select-dropdown` Custom Dropdown component for Angular 2+ with multiple and single selection options
 
+##Features
+* single select dropdown
+* multi select dropdown
+* search dropdown list
+
 ## Examples
 
 * [demo-page](https://manishjanky.github.io/ngx-select-dropdown/)
@@ -64,7 +69,8 @@ class YourModule { ... }
 * `config: Object` - configuration object.
 ````
 config = {
-        displayKey:"description" //if objects array passed which key to be displayed defaults to description
+        displayKey:"description", //if objects array passed which key to be displayed defaults to description
+        search:true //true/false for the search functionlity
       }
 ````
 
