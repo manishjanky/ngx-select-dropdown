@@ -49,24 +49,24 @@
       <pre class="codeBlock">
         //in angular-cli.json
          <strong>"styles": [
-            "../node_modules/ngx-select-dropdown/dist/css/style.css"
+            "../node_modules/ngx-select-dropdown/dist/assets/style.css"
           ]</strong></pre>
     </div>
     <div class="col s12 pt-1">
       <h4>2.Using with webpack and tsc builds/ angular-cli builds</h4>
       <ul>
-        <li>import SelectDropdownModule from ngx-select-dropdown</li>
-        <li>add SelectDropdownModule to the imports of your NgModule</li>
+        <li>import SelectDropDownModule from ngx-select-dropdown</li>
+        <li>add SelectDropDownModule to the imports of your NgModule</li>
       </ul>
       <pre class="codeBlock">
         <strong>
-          import {{'{'}} SelectDropdownModule {{'}'}} from 'ngx-select-dropdown'
+          import {{'{'}} SelectDropDownModule {{'}'}} from 'ngx-select-dropdown'
         
           @NgModule({{'{'}}
             imports: [
               ...,
           
-              SelectDropdownModule
+              SelectDropDownModule
             ],
             ...
           })
