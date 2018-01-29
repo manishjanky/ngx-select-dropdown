@@ -71,7 +71,7 @@ THE SOFTWARE.
 MIT
 MIT
 
-ngx-select-dropdown@0.0.3
+ngx-select-dropdown@0.0.5
 MIT
 MIT License
 
