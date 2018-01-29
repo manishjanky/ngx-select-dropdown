@@ -96,6 +96,8 @@
       }
     }
     ul {
+      margin-top: 1rem;
+      margin-bottom: 1rem;
       list-style-type: none;
       padding-left: 0px;
       &.selected-items {
@@ -114,7 +116,7 @@
         font-weight: 400;
         line-height: 1.42857143;
         color: #333;
-        white-space: nowrap;
+        white-space: normal;
         span::before {
           vertical-align: middle;
         }
