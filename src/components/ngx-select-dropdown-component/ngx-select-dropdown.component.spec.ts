@@ -64,6 +64,26 @@ describe("SelectDropDownComponent", () => {
     }).toThrow();
   });
 
+  it("should set available items when initializing", () => {
+    component.options = objOptions;
+    component.ngOnInit();
+    expect(component.availableItems).toEqual(component.options);
+  });
+
+  it("should set the initial value passed while initializing", () => {
+    component.options = objOptions;
+    component.value = [objOptions[0]];
+    component.ngOnInit();
+    expect(component.selectedItems).toEqual([objOptions[0]]);
+  });
+
+  it("should set the availableitems when initial value passed while initializing", () => {
+    component.options = objOptions;
+    component.value = [objOptions[0]];
+    component.ngOnInit();
+    expect(component.availableItems.length).toEqual(objOptions.length - 1);
+  });
+
   it("Should init the config", () => {
     (component as any).initDropdownValuesAndOptions();
     expect(component.config).toBeTruthy();
@@ -150,14 +170,21 @@ describe("SelectDropDownComponent", () => {
     component.selectedItems = ["Option 1", "Option 2"];
     component.multiple = true;
     component.valueChanged($event);
-    expect(component.selectedDisplayText).toEqual("2 selected");
+    expect(component.selectedDisplayText).toEqual("Option 1 + 1 more");
   });
 
-  it("Should set the selected text for single select", () => {
+  it("Should set the selected text for single select with string options", () => {
     const $event = new Event("click");
     component.selectedItems = ["Option 1"];
     component.valueChanged($event);
     expect(component.selectedDisplayText).toEqual("Option 1");
+  });
+
+  it("Should set the selected text for single select when nothing selected", () => {
+    const $event = new Event("click");
+    component.selectedItems = [];
+    component.valueChanged($event);
+    expect(component.selectedDisplayText).toEqual("Select");
   });
 
   it("Should search", () => {
@@ -196,7 +223,7 @@ describe("SelectDropDownComponent", () => {
     component.searchText = "";
     component.search();
     setTimeout(() => {
-      expect(component.availableItems).toEqual(objOptions);
+      expect(component.availableItems).toEqual(component.options);
     }, 300);
   });
 });

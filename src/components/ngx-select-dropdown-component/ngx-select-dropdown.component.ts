@@ -41,7 +41,11 @@ export class SelectDropDownComponent implements OnInit {
   /**
    * event when value changes to update in the UI
    */
-  @Output() public valueChange = new EventEmitter();
+  @Output() public valueChange: EventEmitter<any> = new EventEmitter();
+  /**
+   * change event when value changes to provide user to handle things in change event
+   */
+  @Output() public change: EventEmitter<any> = new EventEmitter();
 
   /**
    * Toogle the dropdown list
@@ -97,14 +101,14 @@ export class SelectDropDownComponent implements OnInit {
     this.initDropdownValuesAndOptions();
   }
 
-   /**
+  /**
    * When user changes search changes trigger the model change
    */
   public changed($event: any) {
     this.searchTextChanged.next($event);
   }
 
-   /**
+  /**
    * Deselct a selected item
    */
   public deselectItem(item: string, index: number, $event: Event) {
@@ -137,6 +141,7 @@ export class SelectDropDownComponent implements OnInit {
   public valueChanged($event: Event) {
     this.value = this.selectedItems;
     this.valueChange.emit(this.value);
+    this.change.emit({ value: this.value });
     this.setSelectedDisplayText();
     $event.stopPropagation();
   }
@@ -207,19 +212,18 @@ export class SelectDropDownComponent implements OnInit {
   }
 
   /**
-   * set the text to be displayed 
+   * set the text to be displayed
    */
   private setSelectedDisplayText() {
+    let text: string = this.selectedItems[0];
+    if (typeof this.selectedItems[0] === "object") {
+      text = this.selectedItems[0][this.config.displayKey];
+    }
     if (this.multiple && this.selectedItems.length > 0) {
-      this.selectedDisplayText = this.selectedItems.length + " selected";
+      this.selectedDisplayText = this.selectedItems.length === 1 ? text :
+        text + ` + ${this.selectedItems.length - 1} more`;
     } else {
-      this.selectedDisplayText =
-        this.selectedItems.length === 0 ? "Select" : this.selectedItems[0];
-      if (typeof this.selectedDisplayText === "object") {
-        this.selectedDisplayText = this.selectedItems[0][
-          this.config.displayKey
-        ];
-      }
+      this.selectedDisplayText = this.selectedItems.length === 0 ? "Select" : text;
     }
   }
 }
