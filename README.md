@@ -82,7 +82,7 @@ config = {
 ## Changelog
 * v0.1.0
 ````
- Added a change event so that user can attcah a change event handler.
+ Added a change event so that user can attach a change event handler.
  If multiselect the selected text will display first item and + count for eg. (Option 1 + 2 more) .
 ````
 
