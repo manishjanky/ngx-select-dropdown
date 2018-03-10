@@ -133,7 +133,7 @@
       <h5>Multi Select Dropdown</h5>
       <div class="row">
         <div class="col s12 l6">
-            <ngx-select-dropdown [multiple]="true" [(value)]="multiSelect" [config]="config" [options]="options"></ngx-select-dropdown>
+            <ngx-select-dropdown (change)="changeValue($event)" [multiple]="true" [(value)]="multiSelect" [config]="config" [options]="options"></ngx-select-dropdown>
         </div>
         <div class="col s12 l6 flow-text" >
           <p style="margin: 0;">Selected Options:-</p>

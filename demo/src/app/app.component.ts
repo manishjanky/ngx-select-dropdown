@@ -85,4 +85,7 @@ export class AppComponent {
       "name": "Goldie Barber"
     }
   ];
+  changeValue($event: any){
+    console.log($event);
+  }
 }

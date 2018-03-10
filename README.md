@@ -56,7 +56,7 @@ class YourModule { ... }
 * use `<ng--select-dropdown></ng--select-dropdown>` in your templates to add pagination in your view like below
 
 ````
-<ngx-select-dropdown [multiple]="true" [(value)]="dataModel" [config]="config" [options]="dropdownOptions"></ngx-select-dropdown>
+<ngx-select-dropdown (change)="selectionChanged($event)" [multiple]="true" [(value)]="dataModel" [config]="config" [options]="dropdownOptions"></ngx-select-dropdown>
 ````
 
 ## Config
@@ -77,6 +77,14 @@ config = {
 ### Output
 
 * `value: any` - array of selected options
+* `change: Event` - change event when user changes the selected options
+
+## Changelog
+* v0.1.0
+````
+ Added a change event so that user can attcah a change event handler.
+ If multiselect the selected text will display first item and + count for eg. (Option 1 + 2 more) .
+````
 
 ## Help Improve
 
