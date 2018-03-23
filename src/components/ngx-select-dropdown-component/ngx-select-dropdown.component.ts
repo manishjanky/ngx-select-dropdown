@@ -113,8 +113,10 @@ export class SelectDropDownComponent implements OnInit {
    */
   public deselectItem(item: string, index: number, $event: Event) {
     this.selectedItems.splice(index, 1);
-    this.availableItems.push(item);
-    this.availableItems.sort();
+    if (!this.availableItems.includes(item)) {
+      this.availableItems.push(item);
+      this.availableItems.sort();
+    }
     this.valueChanged($event);
   }
 
@@ -161,6 +163,8 @@ export class SelectDropDownComponent implements OnInit {
     const searchResults = [];
     if (this.searchText === "") {
       this.availableItems = this.options;
+      // exclude selectedItems from availableItems
+      this.availableItems = this.availableItems.filter((item) => !this.selectedItems.includes(item));
       return;
     }
     for (const item of this.options) {
@@ -177,6 +181,8 @@ export class SelectDropDownComponent implements OnInit {
       }
     }
     this.availableItems = searchResults;
+    // exclude selectedItems from availableItems
+    this.availableItems = this.availableItems.filter((item) => !this.selectedItems.includes(item));
   }
 
   /**
