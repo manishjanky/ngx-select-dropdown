@@ -176,7 +176,8 @@ export class SelectDropDownComponent implements OnInit {
       }
       for (const key in item) {
         if (item[key].toString().indexOf(this.searchText) > -1) {
-          searchResults.push(item);
+          if (!searchResults.includes(item)) // item is duplicated upon finding the same search text in the same object fields
+            searchResults.push(item);
         }
       }
     }
