@@ -65,19 +65,19 @@
     "compodoc": "compodoc -p tsconfig.json"
   },
   "dependencies": {
-    "@angular/forms": "^5.2.8"
+    "@angular/forms": "^4.0.0"
   },
   "peerDependencies": {
-    "@angular/common": "^5.0.0",
-    "@angular/core": "^5.0.0"
+    "@angular/common": "^4.0.0",
+    "@angular/core": "^4.0.0"
   },
   "devDependencies": {
-    "@angular/common": "^5.2.8",
-    "@angular/compiler": "^5.2.8",
-    "@angular/compiler-cli": "^5.2.8",
-    "@angular/core": "^5.2.8",
-    "@angular/platform-browser": "^5.2.8",
-    "@angular/platform-browser-dynamic": "^5.2.8",
+    "@angular/common": "^4.0.0",
+    "@angular/compiler": "^4.0.0",
+    "@angular/compiler-cli": "^4.0.0",
+    "@angular/core": "^4.0.0",
+    "@angular/platform-browser": "^4.0.0",
+    "@angular/platform-browser-dynamic": "^4.0.0",
     "@compodoc/compodoc": "^1.0.9",
     "@types/jasmine": "^2.8.6",
     "@types/karma": "^1.7.0",

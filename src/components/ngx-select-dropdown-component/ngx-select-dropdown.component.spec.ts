@@ -187,24 +187,26 @@ describe("SelectDropDownComponent", () => {
     expect(component.selectedDisplayText).toEqual("Select");
   });
 
-  it("Should search", () => {
+  it("Should search", (done) => {
     component.options = objOptions;
     component.searchText = "Burns";
     component.search();
     setTimeout(() => {
       expect(component.availableItems).toEqual([objOptions[0]]);
+      done();
     }, 300);
   });
 
-  it("Should search with string array", () => {
+  it("Should search with string array", (done) => {
     component.searchText = "1";
     component.search();
     setTimeout(() => {
       expect(component.availableItems).toEqual(["Option 1"]);
+      done();
     }, 300);
   });
 
-  it("Should change search text", () => {
+  it("Should change search text", (done) => {
     const $event  = new Event("change");
     component.options = objOptions;
     component.searchText = "Burns";
@@ -212,11 +214,12 @@ describe("SelectDropDownComponent", () => {
     setTimeout(() => {
       component.searchText = "Burn";
       component.changed($event);
-      expect(component.searchText).toEqual("Burns");
+      expect(component.searchText).toEqual("Burn");
+      done();
     }, 300);
   });
 
-  it("Should set available items if search text is empty", () => {
+  it("Should set available items if search text is empty", (done) => {
     const $event  = new Event("change");
     component.options = objOptions;
     component.availableItems = [objOptions[0]];
@@ -224,6 +227,7 @@ describe("SelectDropDownComponent", () => {
     component.search();
     setTimeout(() => {
       expect(component.availableItems).toEqual(component.options);
+      done();
     }, 300);
   });
 });

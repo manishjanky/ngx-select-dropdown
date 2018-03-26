@@ -160,11 +160,11 @@ export class SelectDropDownComponent implements OnInit {
    * search for an item in the available items list
    */
   public search() {
-    const searchResults = [];
+    const searchResults: any = [];
     if (this.searchText === "") {
       this.availableItems = this.options;
       // exclude selectedItems from availableItems
-      this.availableItems = this.availableItems.filter(item => !this.selectedItems.includes(item));
+      this.availableItems = this.availableItems.filter((item: any) => !this.selectedItems.includes(item));
       return;
     }
     for (const item of this.options) {
@@ -176,14 +176,16 @@ export class SelectDropDownComponent implements OnInit {
       }
       for (const key in item) {
         if (item[key].toString().indexOf(this.searchText) > -1) {
-          if (!searchResults.includes(item)) // item is duplicated upon finding the same search text in the same object fields
+          if (!searchResults.includes(item)) {
+            // item is duplicated upon finding the same search text in the same object fields
             searchResults.push(item);
+          }
         }
       }
     }
     this.availableItems = searchResults;
     // exclude selectedItems from availableItems
-    this.availableItems = this.availableItems.filter(item => !this.selectedItems.includes(item));
+    this.availableItems = this.availableItems.filter((item: any) => !this.selectedItems.includes(item));
   }
 
   /**
