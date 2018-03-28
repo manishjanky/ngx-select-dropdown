@@ -10,28 +10,32 @@ const objOptions = [
     index: 0,
     balance: "$2,806.37",
     picture: "http://placehold.it/32x32",
-    name: "Burns Dalton"
+    name: "Burns Dalton",
+    firstName: "Burns"
   },
   {
     _id: "5a66d6c3657e60c6073a2d22",
     index: 1,
     balance: "$2,984.98",
     picture: "http://placehold.it/32x32",
-    name: "Mcintyre Lawson"
+    name: "Mcintyre Lawson",
+    firstName: "Mcintyre"
   },
   {
     _id: "5a66d6c376be165a5a7fae33",
     index: 2,
     balance: "$2,794.16",
     picture: "http://placehold.it/32x32",
-    name: "Amie Franklin"
+    name: "Amie Franklin",
+    firstName: "Amie"
   },
   {
     _id: "5a66d6c3f7854b6b4d96333b",
     index: 3,
     balance: "$2,537.14",
     picture: "http://placehold.it/32x32",
-    name: "Jocelyn Horton"
+    name: "Jocelyn Horton",
+    firstName: "Jocelyn"
   }];
 describe("SelectDropDownComponent", () => {
   let component: SelectDropDownComponent;
@@ -207,7 +211,7 @@ describe("SelectDropDownComponent", () => {
   });
 
   it("Should change search text", (done) => {
-    const $event  = new Event("change");
+    const $event = new Event("change");
     component.options = objOptions;
     component.searchText = "Burns";
     component.changed($event);
@@ -220,13 +224,49 @@ describe("SelectDropDownComponent", () => {
   });
 
   it("Should set available items if search text is empty", (done) => {
-    const $event  = new Event("change");
+    const $event = new Event("change");
     component.options = objOptions;
     component.availableItems = [objOptions[0]];
     component.searchText = "";
     component.search();
     setTimeout(() => {
       expect(component.availableItems).toEqual(component.options);
+      done();
+    }, 300);
+  });
+
+  it("Should set available items if search text is empty and selected items", (done) => {
+    const $event = new Event("change");
+    component.options = objOptions;
+    component.selectedItems = [objOptions[1], objOptions[2]]
+    component.availableItems = [objOptions[0]];
+    component.searchText = "";
+    component.search();
+    setTimeout(() => {
+      expect(component.availableItems).toEqual([objOptions[0], objOptions[3]]);
+      done();
+    }, 300);
+  });
+
+  it("Should not duplicate items in avaialable items", (done) => {
+    const $event = new Event("change");
+    component.options = objOptions;
+    component.searchText = "Burns";
+    component.search();
+    setTimeout(() => {
+      expect(component.availableItems).toEqual([objOptions[0]]);
+      done();
+    }, 300);
+  });
+
+  it("Should not duplicate items  when deselect in avaialable items", (done) => {
+    const $event = new Event("change");
+    component.options = objOptions;
+    component.selectedItems = [objOptions[0], objOptions[1]];
+    component.availableItems = [objOptions[0]];
+    component.deselectItem(objOptions[1], 1, new Event('click'));
+    setTimeout(() => {
+      expect(component.availableItems).toEqual([objOptions[0], objOptions[1]]);
       done();
     }, 300);
   });

@@ -111,7 +111,7 @@ export class SelectDropDownComponent implements OnInit {
   /**
    * Deselct a selected item
    */
-  public deselectItem(item: string, index: number, $event: Event) {
+  public deselectItem(item: any, index: number, $event: Event) {
     this.selectedItems.splice(index, 1);
     if (!this.availableItems.includes(item)) {
       this.availableItems.push(item);
