@@ -238,7 +238,7 @@ describe("SelectDropDownComponent", () => {
   it("Should set available items if search text is empty and selected items", (done) => {
     const $event = new Event("change");
     component.options = objOptions;
-    component.selectedItems = [objOptions[1], objOptions[2]]
+    component.selectedItems = [objOptions[1], objOptions[2]];
     component.availableItems = [objOptions[0]];
     component.searchText = "";
     component.search();
