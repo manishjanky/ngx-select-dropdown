@@ -13,7 +13,7 @@
 
 `ngx-select-dropdown` Custom Dropdown component for Angular 2+ with multiple and single selection options
 
-##Features
+## Features
 * single select dropdown
 * multi select dropdown
 * search dropdown list
