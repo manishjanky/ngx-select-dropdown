@@ -11,7 +11,7 @@
 [![GitHub closed issues](https://img.shields.io/github/issues-closed/manishjanky/ngx-select-dropdown.svg)]()
 [![GitHub contributors](https://img.shields.io/github/contributors/manishjanky/ngx-select-dropdown.svg)]()
 
-`ngx-select-dropdown` Custom Dropdown component for Angular 2+ with multiple and single selection options
+`ngx-select-dropdown` Custom Dropdown component for Angular 4+ with multiple and single selection options
 
 ## Features
 * single select dropdown
