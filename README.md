@@ -85,6 +85,11 @@ config = {
  Added a change event so that user can attach a change event handler.
  If multiselect the selected text will display first item and + count for eg. (Option 1 + 2 more) .
 ````
+* v0.2.0
+````
+ Angular 4 and above support.
+ Bug with search functionality fixed.
+````
 
 ## Help Improve
 
