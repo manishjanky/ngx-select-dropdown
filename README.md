@@ -53,7 +53,7 @@ class YourModule { ... }
 `````
 
 
-* use `<ng--select-dropdown></ng--select-dropdown>` in your templates to add pagination in your view like below
+* use `<ngx-select-dropdown></ngx-select-dropdown>` in your templates to add the custom dropdown in your view like below
 
 ````
 <ngx-select-dropdown (change)="selectionChanged($event)" [multiple]="true" [(value)]="dataModel" [config]="config" [options]="dropdownOptions"></ngx-select-dropdown>
