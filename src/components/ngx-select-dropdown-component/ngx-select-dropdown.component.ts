@@ -129,6 +129,7 @@ export class SelectDropDownComponent implements OnInit {
         this.availableItems.push(this.selectedItems[0]);
       }
       this.selectedItems = [];
+      this.toggleDropdown = false;
     }
     this.availableItems.splice(index, 1);
     this.selectedItems.push(item);
@@ -175,7 +176,7 @@ export class SelectDropDownComponent implements OnInit {
         continue;
       }
       for (const key in item) {
-        if (item[key].toString().indexOf(this.searchText) > -1) {
+        if (item[key] && item[key].toString().indexOf(this.searchText) > -1) {
           if (!searchResults.includes(item)) {
             // item is duplicated upon finding the same search text in the same object fields
             searchResults.push(item);
