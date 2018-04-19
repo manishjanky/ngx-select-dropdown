@@ -61,11 +61,28 @@ describe("SelectDropDownComponent", () => {
     expect(component).toBeTruthy();
   });
 
-  it("should trow error", () => {
-    component.options = undefined;
-    expect(() => {
-      component.ngOnInit();
-    }).toThrow();
+  // it("should trow error", () => {
+  //   component.options = undefined;
+  //   expect(() => {
+  //     component.ngOnInit();
+  //   }).toThrow();
+  // });
+
+  it("should reinitialize options if data source changes", (done) => {
+    setTimeout(() => {
+      component.options = objOptions;
+      component.ngOnChanges({});
+      expect(component.options).toEqual(objOptions);
+      done();
+    }, 3000);
+
+  });
+
+  it("when options are not passed ", () => {
+    const undefinedOptions = undefined;
+    component.options = undefinedOptions;
+    component.ngOnInit();
+    expect(component.options).toEqual(undefined);
   });
 
   it("should set available items when initializing", () => {

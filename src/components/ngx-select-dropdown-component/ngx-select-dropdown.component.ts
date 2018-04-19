@@ -4,7 +4,8 @@ import {
   Input,
   EventEmitter,
   Output,
-  HostListener
+  HostListener,
+  OnChanges, SimpleChanges
 } from "@angular/core";
 import { Subject } from "rxjs/Subject";
 import "rxjs/Rx";
@@ -17,7 +18,7 @@ import "rxjs/Rx";
     "(document:click)": "onClick($event)"
   }
 })
-export class SelectDropDownComponent implements OnInit {
+export class SelectDropDownComponent implements OnInit, OnChanges {
   /**
    * Get the required inputs
    */
@@ -92,11 +93,16 @@ export class SelectDropDownComponent implements OnInit {
    * Component onInit
    */
   public ngOnInit() {
-    if (typeof this.options === "undefined" || this.options.length === 0) {
-      throw Error(
-        "Not Defined: ngx-select-dropdown requires options. But got empty or undefined."
-      );
+    if (typeof this.options !== "undefined" && Array.isArray(this.options)) {
+      this.availableItems = JSON.parse(JSON.stringify(this.options.sort()));
+      this.initDropdownValuesAndOptions();
     }
+  }
+
+  /**
+   * Component onchage i.e when any of the innput properties change
+   */
+  public ngOnChanges(changes: SimpleChanges) {
     this.availableItems = JSON.parse(JSON.stringify(this.options.sort()));
     this.initDropdownValuesAndOptions();
   }
