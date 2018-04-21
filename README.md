@@ -90,6 +90,12 @@ config = {
  Angular 4 and above support.
  Bug with search functionality fixed.
 ````
+* v0.3.0
+````
+ Support for Observable data source for options and async pipe.
+ IE bug with styling.
+ Few other minor bug fixes.
+````
 
 ## Help Improve
 
