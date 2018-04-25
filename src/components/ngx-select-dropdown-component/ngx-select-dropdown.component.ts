@@ -103,6 +103,11 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
    * Component onchage i.e when any of the innput properties change
    */
   public ngOnChanges(changes: SimpleChanges) {
+    if (changes.value && !changes.value.firstChange) {
+      return;
+    }
+    this.selectedItems = [];
+    this.searchText = null;
     this.availableItems = JSON.parse(JSON.stringify(this.options.sort()));
     this.initDropdownValuesAndOptions();
   }

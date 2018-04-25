@@ -78,6 +78,26 @@ describe("SelectDropDownComponent", () => {
 
   });
 
+  it("should reinitialize options if data source changes and not the value", (done) => {
+    setTimeout(() => {
+      component.options = objOptions;
+      component.ngOnChanges({});
+      component.selectItem(component.options[0], 0, new Event('click'));
+      expect(component.availableItems).toEqual([objOptions[1], objOptions[2], objOptions[3]]);
+      done();
+    }, 3000);
+  });
+
+  it("should handle value change in ngOnchanges", (done) => {
+    setTimeout(() => {
+      component.options = objOptions;
+      component.selectedItems = [objOptions[0]];
+      component.ngOnChanges({ value: { firstChange: false } } as any);
+      expect(component.selectedItems.length).toEqual(1);
+      done();
+    }, 3000);
+  });
+
   it("when options are not passed ", () => {
     const undefinedOptions = undefined;
     component.options = undefinedOptions;
