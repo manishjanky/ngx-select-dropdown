@@ -14,9 +14,6 @@ import "rxjs/Rx";
   selector: "ngx-select-dropdown",
   templateUrl: "./ngx-select-dropdown.component.html",
   styleUrls: ["./ngx-select-dropdown.component.scss"],
-  host: {
-    "(document:click)": "onClick($event)"
-  }
 })
 export class SelectDropDownComponent implements OnInit, OnChanges {
   /**
@@ -78,6 +75,11 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
    */
   public searchTextChanged: Subject<string> = new Subject<string>();
 
+  /**
+   * variable to track if clicked inside or outside of component
+   */
+  public clickedInside: boolean = false;
+
   constructor() {
     this.multiple = false;
     this.searchTextChanged
@@ -87,6 +89,27 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
         this.searchText = searchText;
         this.search();
       });
+  }
+
+  /**
+   * click listener for host inside this component i.e
+   * if many instances are there, this detects if clicked inside
+   * this instance
+   */
+  @HostListener('click')
+  public clickInsideComponent() {
+    this.clickedInside = true;
+  }
+
+  /**
+   * click handler on documnent to hide the open dropdown if clicked outside
+   */
+  @HostListener('document:click')
+  public clickOutsideComponent() {
+    if (!this.clickedInside) {
+      this.toggleDropdown = false;
+    }
+    this.clickedInside = false;
   }
 
   /**
@@ -157,7 +180,6 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
     this.valueChange.emit(this.value);
     this.change.emit({ value: this.value });
     this.setSelectedDisplayText();
-    $event.stopPropagation();
   }
 
   /**
@@ -165,7 +187,6 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
    */
   public toggleSelectDropdown($event: any) {
     this.toggleDropdown = !this.toggleDropdown;
-    $event.stopPropagation();
   }
 
   /**
@@ -201,13 +222,6 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
   }
 
   /**
-   * Avoid closing the dropdown list when selecting items
-   */
-  public clickHandler($event: any) {
-    $event.stopPropagation();
-  }
-
-  /**
    * initialize the config and other properties
    */
   private initDropdownValuesAndOptions() {
@@ -223,13 +237,6 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
       });
       this.setSelectedDisplayText();
     }
-  }
-
-  /**
-   * Close the dropdown on click on the document
-   */
-  private onClick($event: Event) {
-    this.toggleDropdown = false;
   }
 
   /**

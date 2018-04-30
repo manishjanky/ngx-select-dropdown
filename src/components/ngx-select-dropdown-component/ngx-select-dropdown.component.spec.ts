@@ -135,11 +135,6 @@ describe("SelectDropDownComponent", () => {
     expect(component.config.displayKey).toEqual("description");
   });
 
-  it("Should hide the dropdown", () => {
-    (component as any).onClick();
-    expect(component.toggleDropdown).toBeFalsy();
-  });
-
   it("Should set the select text for selected items", () => {
     component.selectedItems = ["Option 1"];
     (component as any).setSelectedDisplayText();
@@ -165,11 +160,23 @@ describe("SelectDropDownComponent", () => {
     expect(component.toggleDropdown).toBeTruthy();
   });
 
-  it("Click handler", () => {
-    const $event = new Event("click");
+  it("Click inside component", () => {
     component.toggleDropdown = true;
-    component.clickHandler($event);
-    expect(component.toggleDropdown).toBeTruthy();
+    component.clickInsideComponent();
+    expect(component.toggleDropdown).toEqual(true);
+  });
+
+  it("Click outside component", () => {
+    component.toggleDropdown = true;
+    component.clickOutsideComponent();
+    expect(component.toggleDropdown).toEqual(false);
+  });
+
+  it("Click inside component propagates to documnet", () => {
+    component.toggleDropdown = true;
+    component.clickedInside = true;
+    component.clickOutsideComponent();
+    expect(component.toggleDropdown).toEqual(true);
   });
 
   it("Should select an item items with multiple false", () => {
