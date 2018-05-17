@@ -92,12 +92,25 @@ describe("SelectDropDownComponent", () => {
     setTimeout(() => {
       component.options = objOptions;
       component.selectedItems = [objOptions[0]];
+      component.clickedInside = true;
       component.ngOnChanges({ value: { firstChange: false } } as any);
       expect(component.selectedItems.length).toEqual(1);
       done();
     }, 3000);
   });
 
+  it("should handle change in ngOnchanges when options undefined", (done) => {
+    component.options = undefined;
+    component.ngOnChanges({ value: { firstChange: false } } as any);
+    setTimeout(() => {
+      component.options = objOptions;
+      component.selectedItems = [objOptions[0]];
+      component.clickedInside = true;
+      component.ngOnChanges({ value: { firstChange: false } } as any);
+      expect(component.selectedItems.length).toEqual(1);
+      done();
+    }, 3000);
+  });
   it("when options are not passed ", () => {
     const undefinedOptions = undefined;
     component.options = undefinedOptions;

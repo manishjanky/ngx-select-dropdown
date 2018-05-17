@@ -19,7 +19,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
   /**
    * Get the required inputs
    */
-  @Input() public options: any;
+  @Input() public options: any = [];
 
   /**
    * configuration options
@@ -126,11 +126,12 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
    * Component onchage i.e when any of the innput properties change
    */
   public ngOnChanges(changes: SimpleChanges) {
-    if (changes.value && !changes.value.firstChange) {
+    if (changes.value && this.clickedInside) {
       return;
     }
     this.selectedItems = [];
     this.searchText = null;
+    this.options = this.options || [];
     this.availableItems = JSON.parse(JSON.stringify(this.options.sort()));
     this.initDropdownValuesAndOptions();
   }
