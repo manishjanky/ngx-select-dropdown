@@ -9,7 +9,7 @@
   font-style: normal;
 }
 
-[class^="icon-"], [class*=" icon-"] {
+[class^="nsdicon-"], [class*=" nsdicon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'icomoon' !important;
   speak: none;
@@ -24,21 +24,21 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-search:before {
+.nsdicon-search:before {
   content: "\f002";
 }
-.icon-check:before {
+.nsdicon-check:before {
   content: "\f00c";
 }
-.icon-close:before {
+.nsdicon-close:before {
   content: "\f00d";
 }
-.icon-remove:before {
+.nsdicon-remove:before {
   content: "\f00d";
 }
-.icon-times:before {
+.nsdicon-times:before {
   content: "\f00d";
 }
-.icon-angle-down:before {
+.nsdicon-angle-down:before {
   content: "\f107";
 }
