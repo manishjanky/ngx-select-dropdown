@@ -117,7 +117,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
    */
   public ngOnInit() {
     if (typeof this.options !== "undefined" && Array.isArray(this.options)) {
-      this.availableItems = JSON.parse(JSON.stringify(this.options.sort()));
+      this.availableItems = [...this.options.sort()];
       this.initDropdownValuesAndOptions();
     }
   }
@@ -126,13 +126,13 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
    * Component onchage i.e when any of the innput properties change
    */
   public ngOnChanges(changes: SimpleChanges) {
-    if (changes.value && this.clickedInside) {
-      return;
-    }
     this.selectedItems = [];
     this.searchText = null;
     this.options = this.options || [];
-    this.availableItems = JSON.parse(JSON.stringify(this.options.sort()));
+    if (changes.options) {
+      this.availableItems = [...this.options.sort()];
+    }
+
     this.initDropdownValuesAndOptions();
   }
 
@@ -196,9 +196,9 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
   public search() {
     const searchResults: any = [];
     if (this.searchText === "") {
-      this.availableItems = this.options;
+      this.availableItems = [...this.options];
       // exclude selectedItems from availableItems
-      this.availableItems = this.availableItems.filter((item: any) => !this.selectedItems.includes(item));
+      this.availableItems = this.availableItems.filter((item: any) => !JSON.stringify(this.selectedItems).includes(JSON.stringify(item)));
       return;
     }
     for (const item of this.options) {
@@ -234,7 +234,10 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
     if (this.value !== "" && typeof this.value !== "undefined") {
       this.selectedItems = this.value;
       this.value.forEach((item: any) => {
-        this.availableItems.splice(this.availableItems.indexOf(item), 1);
+        const ind = this.availableItems.indexOf(item);
+        if (ind !== -1) {
+          this.availableItems.splice(ind, 1);
+        }
       });
       this.setSelectedDisplayText();
     }

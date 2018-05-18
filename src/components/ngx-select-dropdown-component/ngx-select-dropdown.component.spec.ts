@@ -80,8 +80,8 @@ describe("SelectDropDownComponent", () => {
 
   it("should reinitialize options if data source changes and not the value", (done) => {
     setTimeout(() => {
-      component.options = objOptions;
-      component.ngOnChanges({});
+      component.options = [...objOptions];
+      component.ngOnChanges({ options: { firstChange: false } } as any);
       component.selectItem(component.options[0], 0, new Event('click'));
       expect(component.availableItems).toEqual([objOptions[1], objOptions[2], objOptions[3]]);
       done();
@@ -91,8 +91,7 @@ describe("SelectDropDownComponent", () => {
   it("should handle value change in ngOnchanges", (done) => {
     setTimeout(() => {
       component.options = objOptions;
-      component.selectedItems = [objOptions[0]];
-      component.clickedInside = true;
+      component.value = [objOptions[0]];
       component.ngOnChanges({ value: { firstChange: false } } as any);
       expect(component.selectedItems.length).toEqual(1);
       done();
@@ -105,9 +104,9 @@ describe("SelectDropDownComponent", () => {
     setTimeout(() => {
       component.options = objOptions;
       component.selectedItems = [objOptions[0]];
-      component.clickedInside = true;
+      component.value = [objOptions[0], objOptions[1]];
       component.ngOnChanges({ value: { firstChange: false } } as any);
-      expect(component.selectedItems.length).toEqual(1);
+      expect(component.selectedItems.length).toEqual(2);
       done();
     }, 3000);
   });

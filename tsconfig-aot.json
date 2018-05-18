@@ -5,6 +5,10 @@
     "moduleResolution": "node",
     "sourceMap": true,
     "declaration": true,
+    "lib": [
+      "es7",
+      "dom"
+    ],
     "removeComments": false,
     "noImplicitAny": true,
     "experimentalDecorators": true,
