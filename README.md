@@ -96,6 +96,12 @@ config = {
  IE bug with styling.
  Few other minor bug fixes.
 ````
+* v0.4.0
+````
+ Use arrows keys and enter to select items from available options.
+ Case insensitive search.
+ Few other minor bug fixes.
+````
 
 ## Help Improve
 
