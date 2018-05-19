@@ -132,8 +132,8 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
     }
     if (event.code === 'Enter' && this.focusedItemIndex !== null) {
       this.selectItem(this.availableItems[this.focusedItemIndex], this.focusedItemIndex);
+      return false;
     }
-    return false;
   }
 
   /**
