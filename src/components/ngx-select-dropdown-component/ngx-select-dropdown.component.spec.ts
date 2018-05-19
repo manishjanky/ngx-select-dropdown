@@ -61,13 +61,6 @@ describe("SelectDropDownComponent", () => {
     expect(component).toBeTruthy();
   });
 
-  // it("should trow error", () => {
-  //   component.options = undefined;
-  //   expect(() => {
-  //     component.ngOnInit();
-  //   }).toThrow();
-  // });
-
   it("should reinitialize options if data source changes", (done) => {
     setTimeout(() => {
       component.options = objOptions;
@@ -82,7 +75,7 @@ describe("SelectDropDownComponent", () => {
     setTimeout(() => {
       component.options = [...objOptions];
       component.ngOnChanges({ options: { firstChange: false } } as any);
-      component.selectItem(component.options[0], 0, new Event('click'));
+      component.selectItem(component.options[0], 0);
       expect(component.availableItems).toEqual([objOptions[1], objOptions[2], objOptions[3]]);
       done();
     }, 3000);
@@ -192,58 +185,50 @@ describe("SelectDropDownComponent", () => {
   });
 
   it("Should select an item items with multiple false", () => {
-    const $event = new Event("click");
-    component.selectItem("Option 1", 0, $event);
+    component.selectItem("Option 1", 0);
     expect(component.selectedItems).toEqual(["Option 1"]);
   });
 
   it("Should select an item items with multiple true", () => {
-    const $event = new Event("click");
     component.multiple = true;
-    component.selectItem("Option 1", 0, $event);
+    component.selectItem("Option 1", 0);
     expect(component.selectedItems).toEqual(["Option 1"]);
   });
 
   it("Should select an item items with multiple false and already selected items", () => {
-    const $event = new Event("click");
     component.selectedItems = ["Option 1"];
-    component.selectItem("Option 2", 1, $event);
+    component.selectItem("Option 2", 1);
     expect(component.selectedItems).toEqual(["Option 2"]);
   });
 
   it("Should deselect an item", () => {
-    const $event = new Event("click");
     component.selectedItems = ["Option 1"];
-    component.deselectItem("Option 1", 0, $event);
+    component.deselectItem("Option 1", 0);
     expect(component.selectedItems).toEqual([]);
   });
 
   it("Should set the value", () => {
-    const $event = new Event("click");
     component.selectedItems = ["Option 1", "Option 2"];
-    component.valueChanged($event);
+    component.valueChanged();
     expect(component.value).toEqual(["Option 1", "Option 2"]);
   });
 
   it("Should set the selected text for multi select", () => {
-    const $event = new Event("click");
     component.selectedItems = ["Option 1", "Option 2"];
     component.multiple = true;
-    component.valueChanged($event);
+    component.valueChanged();
     expect(component.selectedDisplayText).toEqual("Option 1 + 1 more");
   });
 
   it("Should set the selected text for single select with string options", () => {
-    const $event = new Event("click");
     component.selectedItems = ["Option 1"];
-    component.valueChanged($event);
+    component.valueChanged();
     expect(component.selectedDisplayText).toEqual("Option 1");
   });
 
   it("Should set the selected text for single select when nothing selected", () => {
-    const $event = new Event("click");
     component.selectedItems = [];
-    component.valueChanged($event);
+    component.valueChanged();
     expect(component.selectedDisplayText).toEqual("Select");
   });
 
@@ -316,14 +301,85 @@ describe("SelectDropDownComponent", () => {
   });
 
   it("Should not duplicate items  when deselect in avaialable items", (done) => {
-    const $event = new Event("change");
     component.options = objOptions;
     component.selectedItems = [objOptions[0], objOptions[1]];
     component.availableItems = [objOptions[0]];
-    component.deselectItem(objOptions[1], 1, new Event('click'));
+    component.deselectItem(objOptions[1], 1);
     setTimeout(() => {
       expect(component.availableItems).toEqual([objOptions[0], objOptions[1]]);
       done();
     }, 300);
   });
+
+  it("Should handle the up arrow key", () => {
+    component.options = objOptions;
+    component.availableItems = [...objOptions];
+    (component as any).onArrowKeyUp();
+    expect(component.focusedItemIndex).toEqual(0);
+  });
+
+  it("Should handle the down arrow key", () => {
+    component.options = objOptions;
+    component.availableItems = [...objOptions];
+    (component as any).onArrowKeyDown();
+    expect(component.focusedItemIndex).toEqual(0);
+  });
+
+  it("Should handle the down arrow key event when focus index already set", () => {
+    component.options = objOptions;
+    component.availableItems = [...objOptions];
+    component.focusedItemIndex = 0;
+    (component as any).onArrowKeyDown();
+    expect(component.focusedItemIndex).toEqual(1);
+  });
+
+  it("Should handle the down arrow key event when focus index already set to last item", () => {
+    component.options = objOptions;
+    component.availableItems = [...objOptions];
+    component.focusedItemIndex = component.availableItems.length - 1;
+    (component as any).onArrowKeyDown();
+    expect(component.focusedItemIndex).toEqual(0);
+  });
+
+  it("Should handle the up arrow key event when focus index already set", () => {
+    component.options = objOptions;
+    component.availableItems = [...objOptions];
+    component.focusedItemIndex = 1;
+    (component as any).onArrowKeyUp();
+    expect(component.focusedItemIndex).toEqual(0);
+  });
+
+  it("Should handle the up arrow key event when focus index already set to first item", () => {
+    component.options = objOptions;
+    component.availableItems = [...objOptions];
+    component.focusedItemIndex = 0;
+    (component as any).onArrowKeyUp();
+    expect(component.focusedItemIndex).toEqual(objOptions.length - 1);
+  });
+
+  it("Should handle the arrow key event for up", () => {
+    component.options = objOptions;
+    component.focusedItemIndex = null;
+    component.availableItems = [...objOptions];
+    component.handleKeyboardEvent({ code: 'ArrowUp' } as any);
+    expect(component.focusedItemIndex).toEqual(0);
+  });
+
+  it("Should handle the arrow key event for down", () => {
+    component.options = objOptions;
+    component.focusedItemIndex = null;
+    component.availableItems = [...objOptions];
+    component.handleKeyboardEvent({ code: 'ArrowDown' } as any);
+    expect(component.focusedItemIndex).toEqual(0);
+  });
+
+  it("Should handle the arrow key event for down", () => {
+    component.options = objOptions;
+    const event = new KeyboardEvent('Enter');
+    component.availableItems = [...objOptions];
+    component.focusedItemIndex = 1;
+    component.handleKeyboardEvent({ code: 'Enter' } as any);
+    expect(component.selectedItems).toEqual([objOptions[1]]);
+  });
+
 });

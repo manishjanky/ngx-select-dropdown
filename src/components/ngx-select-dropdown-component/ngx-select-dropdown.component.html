@@ -10,13 +10,14 @@
                 <span class="nsdicon-search"></span> Search</label>
         </div>
         <ul class="selected-items">
-            <li *ngFor="let selected of selectedItems;let i = index" (click)="deselectItem(selected,i,$event)">
+            <li *ngFor="let selected of selectedItems;let i = index" (click)="deselectItem(selected,i)">
                 <span class="nsdicon-close"> {{selected[config.displayKey] || selected}}</span>
             </li>
         </ul>
         <hr *ngIf="selectedItems.length > 0 && availableItems.length > 0" />
         <ul class="available-items">
-            <li *ngFor="let item of availableItems;let i = index" (click)="selectItem(item,i,$event)"> {{item[config.displayKey] || item}}</li>
+            <li *ngFor="let item of availableItems;let i = index" [ngClass]="{'active': focusedItemIndex == i}" (click)="selectItem(item,i)">
+            {{item[config.displayKey] || item}}</li>
         </ul>
     </div>
 </div>

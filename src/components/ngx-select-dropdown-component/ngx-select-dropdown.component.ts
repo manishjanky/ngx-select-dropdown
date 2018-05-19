@@ -80,6 +80,11 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
    */
   public clickedInside: boolean = false;
 
+  /**
+   * variable to track the focused item whenuser uses arrow keys to select item
+   */
+  public focusedItemIndex: number = null;
+
   constructor() {
     this.multiple = false;
     this.searchTextChanged
@@ -108,8 +113,27 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
   public clickOutsideComponent() {
     if (!this.clickedInside) {
       this.toggleDropdown = false;
+      this.resetArrowKeyActiveElement();
     }
     this.clickedInside = false;
+  }
+
+  /**
+   * Event handler for key up and down event and enter press for selecting element
+   * @param event
+   */
+  @HostListener('document:keydown', ['$event'])
+  public handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.code === 'ArrowDown') {
+      this.onArrowKeyDown();
+    }
+    if (event.code === 'ArrowUp') {
+      this.onArrowKeyUp();
+    }
+    if (event.code === 'Enter' && this.focusedItemIndex !== null) {
+      this.selectItem(this.availableItems[this.focusedItemIndex], this.focusedItemIndex);
+    }
+    return false;
   }
 
   /**
@@ -124,6 +148,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
 
   /**
    * Component onchage i.e when any of the innput properties change
+   * @param changes
    */
   public ngOnChanges(changes: SimpleChanges) {
     this.selectedItems = [];
@@ -138,27 +163,33 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
 
   /**
    * When user changes search changes trigger the model change
+   * @param $event
    */
   public changed($event: any) {
     this.searchTextChanged.next($event);
   }
 
   /**
-   * Deselct a selected item
+   * Deselct a selected items
+   * @param item:  item to be deselected
+   * @param index:  index of the item
    */
-  public deselectItem(item: any, index: number, $event: Event) {
+  public deselectItem(item: any, index: number) {
     this.selectedItems.splice(index, 1);
     if (!this.availableItems.includes(item)) {
       this.availableItems.push(item);
       this.availableItems.sort();
     }
-    this.valueChanged($event);
+    this.valueChanged();
+    this.resetArrowKeyActiveElement();
   }
 
   /**
    * Select an item
+   * @param item:  item to be selected
+   * @param index:  index of the item
    */
-  public selectItem(item: string, index: number, $event: Event) {
+  public selectItem(item: string, index: number) {
     if (!this.multiple) {
       if (this.selectedItems.length > 0) {
         this.availableItems.push(this.selectedItems[0]);
@@ -170,13 +201,14 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
     this.selectedItems.push(item);
     this.selectedItems.sort();
     this.availableItems.sort();
-    this.valueChanged($event);
+    this.valueChanged();
+    this.resetArrowKeyActiveElement();
   }
 
   /**
    * When selected items changes trigger the chaange back to parent
    */
-  public valueChanged($event: Event) {
+  public valueChanged() {
     this.value = this.selectedItems;
     this.valueChange.emit(this.value);
     this.change.emit({ value: this.value });
@@ -185,9 +217,11 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
 
   /**
    * Toggle the dropdownlist on/off
+   * @param event
    */
   public toggleSelectDropdown($event: any) {
     this.toggleDropdown = !this.toggleDropdown;
+    this.resetArrowKeyActiveElement();
   }
 
   /**
@@ -198,7 +232,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
     if (this.searchText === "") {
       this.availableItems = [...this.options];
       // exclude selectedItems from availableItems
-      this.availableItems = this.availableItems.filter((item: any) => !JSON.stringify(this.selectedItems).includes(JSON.stringify(item)));
+      this.availableItems = this.availableItems.filter((item: any) => !JSON.stringify(this.selectedItems).toLocaleLowerCase().includes(JSON.stringify(item).toLocaleLowerCase()));
       return;
     }
     for (const item of this.options) {
@@ -257,5 +291,47 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
     } else {
       this.selectedDisplayText = this.selectedItems.length === 0 ? "Select" : text;
     }
+  }
+
+  /**
+   * Event handler for arrow key up event thats focuses on a item
+   */
+  private onArrowKeyUp() {
+    if (this.focusedItemIndex === 0) {
+      this.focusedItemIndex = this.availableItems.length - 1;
+      return;
+    }
+    if (this.onArrowKey()) {
+      this.focusedItemIndex--;
+    }
+  }
+
+  /**
+   * Event handler for arrow key down event thats focuses on a item
+   */
+  private onArrowKeyDown() {
+    if (this.focusedItemIndex === this.availableItems.length - 1) {
+      this.focusedItemIndex = 0;
+      return;
+    }
+    if (this.onArrowKey()) {
+      this.focusedItemIndex++;
+    }
+  }
+
+  private onArrowKey() {
+    if (this.focusedItemIndex === null) {
+      this.focusedItemIndex = 0;
+      return false;
+    }
+    return true;
+  }
+
+  /**
+   * will reset the element that is marked active using arrow keys
+   */
+  private resetArrowKeyActiveElement() {
+    this.focusedItemIndex = null;
+
   }
 }
