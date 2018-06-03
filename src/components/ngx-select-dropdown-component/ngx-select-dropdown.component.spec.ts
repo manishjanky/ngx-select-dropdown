@@ -255,10 +255,10 @@ describe("SelectDropDownComponent", () => {
     const $event = new Event("change");
     component.options = objOptions;
     component.searchText = "Burns";
-    component.changed($event);
+    component.changed(component.searchText);
     setTimeout(() => {
       component.searchText = "Burn";
-      component.changed($event);
+      component.changed("Burn");
       expect(component.searchText).toEqual("Burn");
       done();
     }, 300);

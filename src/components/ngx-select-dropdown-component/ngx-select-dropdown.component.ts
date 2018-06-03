@@ -230,20 +230,20 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
   public search() {
     const searchResults: any = [];
     if (this.searchText === "") {
-      this.availableItems = [...this.options];
+      this.availableItems = this.options;
       // exclude selectedItems from availableItems
-      this.availableItems = this.availableItems.filter((item: any) => !JSON.stringify(this.selectedItems).toLocaleLowerCase().includes(JSON.stringify(item).toLocaleLowerCase()));
+      this.availableItems = this.availableItems.filter((item: any) => !this.selectedItems.includes(item));
       return;
     }
     for (const item of this.options) {
       if (typeof item !== "object") {
-        if (item.indexOf(this.searchText) > -1) {
+        if (item.toLowerCase().indexOf(this.searchText.toLowerCase()) > -1) {
           searchResults.push(item);
         }
         continue;
       }
       for (const key in item) {
-        if (item[key] && item[key].toString().indexOf(this.searchText) > -1) {
+        if (item[key] && item[key].toString().toLowerCase().indexOf(this.searchText.toLowerCase()) > -1) {
           if (!searchResults.includes(item)) {
             // item is duplicated upon finding the same search text in the same object fields
             searchResults.push(item);
