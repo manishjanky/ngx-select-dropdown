@@ -154,7 +154,6 @@ describe("SelectDropDownComponent", () => {
     expect(component.selectedDisplayText).toEqual("Option 1");
   });
 
-
   it("Should set the select text with 0 selected items", () => {
     (component as any).setSelectedDisplayText();
     expect(component.selectedDisplayText).toEqual("Select");
@@ -370,7 +369,7 @@ describe("SelectDropDownComponent", () => {
     component.options = objOptions;
     component.focusedItemIndex = null;
     component.availableItems = [...objOptions];
-    component.handleKeyboardEvent({ code: 'ArrowUp' } as any);
+    component.handleKeyboardEvent({ code: 'ArrowUp', preventDefault: () => { return; } } as any);
     expect(component.focusedItemIndex).toEqual(0);
   });
 
@@ -378,7 +377,7 @@ describe("SelectDropDownComponent", () => {
     component.options = objOptions;
     component.focusedItemIndex = null;
     component.availableItems = [...objOptions];
-    component.handleKeyboardEvent({ code: 'ArrowDown' } as any);
+    component.handleKeyboardEvent({ code: 'ArrowDown', preventDefault: () => { return; } } as any);
     expect(component.focusedItemIndex).toEqual(0);
   });
 
@@ -387,7 +386,7 @@ describe("SelectDropDownComponent", () => {
     const event = new KeyboardEvent('Enter');
     component.availableItems = [...objOptions];
     component.focusedItemIndex = 1;
-    component.handleKeyboardEvent({ code: 'Enter' } as any);
+    component.handleKeyboardEvent({ code: 'Enter', preventDefault: () => { return; } } as any);
     expect(component.selectedItems).toEqual([objOptions[1]]);
   });
 
