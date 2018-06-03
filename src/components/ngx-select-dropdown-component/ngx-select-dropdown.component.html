@@ -3,7 +3,7 @@
         <span>{{selectedDisplayText}} </span>
         <span class="nsdicon-angle-down"></span>
     </button>
-    <div class="ngx-dropdown-list-container" *ngIf="toggleDropdown">
+    <div class="ngx-dropdown-list-container" *ngIf="toggleDropdown" [style.height]="config.height">
         <div class="search-container" *ngIf="config.search">
             <input name="search" (ngModelChange)='changed($event)' [(ngModel)]="searchText" />
             <label [ngClass]="{'active': searchText}">

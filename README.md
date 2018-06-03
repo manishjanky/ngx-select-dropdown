@@ -70,7 +70,8 @@ class YourModule { ... }
 ````
 config = {
         displayKey:"description", //if objects array passed which key to be displayed defaults to description
-        search:true //true/false for the search functionlity
+        search:true //true/false for the search functionlity defaults to false,
+        height: 'auto' //height of the list so that if there are more no of items it can show a scroll defaults to auto. With auto height scroll will never appear
       }
 ````
 
@@ -102,7 +103,11 @@ config = {
  Case insensitive search.
  Few other minor bug fixes.
 ````
-
+* v0.5.0
+````
+ Support for scroll bar with too many list items.
+ Few other minor bug fixes.
+````
 ## Help Improve
 
 Found a bug or an issue with this? [Open a new issue](https://github.com/manishjanky/ngx-select-dropdown/issues) here on GitHub.

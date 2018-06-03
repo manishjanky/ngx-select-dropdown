@@ -140,11 +140,20 @@ describe("SelectDropDownComponent", () => {
     expect(component.config.displayKey).toEqual("description");
   });
 
+  it("Should init the config with display one key missing", () => {
+    component.config = {
+      displayKey: 'description'
+    };
+    (component as any).initDropdownValuesAndOptions();
+    expect(component.config.height).toEqual("auto");
+  });
+
   it("Should set the select text for selected items", () => {
     component.selectedItems = ["Option 1"];
     (component as any).setSelectedDisplayText();
     expect(component.selectedDisplayText).toEqual("Option 1");
   });
+
 
   it("Should set the select text with 0 selected items", () => {
     (component as any).setSelectedDisplayText();

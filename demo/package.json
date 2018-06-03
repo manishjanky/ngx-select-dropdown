@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "prod": "ng build --prod --aot"
+    "prod": "ng build --prod --aot --output-hashing none"
   },
   "private": true,
   "dependencies": {
@@ -23,8 +23,9 @@
     "@angular/platform-browser": "^5.2.8",
     "@angular/platform-browser-dynamic": "^5.2.8",
     "@angular/router": "^5.2.8",
+    "classlist.js": "^1.1.20150312",
     "core-js": "^2.5.3",
-    "ngx-select-dropdown": "^0.1.0",
+    "ngx-select-dropdown": "^0.4.2",
     "rxjs": "^5.5.6",
     "zone.js": "^0.8.20"
   },

@@ -123,17 +123,19 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
    * @param event
    */
   @HostListener('document:keydown', ['$event'])
-  public handleKeyboardEvent(event: KeyboardEvent) {
-    if (event.code === 'ArrowDown') {
+  public handleKeyboardEvent($event: KeyboardEvent) {
+
+    if ($event.code === 'ArrowDown') {
       this.onArrowKeyDown();
     }
-    if (event.code === 'ArrowUp') {
+    if ($event.code === 'ArrowUp') {
       this.onArrowKeyUp();
     }
-    if (event.code === 'Enter' && this.focusedItemIndex !== null) {
+    if ($event.code === 'Enter' && this.focusedItemIndex !== null) {
       this.selectItem(this.availableItems[this.focusedItemIndex], this.focusedItemIndex);
       return false;
     }
+    $event.preventDefault();
   }
 
   /**
@@ -260,10 +262,16 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
    * initialize the config and other properties
    */
   private initDropdownValuesAndOptions() {
+    const config: any = {
+      displayKey: "description",
+      height: 'auto',
+      search: false
+    };
     if (typeof this.config === "undefined") {
-      this.config = {
-        displayKey: "description"
-      };
+      this.config = { ...config };
+    }
+    for (const key of Object.keys(config)) {
+      this.config[key] = this.config[key] ? this.config[key] : config[key];
     }
     if (this.value !== "" && typeof this.value !== "undefined") {
       this.selectedItems = this.value;
