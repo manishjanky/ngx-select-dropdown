@@ -88,7 +88,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
   /**
    * Hold the reference to available items in the list to focus on the item when scrolling
    */
-  @ViewChildren('availableOption') availableOptions: QueryList<ElementRef>;
+  @ViewChildren('availableOption') public availableOptions: QueryList<ElementRef>;
 
   constructor() {
     this.multiple = false;
