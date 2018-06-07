@@ -1,3 +1,5 @@
+import { QueryList } from '@angular/core';
+import { ElementRef } from '@angular/core';
 import { FormsModule } from "@angular/forms";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
@@ -369,6 +371,8 @@ describe("SelectDropDownComponent", () => {
     component.options = objOptions;
     component.focusedItemIndex = null;
     component.availableItems = [...objOptions];
+    component.availableOptions = new QueryList();
+    component.availableOptions.reset([new ElementRef(document.createElement('li'))]);
     component.handleKeyboardEvent({ code: 'ArrowUp', preventDefault: () => { return; } } as any);
     expect(component.focusedItemIndex).toEqual(0);
   });
@@ -377,6 +381,8 @@ describe("SelectDropDownComponent", () => {
     component.options = objOptions;
     component.focusedItemIndex = null;
     component.availableItems = [...objOptions];
+    component.availableOptions = new QueryList();
+    component.availableOptions.reset([new ElementRef(document.createElement('li'))]);
     component.handleKeyboardEvent({ code: 'ArrowDown', preventDefault: () => { return; } } as any);
     expect(component.focusedItemIndex).toEqual(0);
   });

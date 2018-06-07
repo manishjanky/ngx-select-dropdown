@@ -5,7 +5,7 @@ import {
   EventEmitter,
   Output,
   HostListener,
-  OnChanges, SimpleChanges
+  OnChanges, SimpleChanges, ViewChildren, ElementRef, QueryList
 } from "@angular/core";
 import { Subject } from "rxjs/Subject";
 import "rxjs/Rx";
@@ -85,6 +85,11 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
    */
   public focusedItemIndex: number = null;
 
+  /**
+   * Hold the reference to available items in the list to focus on the item when scrolling
+   */
+  @ViewChildren('availableOption') availableOptions: QueryList<ElementRef>;
+
   constructor() {
     this.multiple = false;
     this.searchTextChanged
@@ -124,18 +129,21 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
    */
   @HostListener('document:keydown', ['$event'])
   public handleKeyboardEvent($event: KeyboardEvent) {
-
-    if ($event.code === 'ArrowDown') {
+    const avaOpts = this.availableOptions.toArray();
+    if ($event.code === 'ArrowDown' && avaOpts.length > 0) {
       this.onArrowKeyDown();
+      avaOpts[this.focusedItemIndex].nativeElement.focus();
+      $event.preventDefault();
     }
-    if ($event.code === 'ArrowUp') {
+    if ($event.code === 'ArrowUp' && avaOpts.length) {
       this.onArrowKeyUp();
+      avaOpts[this.focusedItemIndex].nativeElement.focus();
+      $event.preventDefault();
     }
     if ($event.code === 'Enter' && this.focusedItemIndex !== null) {
       this.selectItem(this.availableItems[this.focusedItemIndex], this.focusedItemIndex);
       return false;
     }
-    $event.preventDefault();
   }
 
   /**
