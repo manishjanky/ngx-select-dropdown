@@ -273,7 +273,8 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
     const config: any = {
       displayKey: "description",
       height: 'auto',
-      search: false
+      search: false,
+      placeholder: 'Select'
     };
     if (typeof this.config === "undefined") {
       this.config = { ...config };
@@ -305,7 +306,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
       this.selectedDisplayText = this.selectedItems.length === 1 ? text :
         text + ` + ${this.selectedItems.length - 1} more`;
     } else {
-      this.selectedDisplayText = this.selectedItems.length === 0 ? "Select" : text;
+      this.selectedDisplayText = this.selectedItems.length === 0 ? this.config.placeholder : text;
     }
   }
 
