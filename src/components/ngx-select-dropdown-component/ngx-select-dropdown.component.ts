@@ -35,7 +35,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
    * Whether options should be sorted or not
    */
   @Input() public sorted: boolean = true;
-  
+
   /**
    * Value
    */
