@@ -170,7 +170,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
     this.searchText = null;
     this.options = this.options || [];
     if (changes.options) {
-     this.availableItems = this.sorted ? [...this.options.sort()] : [...this.options];
+      this.availableItems = this.sorted ? [...this.options.sort()] : [...this.options];
     }
 
     this.initDropdownValuesAndOptions();
