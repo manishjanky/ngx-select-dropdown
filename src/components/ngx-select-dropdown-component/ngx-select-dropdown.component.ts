@@ -32,6 +32,11 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
   @Input() public multiple: boolean = false;
 
   /**
+   * Whether options should be sorted or not
+   */
+  @Input() public sorted: boolean = true;
+  
+  /**
    * Value
    */
   @Input() public value: any;
@@ -151,7 +156,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
    */
   public ngOnInit() {
     if (typeof this.options !== "undefined" && Array.isArray(this.options)) {
-      this.availableItems = [...this.options.sort()];
+      this.availableItems = this.sorted ? [...this.options.sort()] : [...this.options];
       this.initDropdownValuesAndOptions();
     }
   }
@@ -165,7 +170,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
     this.searchText = null;
     this.options = this.options || [];
     if (changes.options) {
-      this.availableItems = [...this.options.sort()];
+     this.availableItems = this.sorted ? [...this.options.sort()] : [...this.options];
     }
 
     this.initDropdownValuesAndOptions();
