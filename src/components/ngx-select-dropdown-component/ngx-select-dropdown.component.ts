@@ -24,7 +24,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
   /**
    * configuration options
    */
-  @Input() public config: any;
+  @Input() public config: any = {};
 
   /**
    * Whether multiple selection or single selection allowed
@@ -278,7 +278,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
       limitTo: this.options.length,
       customComparator: undefined
     };
-    if (typeof this.config === "undefined") {
+    if (this.config === "undefined" || Object.keys(this.config).length === 0) {
       this.config = { ...config };
     }
     for (const key of Object.keys(config)) {
