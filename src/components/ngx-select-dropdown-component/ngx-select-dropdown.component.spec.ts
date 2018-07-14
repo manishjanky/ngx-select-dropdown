@@ -1,3 +1,4 @@
+import { LimitToPipe } from './../../pipes/limit-to.pipe';
 import { QueryList } from '@angular/core';
 import { ElementRef } from '@angular/core';
 import { FormsModule } from "@angular/forms";
@@ -47,7 +48,7 @@ describe("SelectDropDownComponent", () => {
     async(() => {
       TestBed.configureTestingModule({
         imports: [FormsModule],
-        declarations: [SelectDropDownComponent]
+        declarations: [SelectDropDownComponent, LimitToPipe]
       }).compileComponents();
     })
   );

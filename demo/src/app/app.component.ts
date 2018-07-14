@@ -8,19 +8,20 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
-  tab=1;
-  singleSelect: any=[];
-  multiSelect: any=[];
-  stringArray: any=[];
-  objectsArray: any=[];
+  tab = 1;
+  singleSelect: any = [];
+  multiSelect: any = [];
+  stringArray: any = [];
+  objectsArray: any = [];
   stringOptions = [
-      "Burns Dalton","Mcintyre Lawson","Amie Franklin","Jocelyn Horton","Fischer Erickson", "Medina Underwood","Goldie Barber"
+    "Burns Dalton", "Mcintyre Lawson", "Amie Franklin", "Jocelyn Horton", "Fischer Erickson", "Medina Underwood", "Goldie Barber"
   ]
   config = {
-    displayKey:"name", //if objects array passed which key to be displayed defaults to description
-    search:true,
+    displayKey: "name", //if objects array passed which key to be displayed defaults to description
+    search: true,
+    limitTo: 3
   };
-  selectedOptions=[{
+  selectedOptions = [{
     "_id": "5a66d6c31d5e4e36c7711b7a",
     "index": 0,
     "balance": "$2,806.37",
@@ -34,7 +35,7 @@ export class AppComponent {
     "picture": "http://placehold.it/32x32",
     "name": "Mcintyre Lawson"
   }];
-  options=[
+  options = [
     {
       "_id": "5a66d6c31d5e4e36c7711b7a",
       "index": 0,
@@ -85,7 +86,7 @@ export class AppComponent {
       "name": "Goldie Barber"
     }
   ];
-  changeValue($event: any){
+  changeValue($event: any) {
     console.log($event);
   }
 }
