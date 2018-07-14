@@ -3,7 +3,7 @@
         <span>{{selectedDisplayText}} </span>
         <span class="nsdicon-angle-down"></span>
     </button>
-    <div class="ngx-dropdown-list-container" *ngIf="toggleDropdown" [style.height]="config.height">
+    <div class="ngx-dropdown-list-container" *ngIf="toggleDropdown" [style.maxHeight]="config.height">
         <div class="search-container" *ngIf="config.search">
             <input name="search" (ngModelChange)='changed($event)' [(ngModel)]="searchText" />
             <label [ngClass]="{'active': searchText}">
@@ -16,7 +16,7 @@
         </ul>
         <hr *ngIf="selectedItems.length > 0 && availableItems.length > 0" />
         <ul class="available-items">
-            <li #availableOption *ngFor="let item of availableItems;let i = index" tabindex="-1" [ngClass]="{'active': focusedItemIndex == i}"
+            <li #availableOption *ngFor="let item of availableItems| limitTo : config.limitTo;let i = index" tabindex="-1" [ngClass]="{'active': focusedItemIndex == i}"
                 (click)="selectItem(item,i)">
                 {{item[config.displayKey] || item}}</li>
         </ul>
