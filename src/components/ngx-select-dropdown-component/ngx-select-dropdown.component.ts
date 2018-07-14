@@ -61,7 +61,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
   public selectedItems: any = [];
 
   /**
-   * Selction text to be Displayed
+   * Selection text to be Displayed
    */
   public selectedDisplayText: string = "Select";
 
@@ -151,7 +151,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
    */
   public ngOnInit() {
     if (typeof this.options !== "undefined" && Array.isArray(this.options)) {
-      this.availableItems = [...this.options.sort()];
+      this.availableItems = [...this.options.sort(this.config.customComparator)];
       this.initDropdownValuesAndOptions();
     }
   }
@@ -165,7 +165,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
     this.searchText = null;
     this.options = this.options || [];
     if (changes.options) {
-      this.availableItems = [...this.options.sort()];
+      this.availableItems = [...this.options.sort(this.config.customComparator)];
     }
 
     this.initDropdownValuesAndOptions();
@@ -188,7 +188,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
     this.selectedItems.splice(index, 1);
     if (!this.availableItems.includes(item)) {
       this.availableItems.push(item);
-      this.availableItems.sort();
+      this.availableItems.sort(this.config.customComparator);
     }
     this.valueChanged();
     this.resetArrowKeyActiveElement();
@@ -209,8 +209,8 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
     }
     this.availableItems.splice(index, 1);
     this.selectedItems.push(item);
-    this.selectedItems.sort();
-    this.availableItems.sort();
+    this.selectedItems.sort(this.config.customComparator);
+    this.availableItems.sort(this.config.customComparator);
     this.valueChanged();
     this.resetArrowKeyActiveElement();
   }
@@ -275,7 +275,8 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
       height: 'auto',
       search: false,
       placeholder: 'Select',
-      limitTo: this.options.length
+      limitTo: this.options.length,
+      customComparator: undefined
     };
     if (typeof this.config === "undefined") {
       this.config = { ...config };
@@ -283,6 +284,8 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
     for (const key of Object.keys(config)) {
       this.config[key] = this.config[key] ? this.config[key] : config[key];
     }
+    // Adding placeholder in config as default param
+    this.selectedDisplayText = this.config["placeholder"];
     if (this.value !== "" && typeof this.value !== "undefined") {
       this.selectedItems = this.value;
       this.value.forEach((item: any) => {
