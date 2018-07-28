@@ -190,6 +190,8 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
       this.availableItems.push(item);
       this.availableItems.sort(this.config.customComparator);
     }
+    this.selectedItems = [...this.selectedItems];
+    this.availableItems = [...this.availableItems];
     this.valueChanged();
     this.resetArrowKeyActiveElement();
   }
@@ -211,6 +213,8 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
     this.selectedItems.push(item);
     this.selectedItems.sort(this.config.customComparator);
     this.availableItems.sort(this.config.customComparator);
+    this.selectedItems = [...this.selectedItems];
+    this.availableItems = [...this.availableItems];
     this.valueChanged();
     this.resetArrowKeyActiveElement();
   }
