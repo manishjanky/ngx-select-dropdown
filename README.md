@@ -17,6 +17,10 @@
 * single select dropdown
 * multi select dropdown
 * search dropdown list
+* arrows keys support
+* limit number of items displayed in dropdown
+* custom sort 
+
 
 ## Examples
 

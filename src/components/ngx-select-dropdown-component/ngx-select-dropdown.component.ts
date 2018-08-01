@@ -97,7 +97,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
       .distinctUntilChanged()
       .subscribe((searchText) => {
         this.searchText = searchText;
-        this.search();
+        // this.search();
       });
   }
 
@@ -211,10 +211,10 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
     }
     this.availableItems.splice(index, 1);
     this.selectedItems.push(item);
-    this.selectedItems.sort(this.config.customComparator);
-    this.availableItems.sort(this.config.customComparator);
     this.selectedItems = [...this.selectedItems];
     this.availableItems = [...this.availableItems];
+    this.selectedItems.sort(this.config.customComparator);
+    this.availableItems.sort(this.config.customComparator);
     this.valueChanged();
     this.resetArrowKeyActiveElement();
   }
@@ -241,34 +241,34 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
   /**
    * search for an item in the available items list
    */
-  public search() {
-    const searchResults: any = [];
-    if (this.searchText === "") {
-      this.availableItems = this.options;
-      // exclude selectedItems from availableItems
-      this.availableItems = this.availableItems.filter((item: any) => !this.selectedItems.includes(item));
-      return;
-    }
-    for (const item of this.options) {
-      if (typeof item !== "object") {
-        if (item.toLowerCase().indexOf(this.searchText.toLowerCase()) > -1) {
-          searchResults.push(item);
-        }
-        continue;
-      }
-      for (const key in item) {
-        if (item[key] && item[key].toString().toLowerCase().indexOf(this.searchText.toLowerCase()) > -1) {
-          if (!searchResults.includes(item)) {
-            // item is duplicated upon finding the same search text in the same object fields
-            searchResults.push(item);
-          }
-        }
-      }
-    }
-    this.availableItems = searchResults;
-    // exclude selectedItems from availableItems
-    this.availableItems = this.availableItems.filter((item: any) => !this.selectedItems.includes(item));
-  }
+  // public search() {
+  //   const searchResults: any = [];
+  //   if (this.searchText === "") {
+  //     this.availableItems = this.options;
+  //     // exclude selectedItems from availableItems
+  //     this.availableItems = this.availableItems.filter((item: any) => !this.selectedItems.includes(item));
+  //     return;
+  //   }
+  //   for (const item of this.options) {
+  //     if (typeof item !== "object") {
+  //       if (item.toLowerCase().indexOf(this.searchText.toLowerCase()) > -1) {
+  //         searchResults.push(item);
+  //       }
+  //       continue;
+  //     }
+  //     for (const key in item) {
+  //       if (item[key] && item[key].toString().toLowerCase().indexOf(this.searchText.toLowerCase()) > -1) {
+  //         if (!searchResults.includes(item)) {
+  //           // item is duplicated upon finding the same search text in the same object fields
+  //           searchResults.push(item);
+  //         }
+  //       }
+  //     }
+  //   }
+  //   this.availableItems = searchResults;
+  //   // exclude selectedItems from availableItems
+  //   this.availableItems = this.availableItems.filter((item: any) => !this.selectedItems.includes(item));
+  // }
 
   /**
    * initialize the config and other properties
