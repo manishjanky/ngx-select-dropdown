@@ -12,7 +12,7 @@ export class ArrayFilterPipe implements PipeTransform {
          return array;
       }
       if (typeof array[0] === 'string') {
-         return array.filter((item) => item.indexOf(searchText) > -1);
+         return array.filter((item) => item.toLowerCase().indexOf(searchText.toLowerCase()) > -1);
       }
       // filter array, items which match and return true will be
       // kept, false will be filtered out
