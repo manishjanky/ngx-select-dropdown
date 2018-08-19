@@ -263,18 +263,18 @@ describe("SelectDropDownComponent", () => {
   //   }, 300);
   // });
 
-  it("Should change search text", (done) => {
-    const $event = new Event("change");
-    component.options = objOptions;
-    component.searchText = "Burns";
-    component.changed(component.searchText);
-    setTimeout(() => {
-      component.searchText = "Burn";
-      component.changed("Burn");
-      expect(component.searchText).toEqual("Burn");
-      done();
-    }, 300);
-  });
+  // it("Should change search text", (done) => {
+  //   const $event = new Event("change");
+  //   component.options = objOptions;
+  //   component.searchText = "Burns";
+  //   component.changed(component.searchText);
+  //   setTimeout(() => {
+  //     component.searchText = "Burn";
+  //     component.changed("Burn");
+  //     expect(component.searchText).toEqual("Burn");
+  //     done();
+  //   }, 300);
+  // });
 
   // it("Should set available items if search text is empty", (done) => {
   //   const $event = new Event("change");

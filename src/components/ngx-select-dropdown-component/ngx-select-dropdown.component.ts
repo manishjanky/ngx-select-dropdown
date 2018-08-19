@@ -7,8 +7,6 @@ import {
   HostListener,
   OnChanges, SimpleChanges, ViewChildren, ElementRef, QueryList
 } from "@angular/core";
-import { Subject } from "rxjs/Subject";
-import "rxjs/Rx";
 
 @Component({
   selector: "ngx-select-dropdown",
@@ -71,11 +69,6 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
   public searchText: string;
 
   /**
-   * Observable for debouncing the search text change (300ms)
-   */
-  public searchTextChanged: Subject<string> = new Subject<string>();
-
-  /**
    * variable to track if clicked inside or outside of component
    */
   public clickedInside: boolean = false;
@@ -92,13 +85,6 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
 
   constructor() {
     this.multiple = false;
-    this.searchTextChanged
-      .debounceTime(300)
-      .distinctUntilChanged()
-      .subscribe((searchText) => {
-        this.searchText = searchText;
-        // this.search();
-      });
   }
 
   /**
@@ -169,14 +155,6 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
     }
 
     this.initDropdownValuesAndOptions();
-  }
-
-  /**
-   * When user changes search changes trigger the model change
-   * @param $event
-   */
-  public changed($event: any) {
-    this.searchTextChanged.next($event);
   }
 
   /**
