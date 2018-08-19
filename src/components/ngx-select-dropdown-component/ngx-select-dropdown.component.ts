@@ -290,7 +290,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
     }
     // Adding placeholder in config as default param
     this.selectedDisplayText = this.config["placeholder"];
-    if (this.value !== "" && typeof this.value !== "undefined") {
+    if (this.value !== "" && typeof this.value !== "undefined" && Array.isArray(this.value)) {
       this.selectedItems = this.value;
       this.value.forEach((item: any) => {
         const ind = this.availableItems.indexOf(item);
