@@ -79,6 +79,9 @@ config = {
         placeholder:'Select' // text to be displayed when no item is selected defaults to Select,
         customComparator: ()=>{} // a custom function using which user wants to sort the items. default is undefined and Array.sort() will be used in that case,
         limitTo: options.length // a number thats limits the no of options displayed in the UI similar to angular's limitTo pipe
+        moreText: 'more' // text to be displayed whenmore than one items are selected like Option 1 + 5 more
+        noResultsFound: 'No results found!' // text to be displayed when no items are found while searching
+        searchPlaceholder:'Search' // label thats displayed in search input
       }
 ````
 
@@ -120,6 +123,19 @@ config = {
  Support for limito pipe to limit number of options displayed in case of too many options.
  Support for customComparator / custom sort function
  Few other minor bug fixes.
+````
+* v0.7.2
+````
+ Support for angular 6
+ Removed dependency on rxjs
+````
+* v0.8.0
+````
+ No Results found indicator with custom text passed with config
+ Custom text for *more* when more than 1 items selected
+ Open event emitted
+ Close event emitted
+ Search placeholder text
 ````
 ## Help Improve
 

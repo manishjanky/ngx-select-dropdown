@@ -1,4 +1,4 @@
-<div class="ngx-dorpdown-container">
+<div class="ngx-dropdown-container">
     <button type="button" class="ngx-dropdown-button" (click)="toggleSelectDropdown($event)">
         <span>{{selectedDisplayText}} </span>
         <span class="nsdicon-angle-down"></span>
@@ -7,11 +7,12 @@
         <div class="search-container" *ngIf="config.search">
             <input name="search" [(ngModel)]="searchText" />
             <label [ngClass]="{'active': searchText}">
-                <span class="nsdicon-search"></span> Search</label>
+                <span class="nsdicon-search"></span> {{config.searchPlaceholder}}</label>
         </div>
         <ul class="selected-items">
             <li tabindex="-1" *ngFor="let selected of selectedItems;let i = index" (click)="deselectItem(selected,i)">
-                <span class="nsdicon-close"> {{selected[config.displayKey] || selected}}</span>
+                <span class="nsdicon-close"></span>
+                <span> {{selected[config.displayKey] || selected}}</span>
             </li>
         </ul>
         <hr *ngIf="selectedItems.length > 0 && availableItems.length > 0" />
@@ -19,6 +20,7 @@
             <li #availableOption *ngFor="let item of availableItems| filterBy: searchText | limitTo : config.limitTo;let i = index" tabindex="-1"
                 [ngClass]="{'active': focusedItemIndex == i}" (click)="selectItem(item,i)">
                 {{item[config.displayKey] || item}}</li>
+            <li *ngIf="showNotFound">{{config.noResultsFound}}</li>
         </ul>
     </div>
 </div>

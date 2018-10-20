@@ -5,7 +5,7 @@ import {
   EventEmitter,
   Output,
   HostListener,
-  OnChanges, SimpleChanges, ViewChildren, ElementRef, QueryList
+  OnChanges, SimpleChanges, ViewChildren, ElementRef, QueryList, AfterViewInit, ChangeDetectorRef
 } from "@angular/core";
 
 @Component({
@@ -13,7 +13,7 @@ import {
   templateUrl: "./ngx-select-dropdown.component.html",
   styleUrls: ["./ngx-select-dropdown.component.scss"],
 })
-export class SelectDropDownComponent implements OnInit, OnChanges {
+export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit {
   /**
    * Get the required inputs
    */
@@ -42,6 +42,16 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
    * change event when value changes to provide user to handle things in change event
    */
   @Output() public change: EventEmitter<any> = new EventEmitter();
+
+  /**
+   * Event emitted when dropdown is open.
+   */
+  @Output() public open: EventEmitter<any> = new EventEmitter();
+
+  /**
+   * Event emitted when dropdown is open.
+   */
+  @Output() public close: EventEmitter<any> = new EventEmitter();
 
   /**
    * Toogle the dropdown list
@@ -79,11 +89,16 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
   public focusedItemIndex: number = null;
 
   /**
+   * element to show not found text when not itmes match the search
+   */
+
+  public showNotFound = false;
+  /**
    * Hold the reference to available items in the list to focus on the item when scrolling
    */
   @ViewChildren('availableOption') public availableOptions: QueryList<ElementRef>;
 
-  constructor() {
+  constructor(private cdref: ChangeDetectorRef) {
     this.multiple = false;
   }
 
@@ -142,6 +157,24 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
     }
   }
 
+  /**
+   * after view init to subscribe to available option changes
+   */
+  public ngAfterViewInit() {
+    this.availableOptions.changes.subscribe(this.setNotFoundState.bind(this));
+  }
+
+  /**
+   * function sets whether to show items not found text or not
+   */
+  public setNotFoundState() {
+    if (this.availableOptions.length === 0) {
+      this.showNotFound = true;
+    } else {
+      this.showNotFound = false;
+    }
+    this.cdref.detectChanges();
+  }
   /**
    * Component onchage i.e when any of the innput properties change
    * @param changes
@@ -209,44 +242,16 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
 
   /**
    * Toggle the dropdownlist on/off
-   * @param event
    */
-  public toggleSelectDropdown($event: any) {
+  public toggleSelectDropdown() {
     this.toggleDropdown = !this.toggleDropdown;
+    if (this.toggleDropdown) {
+      this.open.emit();
+    } else {
+      this.close.emit();
+    }
     this.resetArrowKeyActiveElement();
   }
-
-  /**
-   * search for an item in the available items list
-   */
-  // public search() {
-  //   const searchResults: any = [];
-  //   if (this.searchText === "") {
-  //     this.availableItems = this.options;
-  //     // exclude selectedItems from availableItems
-  //     this.availableItems = this.availableItems.filter((item: any) => !this.selectedItems.includes(item));
-  //     return;
-  //   }
-  //   for (const item of this.options) {
-  //     if (typeof item !== "object") {
-  //       if (item.toLowerCase().indexOf(this.searchText.toLowerCase()) > -1) {
-  //         searchResults.push(item);
-  //       }
-  //       continue;
-  //     }
-  //     for (const key in item) {
-  //       if (item[key] && item[key].toString().toLowerCase().indexOf(this.searchText.toLowerCase()) > -1) {
-  //         if (!searchResults.includes(item)) {
-  //           // item is duplicated upon finding the same search text in the same object fields
-  //           searchResults.push(item);
-  //         }
-  //       }
-  //     }
-  //   }
-  //   this.availableItems = searchResults;
-  //   // exclude selectedItems from availableItems
-  //   this.availableItems = this.availableItems.filter((item: any) => !this.selectedItems.includes(item));
-  // }
 
   /**
    * initialize the config and other properties
@@ -257,8 +262,11 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
       height: 'auto',
       search: false,
       placeholder: 'Select',
+      searchPlaceholder: 'Search',
       limitTo: this.options.length,
-      customComparator: undefined
+      customComparator: undefined,
+      noResultsFound: 'No results found!',
+      moreText: 'more'
     };
     if (this.config === "undefined" || Object.keys(this.config).length === 0) {
       this.config = { ...config };
@@ -291,7 +299,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges {
 
     if (this.multiple && this.selectedItems.length > 0) {
       this.selectedDisplayText = this.selectedItems.length === 1 ? text :
-        text + ` + ${this.selectedItems.length - 1} more`;
+        text + ` + ${this.selectedItems.length - 1} ${this.config.moreText}`;
     } else {
       this.selectedDisplayText = this.selectedItems.length === 0 ? this.config.placeholder : text;
     }

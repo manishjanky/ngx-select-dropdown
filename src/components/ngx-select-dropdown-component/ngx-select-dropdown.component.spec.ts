@@ -172,9 +172,41 @@ describe("SelectDropDownComponent", () => {
   });
 
   it("Should Toggle Dropdown", () => {
-    const $event = new Event("click");
-    component.toggleSelectDropdown($event);
+    component.toggleSelectDropdown();
     expect(component.toggleDropdown).toBeTruthy();
+  });
+
+  it("Should Toggle Dropdown", () => {
+    component.toggleDropdown = true;
+    component.toggleSelectDropdown();
+    expect(component.toggleDropdown).toBeFalsy();
+  });
+  it("Should Toggle Dropdown and emit open event", () => {
+    component.toggleDropdown = false;
+    spyOn(component.open, 'emit');
+    component.toggleSelectDropdown();
+    expect(component.open.emit).toHaveBeenCalled();
+  });
+
+  it("Should set the showNotfound text when no items found", () => {
+    component.availableOptions = new QueryList();
+    component.availableOptions.reset([]);
+    component.setNotFoundState();
+    expect(component.showNotFound).toEqual(true);
+  });
+
+  it("Should set the showNotfound text when no items found", () => {
+    component.availableOptions = new QueryList();
+    component.availableOptions.reset([new ElementRef(document.createElement('li'))]);
+    component.setNotFoundState();
+    expect(component.showNotFound).toEqual(false);
+  });
+
+  it("Should Toggle Dropdown and emit close event", () => {
+    component.toggleDropdown = true;
+    spyOn(component.close, 'emit');
+    component.toggleSelectDropdown();
+    expect(component.close.emit).toHaveBeenCalled();
   });
 
   it("Click inside component", () => {
