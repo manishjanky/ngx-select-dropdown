@@ -1,3 +1,4 @@
+import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 
 
@@ -6,7 +7,7 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'app';
   tab = 1;
   singleSelect: any = [];
@@ -86,6 +87,12 @@ export class AppComponent {
       "name": "Goldie Barber"
     }
   ];
+
+  ngOnInit() {
+    setTimeout(() => {
+      this.selectedOptions = [];
+    }, 7000);
+  }
   changeValue($event: any) {
     console.log($event);
   }

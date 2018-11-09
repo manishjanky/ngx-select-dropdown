@@ -128,9 +128,12 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
    * Event handler for key up and down event and enter press for selecting element
    * @param event
    */
-  @HostListener('document:keydown', ['$event'])
+  @HostListener('keydown', ['$event'])
   public handleKeyboardEvent($event: KeyboardEvent) {
     const avaOpts = this.availableOptions.toArray();
+    if (avaOpts.length === 0 && !this.toggleDropdown) {
+      this.toggleDropdown = true;
+    }
     if ($event.code === 'ArrowDown' && avaOpts.length > 0) {
       this.onArrowKeyDown();
       avaOpts[this.focusedItemIndex].nativeElement.focus();
@@ -176,7 +179,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
     this.cdref.detectChanges();
   }
   /**
-   * Component onchage i.e when any of the innput properties change
+   * Component onchage i.e when any of the input properties change
    * @param changes
    */
   public ngOnChanges(changes: SimpleChanges) {
@@ -186,7 +189,9 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
     if (changes.options) {
       this.availableItems = [...this.options.sort(this.config.customComparator)];
     }
-
+    if (changes.value && JSON.stringify(changes.value.currentValue) === JSON.stringify([])) {
+      this.availableItems = [...this.options.sort(this.config.customComparator)];
+    }
     this.initDropdownValuesAndOptions();
   }
 

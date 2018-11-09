@@ -95,6 +95,18 @@ describe("SelectDropDownComponent", () => {
     }, 3000);
   });
 
+  it("should handle value changes to [] in ngOnchanges", (done) => {
+    setTimeout(() => {
+      component.options = objOptions;
+      component.value = [objOptions[0]];
+      component.ngOnChanges({ value: { firstChange: false } } as any);
+      component.value = [];
+      component.ngOnChanges({ value: { firstChange: false, currentValue: [], previousValue: [objOptions[0]] } } as any);
+      expect(component.availableItems).toEqual(objOptions);
+      done();
+    }, 3000);
+  });
+
   it("should handle change in ngOnchanges when options undefined", (done) => {
     component.options = undefined;
     component.ngOnChanges({ value: { firstChange: false } } as any);
