@@ -69,7 +69,7 @@ class YourModule { ... }
 
 * `multiple: boolean` - `true/false` beased if multiple selection required or not `Defaults to false`.
 * `options: Array` - Array of string/objects that are to be the dropdown options.
-* `value: any` - the model variable in which you want to save the selected options.
+* `disabled: boolean` - disabled attribute to disable the dropdown when required.
 * `config: Object` - configuration object.
 ````
 config = {
@@ -81,14 +81,16 @@ config = {
         limitTo: options.length // a number thats limits the no of options displayed in the UI similar to angular's limitTo pipe
         moreText: 'more' // text to be displayed whenmore than one items are selected like Option 1 + 5 more
         noResultsFound: 'No results found!' // text to be displayed when no items are found while searching
-        searchPlaceholder:'Search' // label thats displayed in search input
+        searchPlaceholder:'Search' // label thats displayed in search input,
+        searchOnKey: 'name' // key on which search should be performed this will be selective search. if undefined this will be extensive search on all keys
       }
 ````
 
 ### Output
 
-* `value: any` - array of selected options
 * `change: Event` - change event when user changes the selected options
+* `open: Event` - open event when the dropdown toogles on
+* `close: Event` - close event when the dropdown toogles off
 
 ## Changelog
 * v0.1.0
@@ -136,6 +138,12 @@ config = {
  Open event emitted
  Close event emitted
  Search placeholder text
+````
+* v1.0.0
+````
+ Search on a specified key value.
+ Support for Reactive forms
+ Few other minor imoprovements and fixes
 ````
 ## Help Improve
 

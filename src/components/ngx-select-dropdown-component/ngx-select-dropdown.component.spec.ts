@@ -156,6 +156,23 @@ describe("SelectDropDownComponent", () => {
     expect(component.config.displayKey).toEqual("description");
   });
 
+  it("Should handle the value initilization", () => {
+    component.value = objOptions[0];
+    (component as any).initDropdownValuesAndOptions();
+    expect(component.selectedItems).toEqual([objOptions[0]]);
+  });
+
+  it("Should write the value", () => {
+    component.writeValue(objOptions[0]);
+    expect(component.value).toEqual(objOptions[0]);
+    expect(component.selectedItems).toEqual([objOptions[0]]);
+  });
+
+  // it("Should write the value and seleted items when already selected passed in initilization", () => {
+  //   component.writeValue(objOptions[0]);
+  //   expect(component.value).toEqual(objOptions[0]);
+  // });
+
   it("Should init the config with display one key missing", () => {
     component.config = {
       displayKey: 'description'
@@ -264,6 +281,7 @@ describe("SelectDropDownComponent", () => {
   });
 
   it("Should set the value", () => {
+    component.multiple = true;
     component.selectedItems = ["Option 1", "Option 2"];
     component.valueChanged();
     expect(component.value).toEqual(["Option 1", "Option 2"]);
@@ -288,73 +306,17 @@ describe("SelectDropDownComponent", () => {
     expect(component.selectedDisplayText).toEqual("Select");
   });
 
-  // it("Should search", (done) => {
-  //   component.options = objOptions;
-  //   component.searchText = "Burns";
-  //   component.search();
-  //   setTimeout(() => {
-  //     expect(component.availableItems).toEqual([objOptions[0]]);
-  //     done();
-  //   }, 300);
-  // });
+  it("Should handle the key pressed outside event", () => {
+    component.insideKeyPress = true;
+    component.KeyPressOutsideComponent();
+    expect(component.insideKeyPress).toEqual(false);
+  });
 
-  // it("Should search with string array", (done) => {
-  //   component.searchText = "1";
-  //   component.search();
-  //   setTimeout(() => {
-  //     expect(component.availableItems).toEqual(["Option 1"]);
-  //     done();
-  //   }, 300);
-  // });
-
-  // it("Should change search text", (done) => {
-  //   const $event = new Event("change");
-  //   component.options = objOptions;
-  //   component.searchText = "Burns";
-  //   component.changed(component.searchText);
-  //   setTimeout(() => {
-  //     component.searchText = "Burn";
-  //     component.changed("Burn");
-  //     expect(component.searchText).toEqual("Burn");
-  //     done();
-  //   }, 300);
-  // });
-
-  // it("Should set available items if search text is empty", (done) => {
-  //   const $event = new Event("change");
-  //   component.options = objOptions;
-  //   component.availableItems = [objOptions[0]];
-  //   component.searchText = "";
-  //   component.search();
-  //   setTimeout(() => {
-  //     expect(component.availableItems).toEqual(component.options);
-  //     done();
-  //   }, 300);
-  // });
-
-  // it("Should set available items if search text is empty and selected items", (done) => {
-  //   const $event = new Event("change");
-  //   component.options = objOptions;
-  //   component.selectedItems = [objOptions[1], objOptions[2]];
-  //   component.availableItems = [objOptions[0]];
-  //   component.searchText = "";
-  //   component.search();
-  //   setTimeout(() => {
-  //     expect(component.availableItems).toEqual([objOptions[0], objOptions[3]]);
-  //     done();
-  //   }, 300);
-  // });
-
-  // it("Should not duplicate items in avaialable items", (done) => {
-  //   const $event = new Event("change");
-  //   component.options = objOptions;
-  //   component.searchText = "Burns";
-  //   component.search();
-  //   setTimeout(() => {
-  //     expect(component.availableItems).toEqual([objOptions[0]]);
-  //     done();
-  //   }, 300);
-  // });
+  it("Should handle the key pressed outside event toggle dropdown", () => {
+    component.insideKeyPress = false;
+    component.KeyPressOutsideComponent();
+    expect(component.toggleDropdown).toEqual(false);
+  });
 
   it("Should not duplicate items  when deselect in avaialable items", (done) => {
     component.options = objOptions;
@@ -433,6 +395,11 @@ describe("SelectDropDownComponent", () => {
     expect(component.focusedItemIndex).toEqual(0);
   });
 
+  it("Should handle the arrow key event for down when escape key", () => {
+    component.handleKeyboardEvent({ code: 'Escape', preventDefault: () => { return; } } as any);
+    expect(component.toggleDropdown).toEqual(false);
+  });
+
   it("Should handle the arrow key event for down", () => {
     component.options = objOptions;
     const event = new KeyboardEvent('Enter');
@@ -442,4 +409,15 @@ describe("SelectDropDownComponent", () => {
     expect(component.selectedItems).toEqual([objOptions[1]]);
   });
 
+  it("Should register registerOnChange", () => {
+    const func = () => { };
+    component.registerOnChange(func)
+    expect(component.onChange).toEqual(func);
+  });
+
+  it("Should register registerOnTouched", () => {
+    const fun = () => { };
+    component.registerOnTouched(fun)
+    expect(component.onTouched).toEqual(fun);
+  });
 });

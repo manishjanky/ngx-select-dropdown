@@ -1,8 +1,8 @@
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {SelectDropDownModule} from 'ngx-select-dropdown';
-
+import { SelectDropDownModule } from 'ngx-select-dropdown';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 
 
@@ -12,6 +12,8 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     SelectDropDownModule
   ],
   providers: [],

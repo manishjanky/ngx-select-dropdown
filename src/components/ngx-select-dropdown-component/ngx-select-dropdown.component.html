@@ -1,5 +1,5 @@
 <div class="ngx-dropdown-container" tabindex="0">
-    <button type="button" class="ngx-dropdown-button" (click)="toggleSelectDropdown()">
+    <button type="button" class="ngx-dropdown-button" [ngClass]="{'disabled':disabled}" [disabled]="disabled" (click)="toggleSelectDropdown()">
         <span>{{selectedDisplayText}} </span>
         <span class="nsdicon-angle-down"></span>
     </button>
@@ -17,8 +17,8 @@
         </ul>
         <hr *ngIf="selectedItems.length > 0 && availableItems.length > 0" />
         <ul class="available-items">
-            <li #availableOption *ngFor="let item of availableItems| filterBy: searchText | limitTo : config.limitTo;let i = index" tabindex="-1"
-                [ngClass]="{'active': focusedItemIndex == i}" (click)="selectItem(item,i)">
+            <li #availableOption *ngFor="let item of availableItems| filterBy: searchText : config.searchOnKey | limitTo : config.limitTo;let i = index"
+                tabindex="-1" [ngClass]="{'active': focusedItemIndex == i}" (click)="selectItem(item,i)">
                 {{item[config.displayKey] || item}}</li>
             <li *ngIf="showNotFound">{{config.noResultsFound}}</li>
         </ul>

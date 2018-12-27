@@ -1,7 +1,7 @@
 <div class="container pt-1">
   <div class="row white mb-0">
     <div class="col s12 l6">
-      <h5>ngx-select-dropdown demo</h5>
+      <h5 class="header">ngx-select-dropdown demo</h5>
     </div>
     <div class="col s12 l6">
       <a href="https://manishjanky.github.io/#/" class="blue-text right credits" target="_blank">Developed By:Manish</a>
@@ -10,7 +10,9 @@
   <div class="center row">
     <h1 class="blue-text">ngx-select-dropdown</h1>
 
-    <h5 class="blue-text">Custom Dropdown component for Angular 2+ applications with multiple and single selection options.</h5>
+    <h5 class="blue-text header">Custom Dropdown component for Angular 2+ applications with multiple and single
+      selection
+      options.</h5>
     <div>
       <a href="https://github.com/manishjanky/ngx-select-dropdown" class="btn blue" style="margin:10px;">
         <span class="fa fa-github"> Github</span>
@@ -21,17 +23,17 @@
     </div>
   </div>
   <div class="row nav-tabs white">
-      <div class="col s12">
-        <ul class="tabs">
-            <li class="tab col s2">
-                <a class="nav-link" [ngClass]="{'active':tab==1}" (click)="tab=1">Documentation</a>
-              </li>
-              <li class="tab col s2">
-                <a class="nav-link" [ngClass]="{'active':tab==2}" (click)="tab=2">Demo</a>
-              </li>
-        </ul>
-      </div>
+    <div class="col s12">
+      <ul class="tabs">
+        <li class="tab col s2">
+          <a class="nav-link" [ngClass]="{'active':tab==1}" (click)="tab=1">Documentation</a>
+        </li>
+        <li class="tab col s2">
+          <a class="nav-link" [ngClass]="{'active':tab==2}" (click)="tab=2">Demo</a>
+        </li>
+      </ul>
     </div>
+  </div>
   <div class="row white content" *ngIf="tab==1">
     <div class="col s12 pt-1">
       <h4>1.Installation</h4>
@@ -76,27 +78,29 @@
       <ul>
         <li>
           use
-          <strong>&lt;ngx-select-dropdown&gt;&lt;/ngx-select-dropdown&gt;</strong> in your templates to add select dropdown in your view like below
+          <strong>&lt;ngx-select-dropdown&gt;&lt;/ngx-select-dropdown&gt;</strong> in your templates to add select
+          dropdown in your view like below
         </li>
         <li>a tag in you html will look like below with all the config</li>
       </ul>
 
       <pre class="codeBlock">
           <strong>&lt;ngx-select-dropdown [config]="config" [options]="dropdownOptions" 
-            [(value)]="dataModel" [multiple]="true" &gt;&lt;/ngx-select-dropdown&gt;</strong></pre>
+            [(ngModel)]="dataModel" [multiple]="true" &gt;&lt;/ngx-select-dropdown&gt;</strong></pre>
     </div>
     <div class="col s12 pt-1">
       <h4>3.Config</h4>
       <h6>Input</h6>
       <ul>
         <li>
-          <strong>multiple: boolean</strong> - true/false beased if multiple selection required or not Defaults to false
+          <strong>multiple: boolean</strong> - true/false beased if multiple selection required or not Defaults to
+          false
         </li>
         <li>
           <strong>options: Array</strong> - Array of string/objects that are to be the dropdown options.
         </li>
         <li>
-          <strong>value: any</strong> -  the model variable in which you want to save the selected options.
+          <strong>value: any</strong> - the model variable in which you want to save the selected options.
         </li>
         <li>
           <strong>config: Object </strong> - configuration object.
@@ -123,31 +127,44 @@
       <h5>Single Select Dropdown</h5>
       <div class="row">
         <div class="col s12 l6">
-            <ngx-select-dropdown [multiple]="false" [(value)]="singleSelect" [config]="config" [options]="options"></ngx-select-dropdown>
+          <ngx-select-dropdown [multiple]="false" [(ngModel)]="singleSelect" [config]="config" [options]="options"></ngx-select-dropdown>
         </div>
-        <div class="col s12 l6 flow-text" >
-          <p style="margin: 0;">Balance of selected user: {{singleSelect[0]?.balance}}</p>
+        <div class="col s12 l6 flow-text">
+          <p style="margin: 0;">Balance of selected user: {{singleSelect?singleSelect[0]?.balance:''}}</p>
+        </div>
+      </div>
+
+      <h5>Disabled Dropdown</h5>
+      <div class="row">
+        <div class="col s12 l6">
+          <ngx-select-dropdown [disabled]="true" [multiple]="false" [(ngModel)]="singleSelect" [config]="config"
+            [options]="options"></ngx-select-dropdown>
+        </div>
+        <div class="col s12 l6 flow-text">
+          <p style="margin: 0;">Balance of selected user: {{singleSelect?singleSelect[0]?.balance:''}}</p>
         </div>
       </div>
 
       <h5>Multi Select Dropdown</h5>
       <div class="row">
         <div class="col s12 l6">
-            <ngx-select-dropdown (change)="changeValue($event)" [multiple]="true" [(value)]="multiSelect" [config]="config" [options]="options"></ngx-select-dropdown>
+          <ngx-select-dropdown (change)="changeValue($event)" [multiple]="true" [(ngModel)]="multiSelect" [config]="config"
+            [options]="options"></ngx-select-dropdown>
         </div>
-        <div class="col s12 l6 flow-text" >
+        <div class="col s12 l6 flow-text">
           <p style="margin: 0;">Selected Options:-</p>
-          <p style="margin: 0;" *ngFor="let user of multiSelect"><strong>Name:</strong> {{user.name}} , <strong>Balance:</strong> {{user.balance}}</p>
+          <p style="margin: 0;" *ngFor="let user of multiSelect"><strong>Name:</strong> {{user.name}} , <strong>Balance:</strong>
+            {{user.balance}}</p>
         </div>
       </div>
 
       <h5>Options as array of string</h5>
       <div class="row">
         <div class="col s12 l6">
-            <ngx-select-dropdown [multiple]="true" [(value)]="stringArray" [options]="stringOptions"></ngx-select-dropdown>
+          <ngx-select-dropdown [multiple]="true" [(ngModel)]="stringArray" [options]="stringOptions"></ngx-select-dropdown>
         </div>
-        <div class="col s12 l6 flow-text" >
-            <p style="margin: 0;">Selected Options:-</p>
+        <div class="col s12 l6 flow-text">
+          <p style="margin: 0;">Selected Options:-</p>
           <p style="margin: 0;" *ngFor="let user of stringArray">{{user}}</p>
         </div>
       </div>
@@ -155,10 +172,10 @@
       <h5>Options as array of Objects</h5>
       <div class="row">
         <div class="col s12 l6">
-            <ngx-select-dropdown [multiple]="true" [(value)]="objectsArray" [options]="options" [config]="config"></ngx-select-dropdown>
+          <ngx-select-dropdown [multiple]="true" [(ngModel)]="objectsArray" [options]="options" [config]="config"></ngx-select-dropdown>
         </div>
-        <div class="col s12 l6 flow-text" >
-            <p style="margin: 0;">Selected Options:-</p>
+        <div class="col s12 l6 flow-text">
+          <p style="margin: 0;">Selected Options:-</p>
           <p style="margin: 0;" *ngFor="let user of objectsArray">{{user | json}}</p>
         </div>
       </div>
@@ -166,13 +183,15 @@
       <h5>Already selected options passed as value</h5>
       <div class="row">
         <div class="col s12 l6">
-            <ngx-select-dropdown [multiple]="true" [(value)]="selectedOptions" [options]="options" [config]="config"></ngx-select-dropdown>
+          <ngx-select-dropdown [multiple]="true" [(ngModel)]="selectedOptions" [options]="options" [config]="config"></ngx-select-dropdown>
         </div>
-        <div class="col s12 l6 flow-text" >
-            <p style="margin: 0;">Selected Options:-</p>
-          <p style="margin: 0;" *ngFor="let user of selectedOptions"><strong>Name:</strong> {{user.name}} , <strong>Balance:</strong> {{user.balance}}</p>
+        <div class="col s12 l6 flow-text">
+          <p style="margin: 0;">Selected Options:-</p>
+          <p style="margin: 0;" *ngFor="let user of selectedOptions"><strong>Name:</strong> {{user.name}} , <strong>Balance:</strong>
+            {{user.balance}}</p>
         </div>
       </div>
-      </div>
+    </div>
   </div>
+
 </div>

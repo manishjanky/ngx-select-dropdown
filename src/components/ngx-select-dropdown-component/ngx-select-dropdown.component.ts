@@ -5,15 +5,26 @@ import {
   EventEmitter,
   Output,
   HostListener,
-  OnChanges, SimpleChanges, ViewChildren, ElementRef, QueryList, AfterViewInit, ChangeDetectorRef
+  OnChanges, SimpleChanges, ViewChildren, ElementRef, QueryList, AfterViewInit, ChangeDetectorRef, forwardRef
 } from "@angular/core";
+import { NG_VALUE_ACCESSOR } from "@angular/forms";
 
 @Component({
   selector: "ngx-select-dropdown",
   templateUrl: "./ngx-select-dropdown.component.html",
   styleUrls: ["./ngx-select-dropdown.component.scss"],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => SelectDropDownComponent),
+      multi: true
+    }
+  ]
 })
 export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit {
+  /** value of the dropdown */
+  @Input() _value: any;
+
   /**
    * Get the required inputs
    */
@@ -29,15 +40,20 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
    */
   @Input() public multiple: boolean = false;
 
-  /**
-   * Value
-   */
-  @Input() public value: any;
+  // /**
+  //  * Value
+  //  */
+  // @Input() public value: any;
 
   /**
-   * event when value changes to update in the UI
-   */
-  @Output() public valueChange: EventEmitter<any> = new EventEmitter();
+ * Value
+ */
+  @Input() public disabled: boolean;
+
+  // /**
+  //  * event when value changes to update in the UI
+  //  */
+  // @Output() public valueChange: EventEmitter<any> = new EventEmitter();
   /**
    * change event when value changes to provide user to handle things in change event
    */
@@ -84,6 +100,11 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
   public clickedInside: boolean = false;
 
   /**
+   * variable to track keypress event inside and outsid of component
+   */
+  public insideKeyPress: boolean = false;
+
+  /**
    * variable to track the focused item whenuser uses arrow keys to select item
    */
   public focusedItemIndex: number = null;
@@ -98,7 +119,18 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
    */
   @ViewChildren('availableOption') public availableOptions: QueryList<ElementRef>;
 
-  constructor(private cdref: ChangeDetectorRef) {
+  onChange: any = () => { };
+  onTouched: any = () => { };
+
+  get value() {
+    return this._value;
+  }
+  set value(val) {
+    this._value = val;
+    this.onChange(val);
+    this.onTouched();
+  }
+  constructor(private cdref: ChangeDetectorRef, public _elementRef: ElementRef) {
     this.multiple = false;
   }
 
@@ -125,11 +157,27 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
   }
 
   /**
+ * click handler on documnent to hide the open dropdown if clicked outside
+ */
+  @HostListener('document:keydown')
+  public KeyPressOutsideComponent() {
+    if (!this.insideKeyPress) {
+      this.toggleDropdown = false;
+      this.resetArrowKeyActiveElement();
+    }
+    this.insideKeyPress = false;
+  }
+  /**
    * Event handler for key up and down event and enter press for selecting element
    * @param event
    */
   @HostListener('keydown', ['$event'])
   public handleKeyboardEvent($event: KeyboardEvent) {
+    this.insideKeyPress = true;
+    if ($event.code === 'Escape') {
+      this.toggleDropdown = false;
+      return;
+    }
     const avaOpts = this.availableOptions.toArray();
     if (avaOpts.length === 0 && !this.toggleDropdown) {
       this.toggleDropdown = true;
@@ -167,6 +215,37 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
     this.availableOptions.changes.subscribe(this.setNotFoundState.bind(this));
   }
 
+  registerOnChange(fn: any) {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any) {
+    this.onTouched = fn;
+  }
+
+  writeValue(value: any) {
+    /* istanbul ignore else */
+    if (value) {
+      if (Array.isArray(value)) {
+        if (this.multiple) {
+          this.value = value;
+        } else {
+          this.value = value[0];
+        }
+      } else {
+        this.value = value;
+      }
+      /* istanbul ignore else */
+      if (this.selectedItems.length === 0) {
+        if (Array.isArray(value)) {
+          this.selectedItems = value;
+        } else {
+          this.selectedItems.push(value);
+        }
+        this.initDropdownValuesAndOptions();
+      }
+    }
+  }
   /**
    * function sets whether to show items not found text or not
    */
@@ -208,6 +287,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
     }
     this.selectedItems = [...this.selectedItems];
     this.availableItems = [...this.availableItems];
+    // this.writeValue(this.selectedItems);
     this.valueChanged();
     this.resetArrowKeyActiveElement();
   }
@@ -217,7 +297,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
    * @param item:  item to be selected
    * @param index:  index of the item
    */
-  public selectItem(item: string, index: number) {
+  public selectItem(item: string, index?: number) {
     if (!this.multiple) {
       if (this.selectedItems.length > 0) {
         this.availableItems.push(this.selectedItems[0]);
@@ -231,6 +311,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
     this.availableItems = [...this.availableItems];
     this.selectedItems.sort(this.config.customComparator);
     this.availableItems.sort(this.config.customComparator);
+    // this.writeValue(this.selectedItems);
     this.valueChanged();
     this.resetArrowKeyActiveElement();
   }
@@ -239,8 +320,8 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
    * When selected items changes trigger the chaange back to parent
    */
   public valueChanged() {
-    this.value = this.selectedItems;
-    this.valueChange.emit(this.value);
+    this.writeValue(this.selectedItems);
+    // this.valueChange.emit(this.value);
     this.change.emit({ value: this.value });
     this.setSelectedDisplayText();
   }
@@ -271,7 +352,8 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
       limitTo: this.options.length,
       customComparator: undefined,
       noResultsFound: 'No results found!',
-      moreText: 'more'
+      moreText: 'more',
+      searchOnKey: null
     };
     if (this.config === "undefined" || Object.keys(this.config).length === 0) {
       this.config = { ...config };
@@ -281,16 +363,21 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
     }
     // Adding placeholder in config as default param
     this.selectedDisplayText = this.config["placeholder"];
-    if (this.value !== "" && typeof this.value !== "undefined" && Array.isArray(this.value)) {
-      this.selectedItems = this.value;
-      this.value.forEach((item: any) => {
-        const ind = this.availableItems.indexOf(item);
+    if (this.value !== "" && typeof this.value !== "undefined") {
+      if (Array.isArray(this.value)) {
+        this.selectedItems = this.value;
+      } else {
+        this.selectedItems[0] = this.value;
+      }
+
+      this.selectedItems.forEach((item: any) => {
+        const ind = this.availableItems.findIndex((aItem: any) => JSON.stringify(item) === JSON.stringify(aItem));
         if (ind !== -1) {
           this.availableItems.splice(ind, 1);
         }
       });
-      this.setSelectedDisplayText();
     }
+    this.setSelectedDisplayText();
   }
 
   /**
