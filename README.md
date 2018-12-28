@@ -7,9 +7,6 @@
 [![npm](https://img.shields.io/npm/dt/ngx-select-dropdown.svg)]()
 [![GitHub top language](https://img.shields.io/github/languages/top/manishjanky/ngx-select-dropdown.svg)]()
 [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/manishjanky/ngx-select-dropdown.svg)]()
-[![GitHub issues](https://img.shields.io/github/issues/manishjanky/ngx-select-dropdown.svg)]()
-[![GitHub closed issues](https://img.shields.io/github/issues-closed/manishjanky/ngx-select-dropdown.svg)]()
-[![GitHub contributors](https://img.shields.io/github/contributors/manishjanky/ngx-select-dropdown.svg)]()
 
 `ngx-select-dropdown` Custom Dropdown component for Angular 4+ with multiple and single selection options
 
@@ -20,6 +17,8 @@
 * arrows keys support
 * limit number of items displayed in dropdown
 * custom sort 
+* angular forms support
+* angular v4 and above supported
 
 
 ## Examples
@@ -60,7 +59,11 @@ class YourModule { ... }
 * use `<ngx-select-dropdown></ngx-select-dropdown>` in your templates to add the custom dropdown in your view like below
 
 ````
-<ngx-select-dropdown (change)="selectionChanged($event)" [multiple]="true" [(value)]="dataModel" [config]="config" [options]="dropdownOptions"></ngx-select-dropdown>
+<ngx-select-dropdown (change)="selectionChanged($event)" [multiple]="true" [(ngModel)]="dataModel" [config]="config" [options]="dropdownOptions"></ngx-select-dropdown>
+````
+* use with reactive form like
+````
+<ngx-select-dropdown (change)="selectionChanged($event)" formControlName="selectData" [multiple]="true" [config]="config" [options]="dropdownOptions"></ngx-select-dropdown>
 ````
 
 ## Config
@@ -91,6 +94,27 @@ config = {
 * `change: Event` - change event when user changes the selected options
 * `open: Event` - open event when the dropdown toogles on
 * `close: Event` - close event when the dropdown toogles off
+
+### Change detection
+
+As of now `ngx-select-dropdown` uses Default change detection startegy which means dirty checking checks for immutable data types. And in Javascript Objects and arrays are mutable. So when changing any of the @Input parameters if you mutate an object change detection will not detect it. For ex:-
+````
+this.options.push({id: 34, description: 'Adding new item'});
+
+// or
+
+config.height = '200px';
+
+`````
+Both the above scenarios will not trigger the change detection. In order for the componet to detect the changes what you need to do is:-
+````
+this.options = [...this.options, {id: 34, description: 'Adding new item'}];
+
+// or
+
+config = {...config, height:'200px'};
+
+````
 
 ## Changelog
 * v0.1.0
