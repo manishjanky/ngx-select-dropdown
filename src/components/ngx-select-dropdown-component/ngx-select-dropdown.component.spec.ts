@@ -410,14 +410,14 @@ describe("SelectDropDownComponent", () => {
   });
 
   it("Should register registerOnChange", () => {
-    const func = () => { };
-    component.registerOnChange(func)
+    const func = () => { return; };
+    component.registerOnChange(func);
     expect(component.onChange).toEqual(func);
   });
 
   it("Should register registerOnTouched", () => {
-    const fun = () => { };
-    component.registerOnTouched(fun)
+    const fun = () => { return; };
+    component.registerOnTouched(fun);
     expect(component.onTouched).toEqual(fun);
   });
 });

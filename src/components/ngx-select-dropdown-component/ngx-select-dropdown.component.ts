@@ -22,8 +22,9 @@ import { NG_VALUE_ACCESSOR } from "@angular/forms";
   ]
 })
 export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit {
+
   /** value of the dropdown */
-  @Input() _value: any;
+  @Input() public _value: any;
 
   /**
    * Get the required inputs
@@ -40,20 +41,11 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
    */
   @Input() public multiple: boolean = false;
 
-  // /**
-  //  * Value
-  //  */
-  // @Input() public value: any;
-
   /**
- * Value
- */
+   * Value
+   */
   @Input() public disabled: boolean;
 
-  // /**
-  //  * event when value changes to update in the UI
-  //  */
-  // @Output() public valueChange: EventEmitter<any> = new EventEmitter();
   /**
    * change event when value changes to provide user to handle things in change event
    */
@@ -119,9 +111,6 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
    */
   @ViewChildren('availableOption') public availableOptions: QueryList<ElementRef>;
 
-  onChange: any = () => { };
-  onTouched: any = () => { };
-
   get value() {
     return this._value;
   }
@@ -130,8 +119,14 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
     this.onChange(val);
     this.onTouched();
   }
+
   constructor(private cdref: ChangeDetectorRef, public _elementRef: ElementRef) {
     this.multiple = false;
+  }
+
+  public onChange: any = () => { // empty
+  }
+  public onTouched: any = () => { // empty
   }
 
   /**
@@ -157,8 +152,8 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
   }
 
   /**
- * click handler on documnent to hide the open dropdown if clicked outside
- */
+   * click handler on documnent to hide the open dropdown if clicked outside
+   */
   @HostListener('document:keydown')
   public KeyPressOutsideComponent() {
     if (!this.insideKeyPress) {
@@ -215,15 +210,15 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
     this.availableOptions.changes.subscribe(this.setNotFoundState.bind(this));
   }
 
-  registerOnChange(fn: any) {
+  public registerOnChange(fn: any) {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any) {
+  public registerOnTouched(fn: any) {
     this.onTouched = fn;
   }
 
-  writeValue(value: any) {
+  public writeValue(value: any) {
     /* istanbul ignore else */
     if (value) {
       if (Array.isArray(value)) {
@@ -438,4 +433,5 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
     this.focusedItemIndex = null;
 
   }
+
 }
