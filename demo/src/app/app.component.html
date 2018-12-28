@@ -100,7 +100,7 @@
           <strong>options: Array</strong> - Array of string/objects that are to be the dropdown options.
         </li>
         <li>
-          <strong>value: any</strong> - the model variable in which you want to save the selected options.
+          <strong>disabled: boolean</strong> - disabled attribute to disable the dropdown when required.
         </li>
         <li>
           <strong>config: Object </strong> - configuration object.
@@ -108,13 +108,27 @@
       </ul>
       <pre class="codeBlock">
           config = {{'{'}}
-            displayKey:"description" //if objects array passed which key to be displayed defaults to description,
-            search:true/false //enables the search plugin to search in the list
+            displayKey:"description", //if objects array passed which key to be displayed defaults to description
+            search:true //true/false for the search functionlity defaults to false,
+            height: 'auto' //height of the list so that if there are more no of items it can show a scroll defaults to auto. With auto height scroll will never appear
+            placeholder:'Select' // text to be displayed when no item is selected defaults to Select,
+            customComparator: ()=>{} // a custom function using which user wants to sort the items. default is undefined and Array.sort() will be used in that case,
+            limitTo: options.length // a number thats limits the no of options displayed in the UI similar to angular's limitTo pipe
+            moreText: 'more' // text to be displayed whenmore than one items are selected like Option 1 + 5 more
+            noResultsFound: 'No results found!' // text to be displayed when no items are found while searching
+            searchPlaceholder:'Search' // label thats displayed in search input,
+            searchOnKey: 'name' // key on which search should be performed this will be selective search. if undefined this will be extensive search on all keys
             {{'}'}}</pre>
       <h6>Output</h6>
       <ul>
         <li>
-          <strong>value: any</strong> - array of selected options.
+          <strong>change: Event</strong> - change event when user changes the selected options.
+        </li>
+        <li>
+          <strong>open: Event</strong> - open event when the dropdown toogles on.
+        </li>
+        <li>
+          <strong>close: Event</strong> - close event when the dropdown toogles off.
         </li>
       </ul>
     </div>
@@ -137,7 +151,7 @@
       <h5>Disabled Dropdown</h5>
       <div class="row">
         <div class="col s12 l6">
-          <ngx-select-dropdown  [disabled]="true" [multiple]="false" [(ngModel)]="singleSelect" [config]="config"
+          <ngx-select-dropdown [disabled]="true" [multiple]="false" [(ngModel)]="singleSelect" [config]="config"
             [options]="options"></ngx-select-dropdown>
         </div>
         <div class="col s12 l6 flow-text">
