@@ -1,10 +1,5 @@
 import {
-  Component,
-  OnInit,
-  Input,
-  EventEmitter,
-  Output,
-  HostListener,
+  Component, OnInit, Input, EventEmitter, Output, HostListener,
   OnChanges, SimpleChanges, ViewChildren, ElementRef, QueryList, AfterViewInit, ChangeDetectorRef, forwardRef
 } from "@angular/core";
 import { NG_VALUE_ACCESSOR } from "@angular/forms";
