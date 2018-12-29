@@ -164,8 +164,9 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
   @HostListener('keydown', ['$event'])
   public handleKeyboardEvent($event: KeyboardEvent) {
     this.insideKeyPress = true;
-    if ($event.code === 'Escape') {
+    if ($event.code === 'Escape' || this.disabled) {
       this.toggleDropdown = false;
+      this.insideKeyPress = false;
       return;
     }
     const avaOpts = this.availableOptions.toArray();
