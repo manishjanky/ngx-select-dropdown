@@ -164,7 +164,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
   @HostListener('keydown', ['$event'])
   public handleKeyboardEvent($event: KeyboardEvent) {
     this.insideKeyPress = true;
-    if ($event.code === 'Escape' || this.disabled) {
+    if ($event.keyCode === 27 || this.disabled) {
       this.toggleDropdown = false;
       this.insideKeyPress = false;
       return;
@@ -173,17 +173,20 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
     if (avaOpts.length === 0 && !this.toggleDropdown) {
       this.toggleDropdown = true;
     }
-    if ($event.code === 'ArrowDown' && avaOpts.length > 0) {
+    // Arrow Down
+    if ($event.keyCode === 40 && avaOpts.length > 0) {
       this.onArrowKeyDown();
       avaOpts[this.focusedItemIndex].nativeElement.focus();
       $event.preventDefault();
     }
-    if ($event.code === 'ArrowUp' && avaOpts.length) {
+    // Arrow Up
+    if ($event.keyCode === 38 && avaOpts.length) {
       this.onArrowKeyUp();
       avaOpts[this.focusedItemIndex].nativeElement.focus();
       $event.preventDefault();
     }
-    if ($event.code === 'Enter' && this.focusedItemIndex !== null) {
+    // Enter
+    if ($event.keyCode === 13 && this.focusedItemIndex !== null) {
       this.selectItem(this.availableItems[this.focusedItemIndex], this.focusedItemIndex);
       return false;
     }

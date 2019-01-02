@@ -19,6 +19,7 @@
 * custom sort 
 * angular forms support
 * angular v4 and above supported
+* cross browser support
 
 
 ## Examples

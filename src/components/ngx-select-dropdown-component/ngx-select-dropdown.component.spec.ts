@@ -381,7 +381,7 @@ describe("SelectDropDownComponent", () => {
     component.availableItems = [...objOptions];
     component.availableOptions = new QueryList();
     component.availableOptions.reset([new ElementRef(document.createElement('li'))]);
-    component.handleKeyboardEvent({ code: 'ArrowUp', preventDefault: () => { return; } } as any);
+    component.handleKeyboardEvent({ keyCode: 38, preventDefault: () => { return; } } as any);
     expect(component.focusedItemIndex).toEqual(0);
   });
 
@@ -391,12 +391,12 @@ describe("SelectDropDownComponent", () => {
     component.availableItems = [...objOptions];
     component.availableOptions = new QueryList();
     component.availableOptions.reset([new ElementRef(document.createElement('li'))]);
-    component.handleKeyboardEvent({ code: 'ArrowDown', preventDefault: () => { return; } } as any);
+    component.handleKeyboardEvent({ keyCode: 40, preventDefault: () => { return; } } as any);
     expect(component.focusedItemIndex).toEqual(0);
   });
 
   it("Should handle the arrow key event for down when escape key", () => {
-    component.handleKeyboardEvent({ code: 'Escape', preventDefault: () => { return; } } as any);
+    component.handleKeyboardEvent({ keyCode: 27, preventDefault: () => { return; } } as any);
     expect(component.toggleDropdown).toEqual(false);
   });
 
@@ -405,7 +405,7 @@ describe("SelectDropDownComponent", () => {
     const event = new KeyboardEvent('Enter');
     component.availableItems = [...objOptions];
     component.focusedItemIndex = 1;
-    component.handleKeyboardEvent({ code: 'Enter', preventDefault: () => { return; } } as any);
+    component.handleKeyboardEvent({ keyCode: 13, preventDefault: () => { return; } } as any);
     expect(component.selectedItems).toEqual([objOptions[1]]);
   });
 
