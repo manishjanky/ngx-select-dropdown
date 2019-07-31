@@ -4,6 +4,10 @@
         <span class="nsdicon-angle-down"></span>
     </button>
     <div class="ngx-dropdown-list-container" *ngIf="toggleDropdown" [style.maxHeight]="config.height">
+        <div class="select-all" *ngIf="config.selectAll" (click)="toggleAllItems()">
+            <input type="checkbox" [checked]="selectedItems.length==options.length"/>
+            {{config.selectAllText}}
+        </div> 
         <div class="search-container" *ngIf="config.search">
             <input name="search" [(ngModel)]="searchText" />
             <label [ngClass]="{'active': searchText}">

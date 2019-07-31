@@ -311,6 +311,22 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
   }
 
   /**
+   * Toggle all items
+   */
+  public toggleAllItems() {
+    // Enable this option only for multiple selection
+    if (this.multiple) {
+      if (this.selectedItems.length != this.options.length) {
+        this.selectedItems = [...this.options];
+        this.availableItems = [];
+      } else {
+        this.availableItems = [...this.options];
+        this.selectedItems = [];
+      }
+    }
+  }
+
+  /**
    * When selected items changes trigger the chaange back to parent
    */
   public valueChanged() {
@@ -347,7 +363,9 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
       customComparator: undefined,
       noResultsFound: 'No results found!',
       moreText: 'more',
-      searchOnKey: null
+      searchOnKey: null,
+      selectAll: true,
+      selectAllText: "Select All"
     };
     if (this.config === "undefined" || Object.keys(this.config).length === 0) {
       this.config = { ...config };
