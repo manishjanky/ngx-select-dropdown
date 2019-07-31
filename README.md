@@ -87,6 +87,8 @@ config = {
         noResultsFound: 'No results found!' // text to be displayed when no items are found while searching
         searchPlaceholder:'Search' // label thats displayed in search input,
         searchOnKey: 'name' // key on which search should be performed this will be selective search. if undefined this will be extensive search on all keys
+        selectAll: 'true' // Should enable select all feature for multiple select items
+        selectAllText: 'Select All' // Default text for select all feature
       }
 ````
 
