@@ -4,7 +4,7 @@
         <span class="nsdicon-angle-down"></span>
     </button>
     <div class="ngx-dropdown-list-container" *ngIf="toggleDropdown" [style.maxHeight]="config.height">
-        <div class="select-all" *ngIf="config.selectAll" (click)="toggleAllItems()">
+        <div class="select-all" *ngIf="config.selectAll&&multiple" (click)="toggleAllItems()">
             <input type="checkbox" [checked]="selectedItems.length==options.length"/>
             {{config.selectAllText}}
         </div> 
