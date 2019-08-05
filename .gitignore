@@ -8,6 +8,7 @@ Thumbs.db
 
 *.map
 *.d.ts
+/dist/
 /example/*
 
 .vscode/*

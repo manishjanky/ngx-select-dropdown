@@ -29,7 +29,6 @@
     "debug": false,
     "skipTemplateCodegen": true,
     "skipMetadataEmit": false,
-    "strictMetadataEmit": true,
-    "declaration": true
+    "strictMetadataEmit": true
   }
 }
