@@ -1,5 +1,5 @@
 {
-  "name": "ngx-select-dropdown",
+  "name": "custom-select-dropdown",
   "version": "1.0.1",
   "description": "A angular(4+) selct dropdown for single selct or multiselct module.",
   "main": "./dist/index.umd.js",
@@ -29,17 +29,17 @@
     "ng2-dropdown"
   ],
   "author": {
-    "name": "Manish Kumar",
-    "email": "manishjanky@gmail.com"
+    "name": "Govardhan Srinivas",
+    "email": "govardhan-s92@gmail.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/manishjanky/ngx-select-dropdown.git"
+    "url": "https://github.com/govardhan-srinivas/ngx-select-dropdown.git"
   },
   "bugs": {
-    "url": "https://github.com/manishjanky/ngx-select-dropdown/issues"
+    "url": "https://github.com/govardhan-srinivas/ngx-select-dropdown/issues"
   },
-  "homepage": "https://github.com/manishjanky/ngx-select-dropdown#readme",
+  "homepage": "https://github.com/govardhan-srinivas/ngx-select-dropdown#readme",
   "scripts": {
     "build": "npm run build:esm && npm run build:umd",
     "build:esm": "gulp inline-templates && npm run ngcompile",
