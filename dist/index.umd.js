@@ -1,8 +1,8 @@
 /**
- * custom-select-dropdown - A angular(4+) selct dropdown for single selct or multiselct module.
- * @version v1.0.4
- * @author Govardhan
- * @link https://github.com/govardhan-srinivas/ngx-select-dropdown#readme
+ * ngx-select-dropdown - A angular(4+) selct dropdown for single selct or multiselct module.
+ * @version v1.0.1
+ * @author Manish Kumar
+ * @link https://github.com/manishjanky/ngx-select-dropdown#readme
  * @license MIT
  */
 (function webpackUniversalModuleDefinition(root, factory) {
