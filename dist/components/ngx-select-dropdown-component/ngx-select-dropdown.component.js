@@ -268,7 +268,7 @@ var SelectDropDownComponent = /** @class */ (function () {
     SelectDropDownComponent.prototype.toggleAllItems = function () {
         // Enable this option only for multiple selection
         if (this.multiple) {
-            if (this.selectedItems.length != this.options.length) {
+            if (this.selectedItems.length !== this.options.length) {
                 this.selectedItems = this.options.slice();
                 this.availableItems = [];
             }

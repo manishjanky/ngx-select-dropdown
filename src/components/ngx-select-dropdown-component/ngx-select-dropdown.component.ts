@@ -316,7 +316,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
   public toggleAllItems() {
     // Enable this option only for multiple selection
     if (this.multiple) {
-      if (this.selectedItems.length != this.options.length) {
+      if (this.selectedItems.length !== this.options.length) {
         this.selectedItems = [...this.options];
         this.availableItems = [];
       } else {
