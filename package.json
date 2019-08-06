@@ -1,6 +1,6 @@
 {
   "name": "custom-select-dropdown",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A angular(4+) selct dropdown for single selct or multiselct module.",
   "main": "./dist/index.umd.js",
   "typings": "./dist/index.d.ts",
