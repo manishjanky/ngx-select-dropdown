@@ -3,7 +3,6 @@
   "version": "1.0.1",
   "description": "A angular(4+) selct dropdown for single selct or multiselct module.",
   "main": "./dist/index.umd.js",
-  "module": "./dist/index.js",
   "typings": "./dist/index.d.ts",
   "license": "MIT",
   "keywords": [
