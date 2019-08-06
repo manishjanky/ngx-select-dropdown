@@ -1,6 +1,6 @@
 /**
  * custom-select-dropdown - A angular(4+) selct dropdown for single selct or multiselct module.
- * @version v1.0.1
+ * @version v1.0.8
  * @author Govardhan Srinivas
  * @link https://github.com/govardhan-srinivas/ngx-select-dropdown#readme
  * @license MIT
