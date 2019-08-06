@@ -507,6 +507,7 @@ var SelectDropDownComponent = /** @class */ (function () {
     SelectDropDownComponent.prototype.resetArrowKeyActiveElement = function () {
         this.focusedItemIndex = null;
     };
+    var SelectDropDownComponent_1;
     __decorate([
         core_1.Input(),
         __metadata("design:type", Object)
@@ -583,7 +584,6 @@ var SelectDropDownComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [core_1.ChangeDetectorRef, core_1.ElementRef])
     ], SelectDropDownComponent);
     return SelectDropDownComponent;
-    var SelectDropDownComponent_1;
 }());
 exports.SelectDropDownComponent = SelectDropDownComponent;
 
