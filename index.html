@@ -1,8 +1,31 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><title>ngx-select-dropdown</title><base href="/"><meta name="viewport" content="width=device-width,initial-scale=1"><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"/><script>// See http://www.backalleycoder.com/2016/05/13/sghpa-the-single-page-app-hack-for-github-pages/
-    (function(){
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>ngx-select-dropdown</title>
+  <base href="/ngx-select-dropdown/">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+  <script>// See http://www.backalleycoder.com/2016/05/13/sghpa-the-single-page-app-hack-for-github-pages/
+    (function () {
       var redirect = sessionStorage.redirect;
       delete sessionStorage.redirect;
       if (redirect && redirect != location.href) {
         history.replaceState(null, null, redirect);
       }
-    })();</script><link href="styles.bundle.css" rel="stylesheet"/></head><body><app-root></app-root><script type="text/javascript" src="inline.bundle.js"></script><script type="text/javascript" src="polyfills.bundle.js"></script><script type="text/javascript" src="scripts.bundle.js"></script><script type="text/javascript" src="vendor.bundle.js"></script><script type="text/javascript" src="main.bundle.js"></script></body></html>
+    })();</script>
+  <link href="styles.bundle.css" rel="stylesheet" />
+</head>
+
+<body>
+  <app-root></app-root>
+  <script type="text/javascript" src="inline.bundle.js"></script>
+  <script type="text/javascript" src="polyfills.bundle.js"></script>
+  <script type="text/javascript" src="scripts.bundle.js"></script>
+  <script type="text/javascript" src="vendor.bundle.js"></script>
+  <script type="text/javascript" src="main.bundle.js"></script>
+</body>
+
+</html>
