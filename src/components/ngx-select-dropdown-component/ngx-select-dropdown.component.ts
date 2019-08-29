@@ -177,12 +177,20 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
     // Arrow Down
     if ($event.keyCode === 40 && avaOpts.length > 0) {
       this.onArrowKeyDown();
+      /* istanbul ignore else */
+      if (this.focusedItemIndex >= avaOpts.length) {
+        this.focusedItemIndex = 0;
+      }
       avaOpts[this.focusedItemIndex].nativeElement.focus();
       $event.preventDefault();
     }
     // Arrow Up
     if ($event.keyCode === 38 && avaOpts.length) {
       this.onArrowKeyUp();
+      /* istanbul ignore else */
+      if (this.focusedItemIndex >= avaOpts.length) {
+        this.focusedItemIndex = avaOpts.length - 1;
+      }
       avaOpts[this.focusedItemIndex].nativeElement.focus();
       $event.preventDefault();
     }
@@ -277,9 +285,9 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
    */
   public deselectItem(item: any, index: number) {
 
-     this.selectedItems.forEach( (element : any, i : number) => {
+    this.selectedItems.forEach((element: any, i: number) => {
       if (item === element) {
-        this.selectedItems.splice(i,1);
+        this.selectedItems.splice(i, 1);
       }
     });
     if (!this.availableItems.includes(item)) {
@@ -307,13 +315,13 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
       this.toggleDropdown = false;
     }
 
-    this.availableItems.forEach( (element : any, i : number) => {
+    this.availableItems.forEach((element: any, i: number) => {
       if (item === element) {
         this.selectedItems.push(item);
-        this.availableItems.splice(i,1);
+        this.availableItems.splice(i, 1);
       }
     });
-    
+
     this.selectedItems = [...this.selectedItems];
     this.availableItems = [...this.availableItems];
     this.selectedItems.sort(this.config.customComparator);
