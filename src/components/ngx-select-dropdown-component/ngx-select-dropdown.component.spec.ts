@@ -163,7 +163,7 @@ describe("SelectDropDownComponent", () => {
   });
 
   it("Should write the value", () => {
-    component.writeValue(objOptions[0]);
+    component.writeValue(objOptions[0], true);
     expect(component.value).toEqual(objOptions[0]);
     expect(component.selectedItems).toEqual([objOptions[0]]);
   });

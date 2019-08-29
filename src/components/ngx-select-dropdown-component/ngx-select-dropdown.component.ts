@@ -227,8 +227,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
     this.onTouched = fn;
   }
 
-  public writeValue(value: any) {
-    /* istanbul ignore else */
+  public writeValue(value: any, internal?: boolean) {
     if (value) {
       if (Array.isArray(value)) {
         if (this.multiple) {
@@ -248,7 +247,23 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
         }
         this.initDropdownValuesAndOptions();
       }
+    } else {
+      this.value = [];
+      /* istanbul ignore else */
+      if (!internal) {
+        this.reset();
+      }
     }
+    /* istanbul ignore else */
+    if (!internal) {
+      this.reset();
+    }
+
+  }
+
+  public reset() {
+    this.selectedItems = [];
+    this.initDropdownValuesAndOptions();
   }
   /**
    * function sets whether to show items not found text or not
@@ -296,7 +311,6 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
     }
     this.selectedItems = [...this.selectedItems];
     this.availableItems = [...this.availableItems];
-    // this.writeValue(this.selectedItems);
     this.valueChanged();
     this.resetArrowKeyActiveElement();
   }
@@ -335,7 +349,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
    * When selected items changes trigger the chaange back to parent
    */
   public valueChanged() {
-    this.writeValue(this.selectedItems);
+    this.writeValue(this.selectedItems, true);
     // this.valueChange.emit(this.value);
     this.change.emit({ value: this.value });
     this.setSelectedDisplayText();
