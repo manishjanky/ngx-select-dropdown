@@ -1,3 +1,4 @@
+import { ArrayFilterPipe } from './../../pipes/filter-by.pipe';
 import {
   Component, OnInit, Input, EventEmitter, Output, HostListener,
   OnChanges, SimpleChanges, ViewChildren, ElementRef, QueryList, AfterViewInit, ChangeDetectorRef, forwardRef
@@ -187,7 +188,8 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
     }
     // Enter
     if ($event.keyCode === 13 && this.focusedItemIndex !== null) {
-      this.selectItem(this.availableItems[this.focusedItemIndex], this.focusedItemIndex);
+      const filteredItems = new ArrayFilterPipe().transform(this.availableItems, this.searchText, this.config.searchOnKey);
+      this.selectItem(filteredItems[this.focusedItemIndex], this.availableItems.indexOf(filteredItems[this.focusedItemIndex]));
       return false;
     }
   }
@@ -305,7 +307,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
     this.availableItems = [...this.availableItems];
     this.selectedItems.sort(this.config.customComparator);
     this.availableItems.sort(this.config.customComparator);
-    // this.writeValue(this.selectedItems);
+    // this.searchText = null;
     this.valueChanged();
     this.resetArrowKeyActiveElement();
   }
