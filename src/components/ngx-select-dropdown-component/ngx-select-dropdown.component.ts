@@ -274,7 +274,12 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
    * @param index:  index of the item
    */
   public deselectItem(item: any, index: number) {
-    this.selectedItems.splice(index, 1);
+
+     this.selectedItems.forEach( (element : any, i : number) => {
+      if (item === element) {
+        this.selectedItems.splice(i,1);
+      }
+    });
     if (!this.availableItems.includes(item)) {
       this.availableItems.push(item);
       this.availableItems.sort(this.config.customComparator);
@@ -299,8 +304,14 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
       this.selectedItems = [];
       this.toggleDropdown = false;
     }
-    this.availableItems.splice(index, 1);
-    this.selectedItems.push(item);
+
+    this.availableItems.forEach( (element : any, i : number) => {
+      if (item === element) {
+        this.selectedItems.push(item);
+        this.availableItems.splice(i,1);
+      }
+    });
+    
     this.selectedItems = [...this.selectedItems];
     this.availableItems = [...this.availableItems];
     this.selectedItems.sort(this.config.customComparator);

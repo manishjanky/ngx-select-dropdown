@@ -5,7 +5,7 @@
     </button>
     <div class="ngx-dropdown-list-container" *ngIf="toggleDropdown" [style.maxHeight]="config.height">
         <div class="search-container" *ngIf="config.search">
-            <input name="search-text" [(ngModel)]="searchText" />
+            <input name="search-text" [(ngModel)]="searchText" autocomplete="off"/>
             <label [ngClass]="{'active': searchText}">
                 <span class="nsdicon-search"></span> {{config.searchPlaceholder}}</label>
         </div>
