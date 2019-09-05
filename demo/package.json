@@ -26,7 +26,7 @@
     "classlist.js": "^1.1.20150312",
     "core-js": "^2.5.3",
     "jquery": "^3.3.1",
-    "ngx-select-dropdown": "^1.0.1",
+    "ngx-select-dropdown": "^1.1.0",
     "node-sass": "^4.11.0",
     "rxjs": "^5.5.6",
     "zone.js": "^0.8.20"
