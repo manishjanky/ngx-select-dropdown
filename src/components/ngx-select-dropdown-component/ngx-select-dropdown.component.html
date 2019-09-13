@@ -5,7 +5,7 @@
     </button>
     <div class="ngx-dropdown-list-container" *ngIf="toggleDropdown" [style.maxHeight]="config.height">
         <div class="select-all" *ngIf="config.selectAll&&multiple" (click)="toggleAllItems()">
-            <input type="checkbox" [checked]="selectedItems.length==options.length"/>
+            <input type="checkbox" [checked]="options.length !== 0 && selectedItems.length==options.length"/>
             {{config.selectAllText}}
         </div> 
         <div class="search-container" *ngIf="config.search">

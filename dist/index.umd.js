@@ -1,6 +1,6 @@
 /**
  * custom-select-dropdown - A angular(4+) selct dropdown for single selct or multiselct module.
- * @version v1.0.8
+ * @version v1.0.13
  * @author Govardhan Srinivas
  * @link https://github.com/govardhan-srinivas/ngx-select-dropdown#readme
  * @license MIT
@@ -463,8 +463,13 @@ var SelectDropDownComponent = /** @class */ (function () {
             text = this.selectedItems[0][this.config.displayKey];
         }
         if (this.multiple && this.selectedItems.length > 0) {
-            this.selectedDisplayText = this.selectedItems.length === 1 ? text :
-                text + (" + " + (this.selectedItems.length - 1) + " " + this.config.moreText);
+            if (this.options.length !== 0 && (this.options.length === this.selectedItems.length)) {
+                this.selectedDisplayText = this.config.selectAllText;
+            }
+            else {
+                this.selectedDisplayText = this.selectedItems.length === 1 ? text :
+                    this.selectedItems.length + " " + this.config.moreText;
+            }
         }
         else {
             this.selectedDisplayText = this.selectedItems.length === 0 ? this.config.placeholder : text;
@@ -637,7 +642,7 @@ __export(__webpack_require__(1));
 /* 6 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"ngx-dropdown-container\" tabindex=\"0\">\r\n    <button type=\"button\" class=\"ngx-dropdown-button\" [ngClass]=\"{'disabled':disabled}\" [disabled]=\"disabled\" (click)=\"toggleSelectDropdown()\">\r\n        <span>{{selectedDisplayText}} </span>\r\n        <span class=\"nsdicon-angle-down\"></span>\r\n    </button>\r\n    <div class=\"ngx-dropdown-list-container\" *ngIf=\"toggleDropdown\" [style.maxHeight]=\"config.height\">\r\n        <div class=\"select-all\" *ngIf=\"config.selectAll&&multiple\" (click)=\"toggleAllItems()\">\r\n            <input type=\"checkbox\" [checked]=\"selectedItems.length==options.length\"/>\r\n            {{config.selectAllText}}\r\n        </div> \r\n        <div class=\"search-container\" *ngIf=\"config.search\">\r\n            <input name=\"search\" [(ngModel)]=\"searchText\" />\r\n            <label [ngClass]=\"{'active': searchText}\">\r\n                <span class=\"nsdicon-search\"></span> {{config.searchPlaceholder}}</label>\r\n        </div>\r\n        <ul class=\"selected-items\">\r\n            <li tabindex=\"-1\" *ngFor=\"let selected of selectedItems;let i = index\" (click)=\"deselectItem(selected,i)\">\r\n                <span class=\"nsdicon-close\"></span>\r\n                <span> {{selected[config.displayKey] || selected}}</span>\r\n            </li>\r\n        </ul>\r\n        <hr *ngIf=\"selectedItems.length > 0 && availableItems.length > 0\" />\r\n        <ul class=\"available-items\">\r\n            <li #availableOption *ngFor=\"let item of availableItems| filterBy: searchText : config.searchOnKey | limitTo : config.limitTo;let i = index\"\r\n                tabindex=\"-1\" [ngClass]=\"{'active': focusedItemIndex == i}\" (click)=\"selectItem(item,i)\">\r\n                {{item[config.displayKey] || item}}</li>\r\n            <li *ngIf=\"showNotFound\">{{config.noResultsFound}}</li>\r\n        </ul>\r\n    </div>\r\n</div>\r\n"
+module.exports = "<div class=\"ngx-dropdown-container\" tabindex=\"0\">\r\n    <button type=\"button\" class=\"ngx-dropdown-button\" [ngClass]=\"{'disabled':disabled}\" [disabled]=\"disabled\" (click)=\"toggleSelectDropdown()\">\r\n        <span>{{selectedDisplayText}} </span>\r\n        <span class=\"nsdicon-angle-down\"></span>\r\n    </button>\r\n    <div class=\"ngx-dropdown-list-container\" *ngIf=\"toggleDropdown\" [style.maxHeight]=\"config.height\">\r\n        <div class=\"select-all\" *ngIf=\"config.selectAll&&multiple\" (click)=\"toggleAllItems()\">\r\n            <input type=\"checkbox\" [checked]=\"options.length !== 0 && selectedItems.length==options.length\"/>\r\n            {{config.selectAllText}}\r\n        </div> \r\n        <div class=\"search-container\" *ngIf=\"config.search\">\r\n            <input name=\"search\" [(ngModel)]=\"searchText\" />\r\n            <label [ngClass]=\"{'active': searchText}\">\r\n                <span class=\"nsdicon-search\"></span> {{config.searchPlaceholder}}</label>\r\n        </div>\r\n        <ul class=\"selected-items\">\r\n            <li tabindex=\"-1\" *ngFor=\"let selected of selectedItems;let i = index\" (click)=\"deselectItem(selected,i)\">\r\n                <span class=\"nsdicon-close\"></span>\r\n                <span> {{selected[config.displayKey] || selected}}</span>\r\n            </li>\r\n        </ul>\r\n        <hr *ngIf=\"selectedItems.length > 0 && availableItems.length > 0\" />\r\n        <ul class=\"available-items\">\r\n            <li #availableOption *ngFor=\"let item of availableItems| filterBy: searchText : config.searchOnKey | limitTo : config.limitTo;let i = index\"\r\n                tabindex=\"-1\" [ngClass]=\"{'active': focusedItemIndex == i}\" (click)=\"selectItem(item,i)\">\r\n                {{item[config.displayKey] || item}}</li>\r\n            <li *ngIf=\"showNotFound\">{{config.noResultsFound}}</li>\r\n        </ul>\r\n    </div>\r\n</div>\r\n"
 
 /***/ }),
 /* 7 */

@@ -407,8 +407,12 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
     }
 
     if (this.multiple && this.selectedItems.length > 0) {
-      this.selectedDisplayText = this.selectedItems.length === 1 ? text :
-        text + ` + ${this.selectedItems.length - 1} ${this.config.moreText}`;
+      if (this.options.length !== 0 && (this.options.length === this.selectedItems.length)) {
+        this.selectedDisplayText = this.config.selectAllText;
+    } else {
+        this.selectedDisplayText = this.selectedItems.length === 1 ? text :
+            this.selectedItems.length + " " + this.config.moreText;
+    }
     } else {
       this.selectedDisplayText = this.selectedItems.length === 0 ? this.config.placeholder : text;
     }
