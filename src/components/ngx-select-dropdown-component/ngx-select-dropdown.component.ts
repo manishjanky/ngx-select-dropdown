@@ -143,6 +143,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
     if (!this.clickedInside) {
       this.toggleDropdown = false;
       this.resetArrowKeyActiveElement();
+      this.close.emit();
     }
     this.clickedInside = false;
   }
