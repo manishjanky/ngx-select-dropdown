@@ -432,7 +432,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
    */
   private onArrowKeyUp() {
     if (this.focusedItemIndex === 0) {
-      this.focusedItemIndex = this.availableItems.length - 1;
+      this.focusedItemIndex = this.availableOptions.length - 1;
       return;
     }
     if (this.onArrowKey()) {
@@ -444,7 +444,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
    * Event handler for arrow key down event thats focuses on a item
    */
   private onArrowKeyDown() {
-    if (this.focusedItemIndex === this.availableItems.length - 1) {
+    if (this.focusedItemIndex === this.availableOptions.length - 1) {
       this.focusedItemIndex = 0;
       return;
     }
