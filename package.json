@@ -67,9 +67,9 @@
   },
   "dependencies": {},
   "peerDependencies": {
-    "@angular/common": "^4.0.0",
-    "@angular/core": "^4.0.0",
-    "@angular/forms": "^4.0.0"
+    "@angular/common": ">4.0.0",
+    "@angular/core": ">4.0.0",
+    "@angular/forms": ">4.0.0"
   },
   "devDependencies": {
     "node-gyp": "^3.8.0",
