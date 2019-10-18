@@ -171,7 +171,7 @@ config = {...config, height:'200px'};
  Support for Reactive forms
  Few other minor imoprovements and fixes
 ````
-* v1.1.0
+* v1.2.0
 ````
  Search text change event searchChange
 ````
