@@ -48,6 +48,11 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
   @Output() public change: EventEmitter<any> = new EventEmitter();
 
   /**
+   * The search text change event emitter emitted when user type in the search input
+   */
+  @Output() public searchChange: EventEmitter<any> = new EventEmitter();
+
+  /**
    * Event emitted when dropdown is open.
    */
   @Output() public open: EventEmitter<any> = new EventEmitter();
@@ -466,6 +471,13 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
   private resetArrowKeyActiveElement() {
     this.focusedItemIndex = null;
 
+  }
+
+  /**
+   * The change handler for search text
+   */
+  private searchTextChanged() {
+    this.searchChange.emit(this.searchText);
   }
 
 }

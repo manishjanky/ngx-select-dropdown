@@ -95,6 +95,7 @@ config = {
 * `change: Event` - change event when user changes the selected options
 * `open: Event` - open event when the dropdown toogles on
 * `close: Event` - close event when the dropdown toogles off
+* `searchChange: Event` - search change event when the search text changes
 
 ### Change detection
 
@@ -169,6 +170,10 @@ config = {...config, height:'200px'};
  Search on a specified key value.
  Support for Reactive forms
  Few other minor imoprovements and fixes
+````
+* v1.1.0
+````
+ Search text change event searchChange
 ````
 ## Help Improve
 
