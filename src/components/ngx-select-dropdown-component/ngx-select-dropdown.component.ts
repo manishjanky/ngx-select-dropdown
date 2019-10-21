@@ -377,7 +377,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
   /**
    * The change handler for search text
    */
-  private searchTextChanged() {
+  public searchTextChanged() {
     this.searchChange.emit(this.searchText);
   }
 
