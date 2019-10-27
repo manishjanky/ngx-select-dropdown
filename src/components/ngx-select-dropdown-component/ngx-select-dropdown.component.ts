@@ -375,6 +375,13 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
   }
 
   /**
+   * The change handler for search text
+   */
+  public searchTextChanged() {
+    this.searchChange.emit(this.searchText);
+  }
+
+  /**
    * initialize the config and other properties
    */
   private initDropdownValuesAndOptions() {
@@ -472,13 +479,6 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
   private resetArrowKeyActiveElement() {
     this.focusedItemIndex = null;
 
-  }
-
-  /**
-   * The change handler for search text
-   */
-  private searchTextChanged() {
-    this.searchChange.emit(this.searchText);
   }
 
 }
