@@ -163,7 +163,7 @@ describe("SelectDropDownComponent", () => {
   });
 
   it("Should write the value", () => {
-    component.writeValue(objOptions[0]);
+    component.writeValue(objOptions[0], true);
     expect(component.value).toEqual(objOptions[0]);
     expect(component.selectedItems).toEqual([objOptions[0]]);
   });
@@ -420,4 +420,17 @@ describe("SelectDropDownComponent", () => {
     component.registerOnTouched(fun);
     expect(component.onTouched).toEqual(fun);
   });
+
+  it("Should emit the search text changed event", () => {
+    spyOn(component.searchChange, 'emit');
+    (component as any).searchTextChanged();
+    expect(component.searchChange.emit).toHaveBeenCalled();
+  });
+
+  it("Should reset", () => {
+    component.selectedItems = [...options];
+    component.reset();
+    expect(component.selectedItems.length).toEqual(0);
+  });
+
 });

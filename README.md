@@ -4,12 +4,12 @@
 `custom-select-dropdown` Custom Dropdown component for Angular 4+ with multiple and single selection options
 
 ## Features
-* Same features as https://manishjanky.github.io/custom-select-dropdown/ along with "Select all items" during multiple selection.
+* Same features as https://manishjanky.github.io/ngx-select-dropdown/ along with "Select all items" during multiple selection.
 
 
 ## Examples
 
-* [demo-page](https://manishjanky.github.io/custom-select-dropdown/)
+* [demo-page](https://manishjanky.github.io/ngx-select-dropdown/)
 
 ## Installation
 
@@ -81,6 +81,7 @@ config = {
 * `change: Event` - change event when user changes the selected options
 * `open: Event` - open event when the dropdown toogles on
 * `close: Event` - close event when the dropdown toogles off
+* `searchChange: Event` - search change event when the search text changes
 
 ### Change detection
 
@@ -105,4 +106,4 @@ config = {...config, height:'200px'};
 
 
 ##Credits:
-https://manishjanky.github.io/custom-select-dropdown/
+https://manishjanky.github.io/ngx-select-dropdown/

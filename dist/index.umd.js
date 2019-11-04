@@ -1,6 +1,6 @@
 /**
  * custom-select-dropdown - A angular(4+) selct dropdown for single selct or multiselct module.
- * @version v1.0.8
+ * @version v1.0.14
  * @author Govardhan Srinivas
  * @link https://github.com/govardhan-srinivas/ngx-select-dropdown#readme
  * @license MIT
@@ -14,7 +14,7 @@
 		exports["ticktock"] = factory(require("@angular/core"), require("@angular/forms"), require("@angular/common"));
 	else
 		root["ticktock"] = factory(root["ng"]["core"], root["ng"]["forms"], root["ng"]["common"]);
-})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_0__, __WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_13__) {
+})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_0__, __WEBPACK_EXTERNAL_MODULE_3__, __WEBPACK_EXTERNAL_MODULE_14__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -77,7 +77,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 6);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -88,6 +88,64 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_0__;
 
 /***/ }),
 /* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__(0);
+/**
+ * filters an array based on searctext
+ */
+var ArrayFilterPipe = /** @class */ (function () {
+    function ArrayFilterPipe() {
+    }
+    ArrayFilterPipe.prototype.transform = function (array, searchText, keyName) {
+        if (!array || !searchText || !Array.isArray(array)) {
+            return array;
+        }
+        if (typeof array[0] === 'string') {
+            return array.filter(function (item) { return item.toLowerCase().indexOf(searchText.toLowerCase()) > -1; });
+        }
+        // filter array, items which match and return true will be
+        // kept, false will be filtered out
+        if (!keyName) {
+            return array.filter(function (item) {
+                for (var key in item) {
+                    if (typeof item[key] !== "object" && item[key].toString().toLowerCase().indexOf(searchText.toLowerCase()) > -1) {
+                        return true;
+                    }
+                }
+                return false;
+            });
+        }
+        else {
+            return array.filter(function (item) {
+                if (typeof item[keyName] !== "object" && item[keyName].toString().toLowerCase().indexOf(searchText.toLowerCase()) > -1) {
+                    return true;
+                }
+                return false;
+            });
+        }
+    };
+    ArrayFilterPipe = __decorate([
+        core_1.Pipe({
+            name: "filterBy"
+        })
+    ], ArrayFilterPipe);
+    return ArrayFilterPipe;
+}());
+exports.ArrayFilterPipe = ArrayFilterPipe;
+
+
+/***/ }),
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -110,8 +168,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var filter_by_pipe_1 = __webpack_require__(1);
 var core_1 = __webpack_require__(0);
-var forms_1 = __webpack_require__(2);
+var forms_1 = __webpack_require__(3);
 var SelectDropDownComponent = /** @class */ (function () {
     function SelectDropDownComponent(cdref, _elementRef) {
         this.cdref = cdref;
@@ -132,6 +191,10 @@ var SelectDropDownComponent = /** @class */ (function () {
          * change event when value changes to provide user to handle things in change event
          */
         this.change = new core_1.EventEmitter();
+        /**
+         * The search text change event emitter emitted when user type in the search input
+         */
+        this.searchChange = new core_1.EventEmitter();
         /**
          * Event emitted when dropdown is open.
          */
@@ -206,6 +269,7 @@ var SelectDropDownComponent = /** @class */ (function () {
         if (!this.clickedInside) {
             this.toggleDropdown = false;
             this.resetArrowKeyActiveElement();
+            this.close.emit();
         }
         this.clickedInside = false;
     };
@@ -237,18 +301,27 @@ var SelectDropDownComponent = /** @class */ (function () {
         // Arrow Down
         if ($event.keyCode === 40 && avaOpts.length > 0) {
             this.onArrowKeyDown();
+            /* istanbul ignore else */
+            if (this.focusedItemIndex >= avaOpts.length) {
+                this.focusedItemIndex = 0;
+            }
             avaOpts[this.focusedItemIndex].nativeElement.focus();
             $event.preventDefault();
         }
         // Arrow Up
         if ($event.keyCode === 38 && avaOpts.length) {
             this.onArrowKeyUp();
+            /* istanbul ignore else */
+            if (this.focusedItemIndex >= avaOpts.length) {
+                this.focusedItemIndex = avaOpts.length - 1;
+            }
             avaOpts[this.focusedItemIndex].nativeElement.focus();
             $event.preventDefault();
         }
         // Enter
         if ($event.keyCode === 13 && this.focusedItemIndex !== null) {
-            this.selectItem(this.availableItems[this.focusedItemIndex], this.focusedItemIndex);
+            var filteredItems = new filter_by_pipe_1.ArrayFilterPipe().transform(this.availableItems, this.searchText, this.config.searchOnKey);
+            this.selectItem(filteredItems[this.focusedItemIndex], this.availableItems.indexOf(filteredItems[this.focusedItemIndex]));
             return false;
         }
     };
@@ -273,8 +346,7 @@ var SelectDropDownComponent = /** @class */ (function () {
     SelectDropDownComponent.prototype.registerOnTouched = function (fn) {
         this.onTouched = fn;
     };
-    SelectDropDownComponent.prototype.writeValue = function (value) {
-        /* istanbul ignore else */
+    SelectDropDownComponent.prototype.writeValue = function (value, internal) {
         if (value) {
             if (Array.isArray(value)) {
                 if (this.multiple) {
@@ -298,6 +370,21 @@ var SelectDropDownComponent = /** @class */ (function () {
                 this.initDropdownValuesAndOptions();
             }
         }
+        else {
+            this.value = [];
+            /* istanbul ignore else */
+            if (!internal) {
+                this.reset();
+            }
+        }
+        /* istanbul ignore else */
+        if (!internal) {
+            this.reset();
+        }
+    };
+    SelectDropDownComponent.prototype.reset = function () {
+        this.selectedItems = [];
+        this.initDropdownValuesAndOptions();
     };
     /**
      * function sets whether to show items not found text or not
@@ -333,14 +420,18 @@ var SelectDropDownComponent = /** @class */ (function () {
      * @param index:  index of the item
      */
     SelectDropDownComponent.prototype.deselectItem = function (item, index) {
-        this.selectedItems.splice(index, 1);
+        var _this = this;
+        this.selectedItems.forEach(function (element, i) {
+            if (item === element) {
+                _this.selectedItems.splice(i, 1);
+            }
+        });
         if (!this.availableItems.includes(item)) {
             this.availableItems.push(item);
             this.availableItems.sort(this.config.customComparator);
         }
         this.selectedItems = this.selectedItems.slice();
         this.availableItems = this.availableItems.slice();
-        // this.writeValue(this.selectedItems);
         this.valueChanged();
         this.resetArrowKeyActiveElement();
     };
@@ -350,6 +441,7 @@ var SelectDropDownComponent = /** @class */ (function () {
      * @param index:  index of the item
      */
     SelectDropDownComponent.prototype.selectItem = function (item, index) {
+        var _this = this;
         if (!this.multiple) {
             if (this.selectedItems.length > 0) {
                 this.availableItems.push(this.selectedItems[0]);
@@ -357,13 +449,17 @@ var SelectDropDownComponent = /** @class */ (function () {
             this.selectedItems = [];
             this.toggleDropdown = false;
         }
-        this.availableItems.splice(index, 1);
-        this.selectedItems.push(item);
+        this.availableItems.forEach(function (element, i) {
+            if (item === element) {
+                _this.selectedItems.push(item);
+                _this.availableItems.splice(i, 1);
+            }
+        });
         this.selectedItems = this.selectedItems.slice();
         this.availableItems = this.availableItems.slice();
         this.selectedItems.sort(this.config.customComparator);
         this.availableItems.sort(this.config.customComparator);
-        // this.writeValue(this.selectedItems);
+        // this.searchText = null;
         this.valueChanged();
         this.resetArrowKeyActiveElement();
     };
@@ -388,11 +484,21 @@ var SelectDropDownComponent = /** @class */ (function () {
             this.resetArrowKeyActiveElement();
         }
     };
+    // DeselectAll items
+    SelectDropDownComponent.prototype.removeAllItems = function () {
+        this.availableItems = this.options.slice();
+        this.selectedItems = [];
+        this.selectedItems.sort(this.config.customComparator);
+        this.availableItems.sort(this.config.customComparator);
+        // this.writeValue(this.selectedItems);
+        this.valueChanged();
+        this.resetArrowKeyActiveElement();
+    };
     /**
      * When selected items changes trigger the chaange back to parent
      */
     SelectDropDownComponent.prototype.valueChanged = function () {
-        this.writeValue(this.selectedItems);
+        this.writeValue(this.selectedItems, true);
         // this.valueChange.emit(this.value);
         this.change.emit({ value: this.value });
         this.setSelectedDisplayText();
@@ -424,7 +530,7 @@ var SelectDropDownComponent = /** @class */ (function () {
             limitTo: this.options.length,
             customComparator: undefined,
             noResultsFound: 'No results found!',
-            moreText: 'more',
+            moreText: 'items',
             searchOnKey: null,
             selectAll: true,
             selectAllText: "Select All"
@@ -463,8 +569,7 @@ var SelectDropDownComponent = /** @class */ (function () {
             text = this.selectedItems[0][this.config.displayKey];
         }
         if (this.multiple && this.selectedItems.length > 0) {
-            this.selectedDisplayText = this.selectedItems.length === 1 ? text :
-                text + (" + " + (this.selectedItems.length - 1) + " " + this.config.moreText);
+            this.selectedDisplayText = this.selectedItems.length === 1 ? text : this.selectedItems.length + " " + this.config.moreText;
         }
         else {
             this.selectedDisplayText = this.selectedItems.length === 0 ? this.config.placeholder : text;
@@ -507,6 +612,12 @@ var SelectDropDownComponent = /** @class */ (function () {
     SelectDropDownComponent.prototype.resetArrowKeyActiveElement = function () {
         this.focusedItemIndex = null;
     };
+    /**
+     * The change handler for search text
+     */
+    SelectDropDownComponent.prototype.searchTextChanged = function () {
+        this.searchChange.emit(this.searchText);
+    };
     var SelectDropDownComponent_1;
     __decorate([
         core_1.Input(),
@@ -532,6 +643,10 @@ var SelectDropDownComponent = /** @class */ (function () {
         core_1.Output(),
         __metadata("design:type", core_1.EventEmitter)
     ], SelectDropDownComponent.prototype, "change", void 0);
+    __decorate([
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
+    ], SelectDropDownComponent.prototype, "searchChange", void 0);
     __decorate([
         core_1.Output(),
         __metadata("design:type", core_1.EventEmitter)
@@ -571,8 +686,8 @@ var SelectDropDownComponent = /** @class */ (function () {
     SelectDropDownComponent = SelectDropDownComponent_1 = __decorate([
         core_1.Component({
             selector: "ngx-select-dropdown",
-            template: __webpack_require__(6),
-            styles: [__webpack_require__(7)],
+            template: __webpack_require__(9),
+            styles: [__webpack_require__(10)],
             providers: [
                 {
                     provide: forms_1.NG_VALUE_ACCESSOR,
@@ -589,23 +704,10 @@ exports.SelectDropDownComponent = SelectDropDownComponent;
 
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_2__;
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var components_1 = __webpack_require__(4);
-exports.SelectDropDownComponent = components_1.SelectDropDownComponent;
-var ngx_select_dropdown_module_1 = __webpack_require__(10);
-exports.SelectDropDownModule = ngx_select_dropdown_module_1.SelectDropDownModule;
-
+module.exports = __WEBPACK_EXTERNAL_MODULE_3__;
 
 /***/ }),
 /* 4 */
@@ -613,11 +715,32 @@ exports.SelectDropDownModule = ngx_select_dropdown_module_1.SelectDropDownModule
 
 "use strict";
 
-function __export(m) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-}
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-__export(__webpack_require__(5));
+var core_1 = __webpack_require__(0);
+var LimitToPipe = /** @class */ (function () {
+    function LimitToPipe() {
+    }
+    LimitToPipe.prototype.transform = function (array, itemsCount, startIndex) {
+        if (startIndex === void 0) { startIndex = 0; }
+        if (!Array.isArray(array)) {
+            return array;
+        }
+        return array.slice(startIndex, startIndex + itemsCount);
+    };
+    LimitToPipe = __decorate([
+        core_1.Pipe({
+            name: "limitTo"
+        })
+    ], LimitToPipe);
+    return LimitToPipe;
+}());
+exports.LimitToPipe = LimitToPipe;
 
 
 /***/ }),
@@ -631,20 +754,64 @@ function __export(m) {
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 __export(__webpack_require__(1));
+__export(__webpack_require__(4));
 
 
 /***/ }),
 /* 6 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = "<div class=\"ngx-dropdown-container\" tabindex=\"0\">\r\n    <button type=\"button\" class=\"ngx-dropdown-button\" [ngClass]=\"{'disabled':disabled}\" [disabled]=\"disabled\" (click)=\"toggleSelectDropdown()\">\r\n        <span>{{selectedDisplayText}} </span>\r\n        <span class=\"nsdicon-angle-down\"></span>\r\n    </button>\r\n    <div class=\"ngx-dropdown-list-container\" *ngIf=\"toggleDropdown\" [style.maxHeight]=\"config.height\">\r\n        <div class=\"select-all\" *ngIf=\"config.selectAll&&multiple\" (click)=\"toggleAllItems()\">\r\n            <input type=\"checkbox\" [checked]=\"selectedItems.length==options.length\"/>\r\n            {{config.selectAllText}}\r\n        </div> \r\n        <div class=\"search-container\" *ngIf=\"config.search\">\r\n            <input name=\"search\" [(ngModel)]=\"searchText\" />\r\n            <label [ngClass]=\"{'active': searchText}\">\r\n                <span class=\"nsdicon-search\"></span> {{config.searchPlaceholder}}</label>\r\n        </div>\r\n        <ul class=\"selected-items\">\r\n            <li tabindex=\"-1\" *ngFor=\"let selected of selectedItems;let i = index\" (click)=\"deselectItem(selected,i)\">\r\n                <span class=\"nsdicon-close\"></span>\r\n                <span> {{selected[config.displayKey] || selected}}</span>\r\n            </li>\r\n        </ul>\r\n        <hr *ngIf=\"selectedItems.length > 0 && availableItems.length > 0\" />\r\n        <ul class=\"available-items\">\r\n            <li #availableOption *ngFor=\"let item of availableItems| filterBy: searchText : config.searchOnKey | limitTo : config.limitTo;let i = index\"\r\n                tabindex=\"-1\" [ngClass]=\"{'active': focusedItemIndex == i}\" (click)=\"selectItem(item,i)\">\r\n                {{item[config.displayKey] || item}}</li>\r\n            <li *ngIf=\"showNotFound\">{{config.noResultsFound}}</li>\r\n        </ul>\r\n    </div>\r\n</div>\r\n"
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var components_1 = __webpack_require__(7);
+exports.SelectDropDownComponent = components_1.SelectDropDownComponent;
+var ngx_select_dropdown_module_1 = __webpack_require__(13);
+exports.SelectDropDownModule = ngx_select_dropdown_module_1.SelectDropDownModule;
+var pipes_1 = __webpack_require__(5);
+exports.ArrayFilterPipe = pipes_1.ArrayFilterPipe;
+var pipes_2 = __webpack_require__(5);
+exports.LimitToPipe = pipes_2.LimitToPipe;
+
 
 /***/ }),
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
 
-        var result = __webpack_require__(8);
+function __export(m) {
+    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+}
+Object.defineProperty(exports, "__esModule", { value: true });
+__export(__webpack_require__(8));
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+function __export(m) {
+    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+}
+Object.defineProperty(exports, "__esModule", { value: true });
+__export(__webpack_require__(2));
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"ngx-dropdown-container\" tabindex=\"0\">\n  <button\n    type=\"button\"\n    class=\"ngx-dropdown-button\"\n    [ngClass]=\"{ disabled: disabled }\"\n    [disabled]=\"disabled\"\n    (click)=\"toggleSelectDropdown()\"\n  >\n    <span>{{ selectedDisplayText }} </span>\n    <span class=\"nsdicon-angle-down\"></span>\n  </button>\n  <div\n    class=\"ngx-dropdown-list-container\"\n    *ngIf=\"toggleDropdown\"\n    [style.maxHeight]=\"config.height\"\n  >\n    <div\n      class=\"select-all\"\n      *ngIf=\"config.selectAll && multiple\"\n      (click)=\"toggleAllItems()\"\n    >\n      <label>\n        <input\n          type=\"checkbox\"\n          [checked]=\"selectedItems.length == options.length\"\n        />\n        {{ config.selectAllText }}\n      </label>\n    </div>\n    <div class=\"search-container\" *ngIf=\"config.search\">\n      <input\n        name=\"search-text\"\n        (input)=\"searchTextChanged()\"\n        [(ngModel)]=\"searchText\"\n        autocomplete=\"off\"\n      />\n      <label [ngClass]=\"{ active: searchText }\">\n        <span class=\"nsdicon-search\"></span>\n        {{ config.searchPlaceholder }}</label\n      >\n    </div>\n    <ul class=\"selected-items\">\n      <li\n        tabindex=\"-1\"\n        *ngFor=\"let selected of selectedItems; let i = index\"\n        (click)=\"deselectItem(selected, i)\"\n      >\n        <span class=\"nsdicon-close\"></span>\n        <span> {{ selected[config.displayKey] || selected }}</span>\n      </li>\n    </ul>\n    <hr *ngIf=\"selectedItems.length > 0 && availableItems.length > 0\" />\n    <ul class=\"available-items\">\n      <li\n        #availableOption\n        *ngFor=\"\n          let item of availableItems\n            | filterBy: searchText:config.searchOnKey\n            | limitTo: config.limitTo;\n          let i = index\n        \"\n        tabindex=\"-1\"\n        [ngClass]=\"{ active: focusedItemIndex == i }\"\n        (click)=\"selectItem(item, i)\"\n      >\n        {{ item[config.displayKey] || item }}\n      </li>\n      <li *ngIf=\"showNotFound\">{{ config.noResultsFound }}</li>\n    </ul>\n  </div>\n</div>\n"
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+        var result = __webpack_require__(11);
 
         if (typeof result === "string") {
             module.exports = result;
@@ -654,10 +821,10 @@ module.exports = "<div class=\"ngx-dropdown-container\" tabindex=\"0\">\r\n    <
     
 
 /***/ }),
-/* 8 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(9)(false);
+exports = module.exports = __webpack_require__(12)(false);
 // imports
 
 
@@ -668,7 +835,7 @@ exports.push([module.i, ".ngx-dropdown-container {\n  width: 100%;\n  position: 
 
 
 /***/ }),
-/* 9 */
+/* 12 */
 /***/ (function(module, exports) {
 
 /*
@@ -750,7 +917,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 10 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -762,12 +929,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var filter_by_pipe_1 = __webpack_require__(11);
-var limit_to_pipe_1 = __webpack_require__(12);
+var filter_by_pipe_1 = __webpack_require__(1);
+var limit_to_pipe_1 = __webpack_require__(4);
 var core_1 = __webpack_require__(0);
-var common_1 = __webpack_require__(13);
-var forms_1 = __webpack_require__(2);
-var ngx_select_dropdown_component_1 = __webpack_require__(1);
+var common_1 = __webpack_require__(14);
+var forms_1 = __webpack_require__(3);
+var ngx_select_dropdown_component_1 = __webpack_require__(2);
 var SelectDropDownModule = /** @class */ (function () {
     function SelectDropDownModule() {
     }
@@ -775,7 +942,7 @@ var SelectDropDownModule = /** @class */ (function () {
         core_1.NgModule({
             declarations: [ngx_select_dropdown_component_1.SelectDropDownComponent, limit_to_pipe_1.LimitToPipe, filter_by_pipe_1.ArrayFilterPipe],
             imports: [common_1.CommonModule, forms_1.FormsModule],
-            exports: [ngx_select_dropdown_component_1.SelectDropDownComponent, limit_to_pipe_1.LimitToPipe],
+            exports: [ngx_select_dropdown_component_1.SelectDropDownComponent, limit_to_pipe_1.LimitToPipe, filter_by_pipe_1.ArrayFilterPipe],
             providers: [],
             bootstrap: []
         })
@@ -786,102 +953,10 @@ exports.SelectDropDownModule = SelectDropDownModule;
 
 
 /***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__(0);
-/**
- * filters an array based on searctext
- */
-var ArrayFilterPipe = /** @class */ (function () {
-    function ArrayFilterPipe() {
-    }
-    ArrayFilterPipe.prototype.transform = function (array, searchText, keyName) {
-        if (!array || !searchText || !Array.isArray(array)) {
-            return array;
-        }
-        if (typeof array[0] === 'string') {
-            return array.filter(function (item) { return item.toLowerCase().indexOf(searchText.toLowerCase()) > -1; });
-        }
-        // filter array, items which match and return true will be
-        // kept, false will be filtered out
-        if (!keyName) {
-            return array.filter(function (item) {
-                for (var key in item) {
-                    if (typeof item[key] !== "object" && item[key].toString().toLowerCase().indexOf(searchText.toLowerCase()) > -1) {
-                        return true;
-                    }
-                }
-                return false;
-            });
-        }
-        else {
-            return array.filter(function (item) {
-                if (typeof item[keyName] !== "object" && item[keyName].toString().toLowerCase().indexOf(searchText.toLowerCase()) > -1) {
-                    return true;
-                }
-                return false;
-            });
-        }
-    };
-    ArrayFilterPipe = __decorate([
-        core_1.Pipe({
-            name: "filterBy"
-        })
-    ], ArrayFilterPipe);
-    return ArrayFilterPipe;
-}());
-exports.ArrayFilterPipe = ArrayFilterPipe;
-
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__(0);
-var LimitToPipe = /** @class */ (function () {
-    function LimitToPipe() {
-    }
-    LimitToPipe.prototype.transform = function (array, itemsCount, startIndex) {
-        if (startIndex === void 0) { startIndex = 0; }
-        if (!Array.isArray(array)) {
-            return array;
-        }
-        return array.slice(startIndex, startIndex + itemsCount);
-    };
-    LimitToPipe = __decorate([
-        core_1.Pipe({
-            name: "limitTo"
-        })
-    ], LimitToPipe);
-    return LimitToPipe;
-}());
-exports.LimitToPipe = LimitToPipe;
-
-
-/***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_13__;
+module.exports = __WEBPACK_EXTERNAL_MODULE_14__;
 
 /***/ })
 /******/ ]);

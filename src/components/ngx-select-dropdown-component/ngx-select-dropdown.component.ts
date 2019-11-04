@@ -1,3 +1,4 @@
+import { ArrayFilterPipe } from './../../pipes/filter-by.pipe';
 import {
   Component, OnInit, Input, EventEmitter, Output, HostListener,
   OnChanges, SimpleChanges, ViewChildren, ElementRef, QueryList, AfterViewInit, ChangeDetectorRef, forwardRef
@@ -45,6 +46,11 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
    * change event when value changes to provide user to handle things in change event
    */
   @Output() public change: EventEmitter<any> = new EventEmitter();
+
+  /**
+   * The search text change event emitter emitted when user type in the search input
+   */
+  @Output() public searchChange: EventEmitter<any> = new EventEmitter();
 
   /**
    * Event emitted when dropdown is open.
@@ -142,6 +148,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
     if (!this.clickedInside) {
       this.toggleDropdown = false;
       this.resetArrowKeyActiveElement();
+      this.close.emit();
     }
     this.clickedInside = false;
   }
@@ -176,18 +183,27 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
     // Arrow Down
     if ($event.keyCode === 40 && avaOpts.length > 0) {
       this.onArrowKeyDown();
+      /* istanbul ignore else */
+      if (this.focusedItemIndex >= avaOpts.length) {
+        this.focusedItemIndex = 0;
+      }
       avaOpts[this.focusedItemIndex].nativeElement.focus();
       $event.preventDefault();
     }
     // Arrow Up
     if ($event.keyCode === 38 && avaOpts.length) {
       this.onArrowKeyUp();
+      /* istanbul ignore else */
+      if (this.focusedItemIndex >= avaOpts.length) {
+        this.focusedItemIndex = avaOpts.length - 1;
+      }
       avaOpts[this.focusedItemIndex].nativeElement.focus();
       $event.preventDefault();
     }
     // Enter
     if ($event.keyCode === 13 && this.focusedItemIndex !== null) {
-      this.selectItem(this.availableItems[this.focusedItemIndex], this.focusedItemIndex);
+      const filteredItems = new ArrayFilterPipe().transform(this.availableItems, this.searchText, this.config.searchOnKey);
+      this.selectItem(filteredItems[this.focusedItemIndex], this.availableItems.indexOf(filteredItems[this.focusedItemIndex]));
       return false;
     }
   }
@@ -217,8 +233,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
     this.onTouched = fn;
   }
 
-  public writeValue(value: any) {
-    /* istanbul ignore else */
+  public writeValue(value: any, internal?: boolean) {
     if (value) {
       if (Array.isArray(value)) {
         if (this.multiple) {
@@ -238,7 +253,23 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
         }
         this.initDropdownValuesAndOptions();
       }
+    } else {
+      this.value = [];
+      /* istanbul ignore else */
+      if (!internal) {
+        this.reset();
+      }
     }
+    /* istanbul ignore else */
+    if (!internal) {
+      this.reset();
+    }
+
+  }
+
+  public reset() {
+    this.selectedItems = [];
+    this.initDropdownValuesAndOptions();
   }
   /**
    * function sets whether to show items not found text or not
@@ -274,14 +305,18 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
    * @param index:  index of the item
    */
   public deselectItem(item: any, index: number) {
-    this.selectedItems.splice(index, 1);
+
+    this.selectedItems.forEach((element: any, i: number) => {
+      if (item === element) {
+        this.selectedItems.splice(i, 1);
+      }
+    });
     if (!this.availableItems.includes(item)) {
       this.availableItems.push(item);
       this.availableItems.sort(this.config.customComparator);
     }
     this.selectedItems = [...this.selectedItems];
     this.availableItems = [...this.availableItems];
-    // this.writeValue(this.selectedItems);
     this.valueChanged();
     this.resetArrowKeyActiveElement();
   }
@@ -299,13 +334,19 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
       this.selectedItems = [];
       this.toggleDropdown = false;
     }
-    this.availableItems.splice(index, 1);
-    this.selectedItems.push(item);
+
+    this.availableItems.forEach((element: any, i: number) => {
+      if (item === element) {
+        this.selectedItems.push(item);
+        this.availableItems.splice(i, 1);
+      }
+    });
+
     this.selectedItems = [...this.selectedItems];
     this.availableItems = [...this.availableItems];
     this.selectedItems.sort(this.config.customComparator);
     this.availableItems.sort(this.config.customComparator);
-    // this.writeValue(this.selectedItems);
+    // this.searchText = null;
     this.valueChanged();
     this.resetArrowKeyActiveElement();
   }
@@ -331,11 +372,22 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
     }
   }
 
+  // DeselectAll items
+  public removeAllItems() {
+    this.availableItems = [...this.options];
+    this.selectedItems = [];
+    this.selectedItems.sort(this.config.customComparator);
+    this.availableItems.sort(this.config.customComparator);
+    // this.writeValue(this.selectedItems);
+    this.valueChanged();
+    this.resetArrowKeyActiveElement();
+  }
+
   /**
    * When selected items changes trigger the chaange back to parent
    */
   public valueChanged() {
-    this.writeValue(this.selectedItems);
+    this.writeValue(this.selectedItems, true);
     // this.valueChange.emit(this.value);
     this.change.emit({ value: this.value });
     this.setSelectedDisplayText();
@@ -367,7 +419,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
       limitTo: this.options.length,
       customComparator: undefined,
       noResultsFound: 'No results found!',
-      moreText: 'more',
+      moreText: 'items',
       searchOnKey: null,
       selectAll: true,
       selectAllText: "Select All"
@@ -407,8 +459,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
     }
 
     if (this.multiple && this.selectedItems.length > 0) {
-      this.selectedDisplayText = this.selectedItems.length === 1 ? text :
-        text + ` + ${this.selectedItems.length - 1} ${this.config.moreText}`;
+      this.selectedDisplayText = this.selectedItems.length === 1 ? text : `${this.selectedItems.length} ${this.config.moreText}`;
     } else {
       this.selectedDisplayText = this.selectedItems.length === 0 ? this.config.placeholder : text;
     }
@@ -454,6 +505,13 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
   private resetArrowKeyActiveElement() {
     this.focusedItemIndex = null;
 
+  }
+
+  /**
+   * The change handler for search text
+   */
+  private searchTextChanged() {
+    this.searchChange.emit(this.searchText);
   }
 
 }

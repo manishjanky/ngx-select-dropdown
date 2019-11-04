@@ -8,7 +8,7 @@ import { SelectDropDownComponent } from "./components/ngx-select-dropdown-compon
 @NgModule({
   declarations: [SelectDropDownComponent, LimitToPipe, ArrayFilterPipe],
   imports: [CommonModule, FormsModule],
-  exports: [SelectDropDownComponent, LimitToPipe],
+  exports: [SelectDropDownComponent, LimitToPipe, ArrayFilterPipe],
   providers: [],
   bootstrap: []
 })
