@@ -12,7 +12,7 @@
         </div>
         <ul class="selected-items">
             <li tabindex="-1" *ngFor="let selected of selectedItems;let i = index" (click)="deselectItem(selected,i)">
-                <span class="nsdicon-close"></span>
+                <span *ngIf="selectedItems.length > 1 || !config.mustHaveAValue" class="nsdicon-close"></span>
                 <span> {{selected[config.displayKey] || selected}}</span>
             </li>
         </ul>

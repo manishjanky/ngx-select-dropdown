@@ -306,6 +306,10 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
    */
   public deselectItem(item: any, index: number) {
 
+    if (this.selectedItems.length <= 1 && this.config.mustHaveAValue) {
+      return;
+    }
+
     this.selectedItems.forEach((element: any, i: number) => {
       if (item === element) {
         this.selectedItems.splice(i, 1);
@@ -395,7 +399,8 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
       customComparator: undefined,
       noResultsFound: 'No results found!',
       moreText: 'more',
-      searchOnKey: null
+      searchOnKey: null,
+      mustHaveAValue: false
     };
     if (this.config === "undefined" || Object.keys(this.config).length === 0) {
       this.config = { ...config };
