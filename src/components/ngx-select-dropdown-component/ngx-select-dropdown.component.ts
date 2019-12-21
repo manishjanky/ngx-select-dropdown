@@ -148,6 +148,8 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
     if (!this.clickedInside) {
       this.toggleDropdown = false;
       this.resetArrowKeyActiveElement();
+      // clear searh on close
+      this.searchText = null;
       this.close.emit();
     }
     this.clickedInside = false;
@@ -233,6 +235,10 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
     this.onTouched = fn;
   }
 
+  public setDisabledState(isDisabled: boolean) {
+    this.disabled = isDisabled;
+  }
+
   public writeValue(value: any, internal?: boolean) {
     if (value) {
       if (Array.isArray(value)) {
@@ -290,9 +296,11 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
     this.selectedItems = [];
     this.searchText = null;
     this.options = this.options || [];
+    /* istanbul ignore else */
     if (changes.options) {
       this.availableItems = [...this.options.sort(this.config.customComparator)];
     }
+    /* istanbul ignore else */
     if (changes.value && JSON.stringify(changes.value.currentValue) === JSON.stringify([])) {
       this.availableItems = [...this.options.sort(this.config.customComparator)];
     }
@@ -307,10 +315,12 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
   public deselectItem(item: any, index: number) {
 
     this.selectedItems.forEach((element: any, i: number) => {
+      /* istanbul ignore else */
       if (item === element) {
         this.selectedItems.splice(i, 1);
       }
     });
+    /* istanbul ignore else */
     if (!this.availableItems.includes(item)) {
       this.availableItems.push(item);
       this.availableItems.sort(this.config.customComparator);
@@ -327,7 +337,9 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
    * @param index:  index of the item
    */
   public selectItem(item: string, index?: number) {
+    /* istanbul ignore else */
     if (!this.multiple) {
+      /* istanbul ignore else */
       if (this.selectedItems.length > 0) {
         this.availableItems.push(this.selectedItems[0]);
       }
@@ -336,11 +348,17 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
     }
 
     this.availableItems.forEach((element: any, i: number) => {
+      /* istanbul ignore else */
       if (item === element) {
         this.selectedItems.push(item);
         this.availableItems.splice(i, 1);
       }
     });
+
+    /* istanbul ignore else */
+    if (this.config.clearOnSelection) {
+      this.searchText = null;
+    }
 
     this.selectedItems = [...this.selectedItems];
     this.availableItems = [...this.availableItems];
@@ -369,6 +387,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
     if (this.toggleDropdown) {
       this.open.emit();
     } else {
+      this.searchText = null;
       this.close.emit();
     }
     this.resetArrowKeyActiveElement();
@@ -395,8 +414,10 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
       customComparator: undefined,
       noResultsFound: 'No results found!',
       moreText: 'more',
-      searchOnKey: null
+      searchOnKey: null,
+      clearOnSelection: false
     };
+    /* istanbul ignore else */
     if (this.config === "undefined" || Object.keys(this.config).length === 0) {
       this.config = { ...config };
     }
@@ -405,6 +426,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
     }
     // Adding placeholder in config as default param
     this.selectedDisplayText = this.config["placeholder"];
+    /* istanbul ignore else */
     if (this.value !== "" && typeof this.value !== "undefined") {
       if (Array.isArray(this.value)) {
         this.selectedItems = this.value;
@@ -427,6 +449,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
    */
   private setSelectedDisplayText() {
     let text: string = this.selectedItems[0];
+    /* istanbul ignore else */
     if (typeof this.selectedItems[0] === "object") {
       text = this.selectedItems[0][this.config.displayKey];
     }
@@ -443,10 +466,12 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
    * Event handler for arrow key up event thats focuses on a item
    */
   private onArrowKeyUp() {
+    /* istanbul ignore else */
     if (this.focusedItemIndex === 0) {
       this.focusedItemIndex = this.availableItems.length - 1;
       return;
     }
+    /* istanbul ignore else */
     if (this.onArrowKey()) {
       this.focusedItemIndex--;
     }
@@ -456,16 +481,19 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
    * Event handler for arrow key down event thats focuses on a item
    */
   private onArrowKeyDown() {
+    /* istanbul ignore else */
     if (this.focusedItemIndex === this.availableItems.length - 1) {
       this.focusedItemIndex = 0;
       return;
     }
+    /* istanbul ignore else */
     if (this.onArrowKey()) {
       this.focusedItemIndex++;
     }
   }
 
   private onArrowKey() {
+    /* istanbul ignore else */
     if (this.focusedItemIndex === null) {
       this.focusedItemIndex = 0;
       return false;
@@ -478,7 +506,6 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
    */
   private resetArrowKeyActiveElement() {
     this.focusedItemIndex = null;
-
   }
 
 }
