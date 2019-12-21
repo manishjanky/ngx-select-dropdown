@@ -87,6 +87,7 @@ config = {
         noResultsFound: 'No results found!' // text to be displayed when no items are found while searching
         searchPlaceholder:'Search' // label thats displayed in search input,
         searchOnKey: 'name' // key on which search should be performed this will be selective search. if undefined this will be extensive search on all keys
+        clearOnSelection: false // clears search criteria when an option is selected if set to true, default is false
       }
 ````
 
@@ -174,6 +175,11 @@ config = {...config, height:'200px'};
 * v1.2.0
 ````
  Search text change event searchChange
+````
+* v1.3.0
+````
+ Clear search on selection config
+ Disable with reactive forms .disable()
 ````
 ## Help Improve
 

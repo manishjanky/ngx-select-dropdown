@@ -93,7 +93,7 @@
     "copy-webpack-plugin": "^4.5.1",
     "css-loader": "^0.28.10",
     "gh-pages": "^1.0.0",
-    "gulp": "^3.9.0",
+    "gulp": "^3.9.1",
     "gulp-inline-ng2-template": "^4.0.0",
     "istanbul-instrumenter-loader": "^3.0.0",
     "jasmine-core": "^2.99.1",
