@@ -270,11 +270,11 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
     if (!internal) {
       this.reset();
     }
-
   }
 
   public reset() {
     this.selectedItems = [];
+    this.availableItems = [...this.options.sort(this.config.customComparator)];
     this.initDropdownValuesAndOptions();
   }
   /**
