@@ -1,7 +1,19 @@
-import { ArrayFilterPipe } from './../../pipes/filter-by.pipe';
+import { ArrayFilterPipe } from "./../../pipes/filter-by.pipe";
 import {
-  Component, OnInit, Input, EventEmitter, Output, HostListener,
-  OnChanges, SimpleChanges, ViewChildren, ElementRef, QueryList, AfterViewInit, ChangeDetectorRef, forwardRef
+  Component,
+  OnInit,
+  Input,
+  EventEmitter,
+  Output,
+  HostListener,
+  OnChanges,
+  SimpleChanges,
+  ViewChildren,
+  ElementRef,
+  QueryList,
+  AfterViewInit,
+  ChangeDetectorRef,
+  forwardRef
 } from "@angular/core";
 import { NG_VALUE_ACCESSOR } from "@angular/forms";
 
@@ -17,8 +29,8 @@ import { NG_VALUE_ACCESSOR } from "@angular/forms";
     }
   ]
 })
-export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit {
-
+export class SelectDropDownComponent
+  implements OnInit, OnChanges, AfterViewInit {
   /** value of the dropdown */
   @Input() public _value: any;
 
@@ -110,7 +122,9 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
   /**
    * Hold the reference to available items in the list to focus on the item when scrolling
    */
-  @ViewChildren('availableOption') public availableOptions: QueryList<ElementRef>;
+  @ViewChildren("availableOption") public availableOptions: QueryList<
+    ElementRef
+  >;
 
   get value() {
     return this._value;
@@ -121,13 +135,18 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
     this.onTouched();
   }
 
-  constructor(private cdref: ChangeDetectorRef, public _elementRef: ElementRef) {
+  constructor(
+    private cdref: ChangeDetectorRef,
+    public _elementRef: ElementRef
+  ) {
     this.multiple = false;
   }
 
-  public onChange: any = () => { // empty
+  public onChange: any = () => {
+    // empty
   }
-  public onTouched: any = () => { // empty
+  public onTouched: any = () => {
+    // empty
   }
 
   /**
@@ -135,7 +154,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
    * if many instances are there, this detects if clicked inside
    * this instance
    */
-  @HostListener('click')
+  @HostListener("click")
   public clickInsideComponent() {
     this.clickedInside = true;
   }
@@ -143,7 +162,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
   /**
    * click handler on documnent to hide the open dropdown if clicked outside
    */
-  @HostListener('document:click')
+  @HostListener("document:click")
   public clickOutsideComponent() {
     if (!this.clickedInside) {
       this.toggleDropdown = false;
@@ -158,7 +177,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
   /**
    * click handler on documnent to hide the open dropdown if clicked outside
    */
-  @HostListener('document:keydown')
+  @HostListener("document:keydown")
   public KeyPressOutsideComponent() {
     if (!this.insideKeyPress) {
       this.toggleDropdown = false;
@@ -170,7 +189,7 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
    * Event handler for key up and down event and enter press for selecting element
    * @param event
    */
-  @HostListener('keydown', ['$event'])
+  @HostListener("keydown", ["$event"])
   public handleKeyboardEvent($event: KeyboardEvent) {
     this.insideKeyPress = true;
     if ($event.keyCode === 27 || this.disabled) {
@@ -204,8 +223,15 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
     }
     // Enter
     if ($event.keyCode === 13 && this.focusedItemIndex !== null) {
-      const filteredItems = new ArrayFilterPipe().transform(this.availableItems, this.searchText, this.config.searchOnKey);
-      this.selectItem(filteredItems[this.focusedItemIndex], this.availableItems.indexOf(filteredItems[this.focusedItemIndex]));
+      const filteredItems = new ArrayFilterPipe().transform(
+        this.availableItems,
+        this.searchText,
+        this.config.searchOnKey
+      );
+      this.selectItem(
+        filteredItems[this.focusedItemIndex],
+        this.availableItems.indexOf(filteredItems[this.focusedItemIndex])
+      );
       return false;
     }
   }
@@ -215,7 +241,9 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
    */
   public ngOnInit() {
     if (typeof this.options !== "undefined" && Array.isArray(this.options)) {
-      this.availableItems = [...this.options.sort(this.config.customComparator)];
+      this.availableItems = [
+        ...this.options.sort(this.config.customComparator)
+      ];
       this.initDropdownValuesAndOptions();
     }
   }
@@ -298,11 +326,18 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
     this.options = this.options || [];
     /* istanbul ignore else */
     if (changes.options) {
-      this.availableItems = [...this.options.sort(this.config.customComparator)];
+      this.availableItems = [
+        ...this.options.sort(this.config.customComparator)
+      ];
     }
     /* istanbul ignore else */
-    if (changes.value && JSON.stringify(changes.value.currentValue) === JSON.stringify([])) {
-      this.availableItems = [...this.options.sort(this.config.customComparator)];
+    if (changes.value) {
+      /* istanbul ignore else */
+      if (JSON.stringify(changes.value.currentValue) === JSON.stringify([])) {
+        this.availableItems = [
+          ...this.options.sort(this.config.customComparator)
+        ];
+      }
     }
     this.initDropdownValuesAndOptions();
   }
@@ -313,7 +348,6 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
    * @param index:  index of the item
    */
   public deselectItem(item: any, index: number) {
-
     this.selectedItems.forEach((element: any, i: number) => {
       /* istanbul ignore else */
       if (item === element) {
@@ -406,14 +440,14 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
   private initDropdownValuesAndOptions() {
     const config: any = {
       displayKey: "description",
-      height: 'auto',
+      height: "auto",
       search: false,
-      placeholder: 'Select',
-      searchPlaceholder: 'Search',
+      placeholder: "Select",
+      searchPlaceholder: "Search",
       limitTo: this.options.length,
       customComparator: undefined,
-      noResultsFound: 'No results found!',
-      moreText: 'more',
+      noResultsFound: "No results found!",
+      moreText: "more",
       searchOnKey: null,
       clearOnSelection: false
     };
@@ -435,7 +469,9 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
       }
 
       this.selectedItems.forEach((item: any) => {
-        const ind = this.availableItems.findIndex((aItem: any) => JSON.stringify(item) === JSON.stringify(aItem));
+        const ind = this.availableItems.findIndex(
+          (aItem: any) => JSON.stringify(item) === JSON.stringify(aItem)
+        );
         if (ind !== -1) {
           this.availableItems.splice(ind, 1);
         }
@@ -455,10 +491,14 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
     }
 
     if (this.multiple && this.selectedItems.length > 0) {
-      this.selectedDisplayText = this.selectedItems.length === 1 ? text :
-        text + ` + ${this.selectedItems.length - 1} ${this.config.moreText}`;
+      this.selectedDisplayText =
+        this.selectedItems.length === 1
+          ? text
+          : text +
+            ` + ${this.selectedItems.length - 1} ${this.config.moreText}`;
     } else {
-      this.selectedDisplayText = this.selectedItems.length === 0 ? this.config.placeholder : text;
+      this.selectedDisplayText =
+        this.selectedItems.length === 0 ? this.config.placeholder : text;
     }
   }
 
@@ -507,5 +547,4 @@ export class SelectDropDownComponent implements OnInit, OnChanges, AfterViewInit
   private resetArrowKeyActiveElement() {
     this.focusedItemIndex = null;
   }
-
 }
