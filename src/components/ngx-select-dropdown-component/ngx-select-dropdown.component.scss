@@ -1,6 +1,7 @@
 .ngx-dropdown-container {
    width: 100%;
    position: relative;
+
    button {
       display: inline-block;
       margin-bottom: 0;
@@ -17,22 +18,41 @@
       white-space: nowrap;
       overflow-x: hidden;
       text-overflow: ellipsis;
+      text-align: left;
+
       span {
+         display: inline;
          vertical-align: middle;
-         float: left;
       }
+
       .nsdicon-angle-down {
+         right: 5px;
+
+         &::before {
+            border-style: solid;
+            border-width: 0.1em 0.1em 0 0;
+            content: '';
+            display: inline-block;
+            height: 10px;
+            position: relative;
+            vertical-align: text-top;
+            width: 10px;
+            top: 0;
+            transform: rotate(135deg);
+         }
+
          position: relative;
-         font-size: large;
          float: right;
       }
    }
+
    .ngx-dropdown-button {
       width: 100%;
       min-height: 30px;
       padding: 5px 10px 5px 10px;
       background-color: white;
    }
+
    .ngx-dropdown-list-container {
       box-sizing: border-box;
       border: 1px solid rgba(0, 0, 0, 0.15);
@@ -48,10 +68,12 @@
       -moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.21);
       box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.21);
       overflow-y: auto;
+
       .search-container {
          position: relative;
          padding-top: 10px;
          margin-top: 5px;
+
          input {
             background-color: transparent;
             border: none;
@@ -66,14 +88,17 @@
             box-shadow: none;
             box-sizing: content-box;
             transition: all 0.3s;
+
             &:focus {
                border-bottom: 1px solid #26a69a;
             }
+
             &:focus+label {
                transform: translateY(-2px) scale(0.8);
                transform-origin: 0 0;
             }
          }
+
          label {
             color: #9e9e9e;
             position: absolute;
@@ -91,30 +116,40 @@
             text-align: initial;
             transform: translateY(12px);
             pointer-events: none;
+
             &.active {
                transform: translateY(-2px) scale(0.8);
                transform-origin: 0 0;
             }
          }
       }
+
       ul {
          margin-top: 1rem;
          margin-bottom: 1rem;
          list-style-type: none;
          padding-left: 0px;
+
          &.selected-items {
             li {
                background-color: #337ab7;
                color: white;
                margin-bottom: 2px;
+
+               .nsdicon-close {
+                  font-weight: bold;
+                  font-size: large;
+               }
             }
          }
+
          &.available-items {
             li.active {
                background-color: #337ab7;
                color: #ffff;
             }
          }
+
          li {
             font-size: inherit;
             cursor: pointer;
@@ -124,12 +159,11 @@
             font-weight: 400;
             line-height: 1.42857143;
             color: #333;
-            white-space: normal; // span::before {
-            //     vertical-align: middle;
-            // }
+            white-space: normal;
          }
       }
    }
+
    .disabled {
       pointer-events: none;
       background-color: #e9ecef;

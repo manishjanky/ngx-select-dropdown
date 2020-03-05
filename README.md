@@ -48,7 +48,7 @@ import { SelectDropDownModule } from 'ngx-select-dropdown'
 class YourModule { ... }
 `````
 
-* include css styles in you `angular-cli.json`.
+* include css styles in you `angular-cli.json` for versions earlier than 1.4.0
 
 `````
  "styles": [

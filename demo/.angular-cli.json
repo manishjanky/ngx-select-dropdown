@@ -20,7 +20,6 @@
       "prefix": "app",
       "styles": [
         "styles.css",
-        "../node_modules/ngx-select-dropdown/dist/assets/style.css",
         "../node_modules/materialize-css/dist/css/materialize.css"
       ],
       "scripts": [

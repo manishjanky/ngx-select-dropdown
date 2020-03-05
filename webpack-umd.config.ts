@@ -5,7 +5,6 @@ import * as angularExternals from 'webpack-angular-externals';
 import * as rxjsExternals from 'webpack-rxjs-externals';
 import * as CopyWebpackPlugin from 'copy-webpack-plugin';
 
-
 const pkg = JSON.parse(fs.readFileSync('./package.json').toString());
 
 export default {
@@ -20,7 +19,7 @@ export default {
     library: 'ticktock'
   },
   resolve: {
-    extensions: [ '.ts', '.js', '.json' ]
+    extensions: ['.ts', '.js', '.json']
   },
   externals: [
     angularExternals(),
@@ -79,9 +78,6 @@ export default {
       include: /\.min\.js$/,
       sourceMap: true
     }),
-    new CopyWebpackPlugin([
-      { from: './src/assets', to: './assets' },
-    ]),
 
     new webpack.BannerPlugin({
       banner: `

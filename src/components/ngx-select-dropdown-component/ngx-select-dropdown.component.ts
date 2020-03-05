@@ -288,7 +288,7 @@ export class SelectDropDownComponent
         this.initDropdownValuesAndOptions();
       }
     } else {
-      this.value = [];
+      // this.value = [];
       /* istanbul ignore else */
       if (!internal) {
         this.reset();
@@ -443,7 +443,7 @@ export class SelectDropDownComponent
       height: "auto",
       search: false,
       placeholder: "Select",
-      searchPlaceholder: "Search",
+      searchPlaceholder: "Search...",
       limitTo: this.options.length,
       customComparator: undefined,
       noResultsFound: "No results found!",
@@ -495,7 +495,7 @@ export class SelectDropDownComponent
         this.selectedItems.length === 1
           ? text
           : text +
-            ` + ${this.selectedItems.length - 1} ${this.config.moreText}`;
+          ` + ${this.selectedItems.length - 1} ${this.config.moreText}`;
     } else {
       this.selectedDisplayText =
         this.selectedItems.length === 0 ? this.config.placeholder : text;
