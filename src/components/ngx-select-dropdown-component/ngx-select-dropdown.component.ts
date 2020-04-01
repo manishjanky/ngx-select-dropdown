@@ -144,10 +144,10 @@ export class SelectDropDownComponent
 
   public onChange: any = () => {
     // empty
-  }
+  };
   public onTouched: any = () => {
     // empty
-  }
+  };
 
   /**
    * click listener for host inside this component i.e
@@ -329,6 +329,7 @@ export class SelectDropDownComponent
       this.availableItems = [
         ...this.options.sort(this.config.customComparator)
       ];
+      this.config.limitTo = this.options.length;
     }
     /* istanbul ignore else */
     if (changes.value) {
@@ -340,6 +341,7 @@ export class SelectDropDownComponent
       }
     }
     this.initDropdownValuesAndOptions();
+    this.config.limitTo = this.options.length;
   }
 
   /**
@@ -354,13 +356,14 @@ export class SelectDropDownComponent
         this.selectedItems.splice(i, 1);
       }
     });
+    let sortedItems = [...this.availableItems];
     /* istanbul ignore else */
     if (!this.availableItems.includes(item)) {
       this.availableItems.push(item);
-      this.availableItems.sort(this.config.customComparator);
+      sortedItems = this.availableItems.sort(this.config.customComparator);
     }
     this.selectedItems = [...this.selectedItems];
-    this.availableItems = [...this.availableItems];
+    this.availableItems = [...sortedItems];
     this.valueChanged();
     this.resetArrowKeyActiveElement();
   }
@@ -458,6 +461,7 @@ export class SelectDropDownComponent
     for (const key of Object.keys(config)) {
       this.config[key] = this.config[key] ? this.config[key] : config[key];
     }
+    this.config = { ...this.config };
     // Adding placeholder in config as default param
     this.selectedDisplayText = this.config["placeholder"];
     /* istanbul ignore else */
@@ -495,7 +499,7 @@ export class SelectDropDownComponent
         this.selectedItems.length === 1
           ? text
           : text +
-          ` + ${this.selectedItems.length - 1} ${this.config.moreText}`;
+            ` + ${this.selectedItems.length - 1} ${this.config.moreText}`;
     } else {
       this.selectedDisplayText =
         this.selectedItems.length === 0 ? this.config.placeholder : text;
