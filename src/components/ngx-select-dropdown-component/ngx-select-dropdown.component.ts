@@ -144,10 +144,10 @@ export class SelectDropDownComponent
 
   public onChange: any = () => {
     // empty
-  };
+  }
   public onTouched: any = () => {
     // empty
-  };
+  }
 
   /**
    * click listener for host inside this component i.e
