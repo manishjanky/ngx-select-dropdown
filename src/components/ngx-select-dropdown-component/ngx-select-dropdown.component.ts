@@ -322,7 +322,7 @@ export class SelectDropDownComponent
    */
   public ngOnChanges(changes: SimpleChanges) {
     this.selectedItems = [];
-    this.searchText = null;
+    // this.searchText = null;
     this.options = this.options || [];
     /* istanbul ignore else */
     if (changes.options) {
@@ -341,7 +341,6 @@ export class SelectDropDownComponent
       }
     }
     this.initDropdownValuesAndOptions();
-    this.config.limitTo = this.options.length;
   }
 
   /**
