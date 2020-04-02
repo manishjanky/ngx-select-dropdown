@@ -1,6 +1,6 @@
 {
   "name": "ngx-select-dropdown",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "A angular(4+) select dropdown for single select or multiselct module.",
   "main": "./dist/index.umd.js",
   "module": "./dist/index.js",
