@@ -57,7 +57,7 @@ export class SelectDropDownComponent
   /**
    * change event when value changes to provide user to handle things in change event
    */
-  @Output() public change: EventEmitter<any> = new EventEmitter();
+  @Output() public selectionChange: EventEmitter<any> = new EventEmitter();
 
   /**
    * The search text change event emitter emitted when user type in the search input
@@ -411,7 +411,7 @@ export class SelectDropDownComponent
   public valueChanged() {
     this.writeValue(this.selectedItems, true);
     // this.valueChange.emit(this.value);
-    this.change.emit({ value: this.value });
+    this.selectionChange.emit({ value: this.value });
     this.setSelectedDisplayText();
   }
 
@@ -451,7 +451,8 @@ export class SelectDropDownComponent
       noResultsFound: "No results found!",
       moreText: "more",
       searchOnKey: null,
-      clearOnSelection: false
+      clearOnSelection: false,
+      inputDirection: 'ltr'
     };
     /* istanbul ignore else */
     if (this.config === "undefined" || Object.keys(this.config).length === 0) {
