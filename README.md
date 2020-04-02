@@ -88,6 +88,7 @@ config = {
         searchPlaceholder:'Search' // label thats displayed in search input,
         searchOnKey: 'name' // key on which search should be performed this will be selective search. if undefined this will be extensive search on all keys
         clearOnSelection: false // clears search criteria when an option is selected if set to true, default is false
+        inputDirection: 'ltr' // the direction of the search input can be rtl or ltr(default)
       }
 ````
 
