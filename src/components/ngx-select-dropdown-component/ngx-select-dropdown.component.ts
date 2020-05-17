@@ -13,7 +13,7 @@ import {
   QueryList,
   AfterViewInit,
   ChangeDetectorRef,
-  forwardRef
+  forwardRef,
 } from "@angular/core";
 import { NG_VALUE_ACCESSOR } from "@angular/forms";
 
@@ -25,9 +25,9 @@ import { NG_VALUE_ACCESSOR } from "@angular/forms";
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => SelectDropDownComponent),
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
 export class SelectDropDownComponent
   implements OnInit, OnChanges, AfterViewInit {
@@ -144,10 +144,10 @@ export class SelectDropDownComponent
 
   public onChange: any = () => {
     // empty
-  }
+  };
   public onTouched: any = () => {
     // empty
-  }
+  };
 
   /**
    * click listener for host inside this component i.e
@@ -242,7 +242,7 @@ export class SelectDropDownComponent
   public ngOnInit() {
     if (typeof this.options !== "undefined" && Array.isArray(this.options)) {
       this.availableItems = [
-        ...this.options.sort(this.config.customComparator)
+        ...this.options.sort(this.config.customComparator),
       ];
       this.initDropdownValuesAndOptions();
     }
@@ -327,7 +327,7 @@ export class SelectDropDownComponent
     /* istanbul ignore else */
     if (changes.options) {
       this.availableItems = [
-        ...this.options.sort(this.config.customComparator)
+        ...this.options.sort(this.config.customComparator),
       ];
       this.config.limitTo = this.options.length;
     }
@@ -336,7 +336,7 @@ export class SelectDropDownComponent
       /* istanbul ignore else */
       if (JSON.stringify(changes.value.currentValue) === JSON.stringify([])) {
         this.availableItems = [
-          ...this.options.sort(this.config.customComparator)
+          ...this.options.sort(this.config.customComparator),
         ];
       }
     }
@@ -436,6 +436,10 @@ export class SelectDropDownComponent
     this.searchChange.emit(this.searchText);
   }
 
+  public changeSearchText($event) {
+    $event.stopPropagation();
+  }
+
   /**
    * initialize the config and other properties
    */
@@ -452,7 +456,7 @@ export class SelectDropDownComponent
       moreText: "more",
       searchOnKey: null,
       clearOnSelection: false,
-      inputDirection: 'ltr'
+      inputDirection: "ltr",
     };
     /* istanbul ignore else */
     if (this.config === "undefined" || Object.keys(this.config).length === 0) {
