@@ -144,10 +144,10 @@ export class SelectDropDownComponent
 
   public onChange: any = () => {
     // empty
-  };
+  }
   public onTouched: any = () => {
     // empty
-  };
+  }
 
   /**
    * click listener for host inside this component i.e
@@ -198,7 +198,7 @@ export class SelectDropDownComponent
       return;
     }
     const avaOpts = this.availableOptions.toArray();
-    if (avaOpts.length === 0 && !this.toggleDropdown) {
+    if ($event.keyCode !== 9 && avaOpts.length === 0 && !this.toggleDropdown) {
       this.toggleDropdown = true;
     }
     // Arrow Down
@@ -436,7 +436,7 @@ export class SelectDropDownComponent
     this.searchChange.emit(this.searchText);
   }
 
-  public changeSearchText($event) {
+  public changeSearchText($event: any) {
     $event.stopPropagation();
   }
 
