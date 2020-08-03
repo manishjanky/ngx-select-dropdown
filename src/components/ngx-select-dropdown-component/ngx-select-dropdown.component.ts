@@ -329,7 +329,6 @@ export class SelectDropDownComponent
       this.availableItems = [
         ...this.options.sort(this.config.customComparator),
       ];
-      this.config.limitTo = this.options.length;
     }
     /* istanbul ignore else */
     if (changes.value) {
@@ -450,7 +449,7 @@ export class SelectDropDownComponent
       search: false,
       placeholder: "Select",
       searchPlaceholder: "Search...",
-      limitTo: this.options.length,
+      limitTo: 0,
       customComparator: undefined,
       noResultsFound: "No results found!",
       moreText: "more",
