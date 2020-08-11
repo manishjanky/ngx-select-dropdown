@@ -113,4 +113,10 @@ describe('ArrayLimitToPipe', () => {
       const pipe = new LimitToPipe();
       expect(pipe.transform('test' as any, 5)).toEqual('test' as any);
    });
+
+   it('should return the full array when 0 limit', () => {
+      const data = JSON.parse(JSON.stringify(testData));
+      const pipe = new LimitToPipe();
+      expect(pipe.transform(data, 0)).toEqual(data);
+   });
 });
