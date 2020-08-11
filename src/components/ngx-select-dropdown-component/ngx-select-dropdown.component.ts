@@ -159,11 +159,22 @@ export class SelectDropDownComponent
     this.clickedInside = true;
   }
 
+  @HostListener("blur", ["$event"]) public blur() {
+    this.toggleDropdown = false;
+  }
+
+  @HostListener("focus", ["$event"]) public focus() {
+    /* istanbul ignore else */
+    if (!this.disabled) {
+      this.toggleSelectDropdown();
+    }
+  }
   /**
    * click handler on documnent to hide the open dropdown if clicked outside
    */
   @HostListener("document:click")
   public clickOutsideComponent() {
+    /* istanbul ignore else */
     if (!this.clickedInside) {
       this.toggleDropdown = false;
       this.resetArrowKeyActiveElement();
@@ -179,6 +190,7 @@ export class SelectDropDownComponent
    */
   @HostListener("document:keydown")
   public KeyPressOutsideComponent() {
+    /* istanbul ignore else */
     if (!this.insideKeyPress) {
       this.toggleDropdown = false;
       this.resetArrowKeyActiveElement();
@@ -192,16 +204,19 @@ export class SelectDropDownComponent
   @HostListener("keydown", ["$event"])
   public handleKeyboardEvent($event: KeyboardEvent) {
     this.insideKeyPress = true;
+    /* istanbul ignore else */
     if ($event.keyCode === 27 || this.disabled) {
       this.toggleDropdown = false;
       this.insideKeyPress = false;
       return;
     }
     const avaOpts = this.availableOptions.toArray();
+    /* istanbul ignore else */
     if ($event.keyCode !== 9 && avaOpts.length === 0 && !this.toggleDropdown) {
       this.toggleDropdown = true;
     }
     // Arrow Down
+    /* istanbul ignore else */
     if ($event.keyCode === 40 && avaOpts.length > 0) {
       this.onArrowKeyDown();
       /* istanbul ignore else */
@@ -212,6 +227,7 @@ export class SelectDropDownComponent
       $event.preventDefault();
     }
     // Arrow Up
+    /* istanbul ignore else */
     if ($event.keyCode === 38 && avaOpts.length) {
       this.onArrowKeyUp();
       /* istanbul ignore else */
@@ -222,6 +238,7 @@ export class SelectDropDownComponent
       $event.preventDefault();
     }
     // Enter
+    /* istanbul ignore else */
     if ($event.keyCode === 13 && this.focusedItemIndex !== null) {
       const filteredItems = new ArrayFilterPipe().transform(
         this.availableItems,
@@ -240,6 +257,7 @@ export class SelectDropDownComponent
    * Component onInit
    */
   public ngOnInit() {
+    /* istanbul ignore else */
     if (typeof this.options !== "undefined" && Array.isArray(this.options)) {
       this.availableItems = [
         ...this.options.sort(this.config.customComparator),

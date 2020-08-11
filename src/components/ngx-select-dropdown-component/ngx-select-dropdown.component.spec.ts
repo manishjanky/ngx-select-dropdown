@@ -433,4 +433,19 @@ describe("SelectDropDownComponent", () => {
     expect(component.selectedItems.length).toEqual(0);
   });
 
+  it("Should focus", () => {
+    component.focus();
+    expect(component.toggleDropdown).toBeTruthy();
+  });
+
+  it("Should not focus", () => {
+    component.disabled = true;
+    component.focus();
+    expect(component.toggleDropdown).toBeFalsy();
+  });
+
+  it("Should  blur", () => {
+    component.blur();
+    expect(component.toggleDropdown).toBeFalsy();
+  });
 });
