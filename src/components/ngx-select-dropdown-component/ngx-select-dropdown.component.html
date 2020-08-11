@@ -1,7 +1,7 @@
 <div class="ngx-dropdown-container" tabindex="0">
     <button type="button" tabindex="-1" class="ngx-dropdown-button" [ngClass]="{'disabled':disabled}" [disabled]="disabled"
         (click)="toggleSelectDropdown()">
-        <span>{{selectedDisplayText}} </span>
+        <span class="display-text">{{selectedDisplayText}} </span>
         <span class="nsdicon-angle-down"></span>
     </button>
     <div class="ngx-dropdown-list-container" *ngIf="toggleDropdown" [style.maxHeight]="config.height">
