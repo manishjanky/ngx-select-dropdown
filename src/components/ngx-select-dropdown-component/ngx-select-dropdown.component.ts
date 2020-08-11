@@ -272,7 +272,7 @@ export class SelectDropDownComponent
       if (Array.isArray(value)) {
         if (this.multiple) {
           this.value = value;
-        } else {
+        } else if (value.length > 0) {
           this.value = value[0];
         }
       } else {
@@ -288,7 +288,7 @@ export class SelectDropDownComponent
         this.initDropdownValuesAndOptions();
       }
     } else {
-      // this.value = [];
+      this.value = [];
       /* istanbul ignore else */
       if (!internal) {
         this.reset();
@@ -333,7 +333,11 @@ export class SelectDropDownComponent
     /* istanbul ignore else */
     if (changes.value) {
       /* istanbul ignore else */
-      if (JSON.stringify(changes.value.currentValue) === JSON.stringify([])) {
+      if (
+        JSON.stringify(changes.value.currentValue) === JSON.stringify([]) ||
+        changes.value.currentValue === "" ||
+        changes.value.currentValue === null
+      ) {
         this.availableItems = [
           ...this.options.sort(this.config.customComparator),
         ];
@@ -471,8 +475,11 @@ export class SelectDropDownComponent
     if (this.value !== "" && typeof this.value !== "undefined") {
       if (Array.isArray(this.value)) {
         this.selectedItems = this.value;
-      } else {
+      } else if (this.value !== "" && this.value !== null) {
         this.selectedItems[0] = this.value;
+      } else {
+        this.selectedItems = [];
+        this.value = [];
       }
 
       this.selectedItems.forEach((item: any) => {
@@ -496,7 +503,6 @@ export class SelectDropDownComponent
     if (typeof this.selectedItems[0] === "object") {
       text = this.selectedItems[0][this.config.displayKey];
     }
-
     if (this.multiple && this.selectedItems.length > 0) {
       this.selectedDisplayText =
         this.selectedItems.length === 1

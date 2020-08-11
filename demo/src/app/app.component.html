@@ -212,6 +212,25 @@
             {{user.balance}}</p>
         </div>
       </div>
+
+      <h5>Reset </h5>
+      <div class="row">
+        <div class="col s12 l6">
+          <ngx-select-dropdown tabindex="0" [multiple]="true" [(ngModel)]="resetOption" [options]="options"
+            [config]="config"></ngx-select-dropdown>
+        </div>
+        <div class="col s12 l6 flow-text">
+          <p style="margin: 0;">Selected Options:-</p>
+          <p style="margin: 0;" *ngFor="let user of resetOption"><strong>Name:</strong> {{user.name}} ,
+            <strong>Balance:</strong>
+            {{user.balance}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12">
+          <button (click)="reset()" class="btn">Reset</button>
+        </div>
+      </div>
     </div>
   </div>
 
