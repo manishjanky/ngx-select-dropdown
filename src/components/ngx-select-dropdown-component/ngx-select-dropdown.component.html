@@ -10,7 +10,7 @@
                 [(ngModel)]="searchText" tabindex="-1" autocomplete="off" />
             <label [ngClass]="{'active': searchText}">
                 <span class="nsdicon-search"></span> {{config.searchPlaceholder}}</label>
-        </div>
+        </div>  
         <ul class="selected-items">
             <li tabindex="-1" *ngFor="let selected of selectedItems;let i = index" (click)="deselectItem(selected,i)">
                 <span class="nsdicon-close">x</span>
