@@ -510,7 +510,7 @@ export class SelectDropDownComponent
       });
     }
     this.setSelectedDisplayText();
-  } 
+  }
 
   /**
    * set the text to be displayed
