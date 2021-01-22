@@ -14,7 +14,9 @@
         <ul class="selected-items">
             <li tabindex="-1" *ngFor="let selected of selectedItems;let i = index" (click)="deselectItem(selected,i)">
                 <span class="nsdicon-close">x</span>
-                <span> {{selected[config.displayKey] || selected}}</span>
+                <span>
+                    {{config.displayFn ? config.displayFn(selected) : (selected[config.displayKey] || selected)}}
+                </span>
             </li>
         </ul>
         <hr *ngIf="selectedItems.length > 0 && availableItems.length > 0" />
@@ -22,7 +24,8 @@
             <li #availableOption
                 *ngFor="let item of availableItems| filterBy: searchText : config.searchOnKey | limitTo : config.limitTo;let i = index"
                 tabindex="-1" [ngClass]="{'active': focusedItemIndex == i}" (click)="selectItem(item,i)">
-                {{item[config.displayKey] || item}}</li>
+                {{config.displayFn ? config.displayFn(item) : (item[config.displayKey] || item)}}
+            </li>
             <li *ngIf="showNotFound">{{config.noResultsFound}}</li>
         </ul>
     </div>
