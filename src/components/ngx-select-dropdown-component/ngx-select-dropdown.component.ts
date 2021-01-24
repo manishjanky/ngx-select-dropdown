@@ -122,9 +122,8 @@ export class SelectDropDownComponent
   /**
    * Hold the reference to available items in the list to focus on the item when scrolling
    */
-  @ViewChildren("availableOption") public availableOptions: QueryList<
-    ElementRef
-  >;
+  @ViewChildren("availableOption")
+  public availableOptions: QueryList<ElementRef>;
 
   get value() {
     return this._value;
@@ -519,7 +518,11 @@ export class SelectDropDownComponent
     let text: string = this.selectedItems[0];
     /* istanbul ignore else */
     if (typeof this.selectedItems[0] === "object") {
-      text = this.selectedItems[0][this.config.displayKey];
+      if (this.config.displayFn) {
+        text = this.config.displayFn[this.selectedItems[0]];
+      } else {
+        text = this.selectedItems[0][this.config.displayKey];
+      }
     }
     if (this.multiple && this.selectedItems.length > 0) {
       this.selectedDisplayText =

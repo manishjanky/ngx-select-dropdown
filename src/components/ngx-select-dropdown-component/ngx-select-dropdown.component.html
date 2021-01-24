@@ -1,13 +1,13 @@
 <div class="ngx-dropdown-container" tabindex="0">
-    <button type="button" tabindex="-1" class="ngx-dropdown-button" [ngClass]="{'disabled':disabled}" [disabled]="disabled"
-        (click)="toggleSelectDropdown()">
+    <button type="button" tabindex="-1" class="ngx-dropdown-button" [ngClass]="{'disabled':disabled}"
+        [disabled]="disabled" (click)="toggleSelectDropdown()">
         <span class="display-text">{{selectedDisplayText}} </span>
         <span class="nsdicon-angle-down"></span>
     </button>
     <div class="ngx-dropdown-list-container" *ngIf="toggleDropdown" [style.maxHeight]="config.height">
         <div class="search-container" *ngIf="config.search">
-            <input (change)="changeSearchText($event)" [style.direction]="config.inputDirection" name="search-text" (input)="searchTextChanged()"
-                [(ngModel)]="searchText" tabindex="-1" autocomplete="off" />
+            <input (change)="changeSearchText($event)" [style.direction]="config.inputDirection" name="search-text"
+                (input)="searchTextChanged()" [(ngModel)]="searchText" tabindex="-1" autocomplete="off" />
             <label [ngClass]="{'active': searchText}">
                 <span class="nsdicon-search"></span> {{config.searchPlaceholder}}</label>
         </div>
@@ -23,7 +23,8 @@
         <ul class="available-items">
             <li #availableOption
                 *ngFor="let item of availableItems| filterBy: searchText : config.searchOnKey | limitTo : config.limitTo;let i = index"
-                tabindex="-1" [ngClass]="{'active': focusedItemIndex == i}" (click)="selectItem(item,i)">
+                tabindex="-1" [ngClass]="{'active': focusedItemIndex == i && !item.disabled, 'disabled': item.disabled}"
+                (click)="selectItem(item,i)">
                 {{config.displayFn ? config.displayFn(item) : (item[config.displayKey] || item)}}
             </li>
             <li *ngIf="showNotFound">{{config.noResultsFound}}</li>

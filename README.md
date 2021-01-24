@@ -77,7 +77,7 @@ class YourModule { ... }
 * `config: Object` - configuration object.
 ````
 config = {
-        displayFn:(item: any) => { return item.hello.world; } //a replacement ofr displayKey to support flexible text displaying for each item
+        displayFn:(item: any) => { return item.hello.world; } //to support flexible text displaying for each item
         displayKey:"description", //if objects array passed which key to be displayed defaults to description
         search:true //true/false for the search functionlity defaults to false,
         height: 'auto' //height of the list so that if there are more no of items it can show a scroll defaults to auto. With auto height scroll will never appear
