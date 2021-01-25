@@ -122,9 +122,8 @@ export class SelectDropDownComponent
   /**
    * Hold the reference to available items in the list to focus on the item when scrolling
    */
-  @ViewChildren("availableOption") public availableOptions: QueryList<
-    ElementRef
-  >;
+  @ViewChildren("availableOption")
+  public availableOptions: QueryList<ElementRef>;
 
   get value() {
     return this._value;
