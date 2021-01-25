@@ -519,7 +519,7 @@ export class SelectDropDownComponent
     let text: string = this.selectedItems[0];
     /* istanbul ignore else */
     if (typeof this.selectedItems[0] === "object") {
-      text = this.selectedItems[0][this.config.displayKey];
+      text = this.config.displayFn ? this.config.displayFn(this.selectedItems[0]) : this.selectedItems[0][this.config.displayKey];
     }
     if (this.multiple && this.selectedItems.length > 0) {
       this.selectedDisplayText =
