@@ -20,3 +20,4 @@ Fixes # (issue)
 - [ ] I have commented my code, particularly in hard-to-understand areas
 - [ ] I have made corresponding changes to the documentation
 - [ ] My changes generate no new warnings
+- [ ] My changes do not reduce the code coverage percentage. Approproiate test cases have been added for the new code.
