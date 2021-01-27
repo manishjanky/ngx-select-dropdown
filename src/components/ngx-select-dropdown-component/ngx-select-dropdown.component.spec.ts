@@ -8,14 +8,28 @@ import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { SelectDropDownComponent } from "./ngx-select-dropdown.component";
 
 const options = ["Option 1", "Option 2", "Option 3"];
-const objOptions = [
+interface Account {
+  _id: string,
+  index: number;
+  balance: string;
+  picture: string;
+  name: string;
+  firstName: string;
+  thirdPartyProfile: {
+    name: string;
+  }
+}
+const objOptions: Account[] = [
   {
     _id: "5a66d6c31d5e4e36c7711b7a",
     index: 0,
     balance: "$2,806.37",
     picture: "http://placehold.it/32x32",
     name: "Burns Dalton",
-    firstName: "Burns"
+    firstName: "Burns",
+    thirdPartyProfile: {
+      name: "Burns.D"
+    }
   },
   {
     _id: "5a66d6c3657e60c6073a2d22",
@@ -23,7 +37,10 @@ const objOptions = [
     balance: "$2,984.98",
     picture: "http://placehold.it/32x32",
     name: "Mcintyre Lawson",
-    firstName: "Mcintyre"
+    firstName: "Mcintyre",
+    thirdPartyProfile: {
+      name: "Mcint"
+    }
   },
   {
     _id: "5a66d6c376be165a5a7fae33",
@@ -31,7 +48,10 @@ const objOptions = [
     balance: "$2,794.16",
     picture: "http://placehold.it/32x32",
     name: "Amie Franklin",
-    firstName: "Amie"
+    firstName: "Amie",
+    thirdPartyProfile: {
+      name: "Frank"
+    }
   },
   {
     _id: "5a66d6c3f7854b6b4d96333b",
@@ -39,7 +59,10 @@ const objOptions = [
     balance: "$2,537.14",
     picture: "http://placehold.it/32x32",
     name: "Jocelyn Horton",
-    firstName: "Jocelyn"
+    firstName: "Jocelyn",
+    thirdPartyProfile: {
+      name: "Joce"
+    }
   }];
 describe("SelectDropDownComponent", () => {
   let component: SelectDropDownComponent;
@@ -198,6 +221,16 @@ describe("SelectDropDownComponent", () => {
     component.config.displayKey = "name";
     (component as any).setSelectedDisplayText();
     expect(component.selectedDisplayText).toEqual("Burns Dalton");
+  });
+
+  it("Should set the select text with 1 object as selected items and use display function to display sub-object", () => {
+    component.config.displayFn = (item: Account) => {
+      return item.thirdPartyProfile.name
+    };
+    component.selectedItems = [objOptions[0]];
+    component.multiple = false;
+    (component as any).setSelectedDisplayText();
+    expect(component.selectedDisplayText).toEqual("Burns.D");
   });
 
   it("Should Toggle Dropdown", () => {
