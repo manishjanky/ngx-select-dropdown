@@ -183,6 +183,11 @@ config = {...config, height:'200px'};
  Clear search on selection config
  Disable with reactive forms .disable()
 ````
+* v1.5.0
+````
+Custom function for displaying text for each option
+Add disabled class to different items based on item.disabled
+````
 ## Help Improve
 
 Found a bug or an issue with this? [Open a new issue](https://github.com/manishjanky/ngx-select-dropdown/issues) here on GitHub.
