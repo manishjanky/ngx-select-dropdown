@@ -9,7 +9,7 @@ import { SelectDropDownComponent } from "./ngx-select-dropdown.component";
 
 const options = ["Option 1", "Option 2", "Option 3"];
 interface Account {
-  _id: string,
+  _id: string;
   index: number;
   balance: string;
   picture: string;
@@ -17,7 +17,7 @@ interface Account {
   firstName: string;
   thirdPartyProfile: {
     name: string;
-  }
+  };
 }
 const objOptions: Account[] = [
   {
@@ -225,7 +225,7 @@ describe("SelectDropDownComponent", () => {
 
   it("Should set the select text with 1 object as selected items and use display function to display sub-object", () => {
     component.config.displayFn = (item: Account) => {
-      return item.thirdPartyProfile.name
+      return item.thirdPartyProfile.name;
     };
     component.selectedItems = [objOptions[0]];
     component.multiple = false;
