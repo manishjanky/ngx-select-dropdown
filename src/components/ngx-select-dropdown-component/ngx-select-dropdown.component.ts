@@ -383,6 +383,7 @@ export class SelectDropDownComponent
     }
     this.selectedItems = [...this.selectedItems];
     this.availableItems = [...sortedItems];
+    this.value = [];
     this.valueChanged();
     this.resetArrowKeyActiveElement();
   }
