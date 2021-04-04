@@ -1,5 +1,5 @@
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgxSelectDropdownModule } from './../../../ngx-select-dropdown/src/lib/ngx-select-dropdown.module';
+import { NgxSelectDropdownModule } from 'ngx-select-dropdown';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
