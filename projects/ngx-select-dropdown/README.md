@@ -188,6 +188,11 @@ config = {...config, height:'200px'};
 Custom function for displaying text for each option
 Add disabled class to different items based on item.disabled
 ````
+* v2.0.0
+````
+Angular library approach opted for development
+Angular Ivy compatibility
+````
 ## Help Improve
 
 Found a bug or an issue with this? [Open a new issue](https://github.com/manishjanky/ngx-select-dropdown/issues) here on GitHub.
