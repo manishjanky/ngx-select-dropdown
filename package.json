@@ -45,7 +45,7 @@
     "test": "ng test ngx-select-dropdown",
     "lint": "ng lint ngx-select-dropdown",
     "e2e": "ng e2e",
-    "publish": "cd dist/ngx-select-dropdown && npm publish",
+    "publish": "ng build && cd dist/ngx-select-dropdown && npm publish",
     "ci": "npm run lint && npm run test && npm run build"
   },
   "private": false,
