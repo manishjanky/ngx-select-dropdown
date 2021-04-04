@@ -1,0 +1,43 @@
+/* You can add global styles to this file, and also import other style files */
+html,body{
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+body{
+    background-image: url(assets/back.jpg);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+.white{
+    background-color: #fff !important;
+}
+.container{
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+}
+h3{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+}
+
+.codeBlock{
+    box-sizing: border-box;
+     -moz-box-sizing: border-box;
+     padding: 2em;
+     margin:15px;
+     background: #e6eff1;
+     box-shadow: 0px 0px 20px rgba(0,0,0,0.0);
+     white-space: pre-wrap;
+ }
+ 
+ .codeBlock:hover{
+     box-shadow: 5px 5px 20px  #e6eff1;
+     background:rgb(158, 226, 235);
+     -webkit-transition: all .5s ease-out;
+   -moz-transition: all .5s ease-out ;
+   -ms-transition: all .5s ease-out ;
+   -o-transition: all .5s ease-out ;
+   transition: all .5s ease-out ;
+ 
+ }

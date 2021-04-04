@@ -1,0 +1,178 @@
+.ngx-dropdown-container {
+    width: 100%;
+    position: relative;
+  
+    button {
+      display: inline-block;
+      margin-bottom: 0;
+      font-weight: 400;
+      line-height: 1.42857143;
+      vertical-align: middle;
+      touch-action: manipulation;
+      cursor: pointer;
+      user-select: none;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      color: #333;
+      background-color: #fff;
+      white-space: nowrap;
+      overflow-x: hidden;
+      text-overflow: ellipsis;
+      text-align: left;
+  
+      span {
+        display: inline;
+        vertical-align: middle;
+      }
+  
+      .nsdicon-angle-down {
+        right: 5px;
+  
+        &::before {
+          border-style: solid;
+          border-width: 0.1em 0.1em 0 0;
+          content: "";
+          display: inline-block;
+          height: 10px;
+          position: relative;
+          vertical-align: text-top;
+          width: 10px;
+          top: 0;
+          transform: rotate(135deg);
+        }
+  
+        position: relative;
+        float: right;
+      }
+    }
+  
+    .ngx-dropdown-button {
+      width: 100%;
+      min-height: 30px;
+      padding: 5px 10px 5px 10px;
+      background-color: white;
+      .display-text {
+        display: inline-block;
+        width: calc(100% - 20px);
+      }
+    }
+  
+    .ngx-dropdown-list-container {
+      box-sizing: border-box;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      border-radius: 4px;
+      padding-left: 10px;
+      padding-right: 10px;
+      z-index: 999999999;
+      width: 100%;
+      background-clip: padding-box;
+      background: white;
+      position: absolute;
+      -webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.21);
+      -moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.21);
+      box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.21);
+      overflow-y: auto;
+  
+      .search-container {
+        position: relative;
+        padding-top: 10px;
+        margin-top: 5px;
+  
+        input {
+          background-color: transparent;
+          border: none;
+          border-bottom: 1px solid #9e9e9e;
+          border-radius: 0;
+          outline: none;
+          height: 2rem;
+          width: 100%;
+          font-size: 13px;
+          margin: 0;
+          padding: 0;
+          box-shadow: none;
+          box-sizing: content-box;
+          transition: all 0.3s;
+  
+          &:focus {
+            border-bottom: 1px solid #26a69a;
+          }
+  
+          &:focus + label {
+            transform: translateY(-2px) scale(0.8);
+            transform-origin: 0 0;
+          }
+        }
+  
+        label {
+          color: #9e9e9e;
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100%;
+          font-size: 1rem;
+          cursor: text;
+          -webkit-transition: -webkit-transform 0.2s ease-out;
+          transition: -webkit-transform 0.2s ease-out;
+          transition: transform 0.2s ease-out;
+          transition: transform 0.2s ease-out, -webkit-transform 0.2s ease-out;
+          -webkit-transform-origin: 0% 100%;
+          transform-origin: 0% 100%;
+          text-align: initial;
+          transform: translateY(12px);
+          pointer-events: none;
+  
+          &.active {
+            transform: translateY(-2px) scale(0.8);
+            transform-origin: 0 0;
+          }
+        }
+      }
+  
+      ul {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        list-style-type: none;
+        padding-left: 0px;
+  
+        &.selected-items {
+          li {
+            background-color: #337ab7;
+            color: white;
+            margin-bottom: 2px;
+  
+            .nsdicon-close {
+              font-weight: bold;
+              font-size: large;
+            }
+          }
+        }
+  
+        &.available-items {
+          li.active {
+            background-color: #337ab7;
+            color: #ffff;
+          }
+        }
+  
+        li {
+          font-size: inherit;
+          cursor: pointer;
+          display: block;
+          padding: 3px 20px;
+          clear: both;
+          font-weight: 400;
+          line-height: 1.42857143;
+          color: #333;
+          white-space: normal;
+        }
+      }
+    }
+  
+    .ngx-disabled {
+      pointer-events: none;
+      background-color: #e9ecef;
+      opacity: 1;
+      cursor: no-drop;
+    }
+  }
+  

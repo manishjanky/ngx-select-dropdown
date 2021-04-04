@@ -1,0 +1,46 @@
+{
+  "name": "ngx-select-dropdown",
+  "version": "1.5.0",
+  "description": "A angular(4+) select dropdown for single select or multiselct module.",
+  "license": "MIT",
+  "keywords": [
+    "angular",
+    "angular-2",
+    "angular-4",
+    "angular2",
+    "angular4",
+    "ng2",
+    "ng4",
+    "ngx",
+    "select",
+    "dropdown",
+    "multiselect",
+    "multi-select",
+    "dropdown",
+    "custom",
+    "combobox",
+    "ng-select",
+    "ngx-select",
+    "ng2-select",
+    "ng-dropdown",
+    "ngx-dropdown",
+    "ng2-dropdown"
+  ],
+  "author": {
+    "name": "Manish Kumar",
+    "email": "manishjanky@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/manishjanky/ngx-select-dropdown.git"
+  },
+  "bugs": {
+    "url": "https://github.com/manishjanky/ngx-select-dropdown/issues"
+  },
+  "homepage": "https://github.com/manishjanky/ngx-select-dropdown#readme",
+  
+  "peerDependencies": {
+    "@angular/common": ">=4.0.0",
+    "@angular/core": ">=4.0.0"
+  }
+}
