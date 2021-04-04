@@ -1,5 +1,5 @@
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgxSelectDropdownModule } from 'ngx-select-dropdown';
+import { SelectDropDownModule } from 'ngx-select-dropdown';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -10,7 +10,7 @@ import { AppComponent } from './app.component';
     AppComponent
   ],
   imports: [
-    BrowserModule, FormsModule, ReactiveFormsModule, NgxSelectDropdownModule
+    BrowserModule, FormsModule, ReactiveFormsModule, SelectDropDownModule
   ],
   providers: [],
   bootstrap: [AppComponent]

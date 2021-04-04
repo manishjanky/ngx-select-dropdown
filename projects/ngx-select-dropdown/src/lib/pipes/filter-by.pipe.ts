@@ -1,10 +1,10 @@
-import { Pipe, PipeTransform } from "@angular/core";
+import { Pipe, PipeTransform } from '@angular/core';
 
 /**
  * filters an array based on searctext
  */
 @Pipe({
-   name: "filterBy"
+   name: 'filterBy'
 })
 export class FilterByPipe implements PipeTransform {
    public transform(array: any[], searchText?: string, keyName?: string) {
@@ -19,7 +19,7 @@ export class FilterByPipe implements PipeTransform {
       if (!keyName) {
          return array.filter((item: any) => {
             for (const key in item) {
-               if (typeof item[key] !== "object" && item[key].toString().toLowerCase().indexOf(searchText.toLowerCase()) > -1) {
+               if (typeof item[key] !== 'object' && item[key].toString().toLowerCase().indexOf(searchText.toLowerCase()) > -1) {
                   return true;
                }
             }
@@ -27,7 +27,7 @@ export class FilterByPipe implements PipeTransform {
          });
       } else {
          return array.filter((item: any) => {
-            if (typeof item[keyName] !== "object" && item[keyName].toString().toLowerCase().indexOf(searchText.toLowerCase()) > -1) {
+            if (typeof item[keyName] !== 'object' && item[keyName].toString().toLowerCase().indexOf(searchText.toLowerCase()) > -1) {
                return true;
             }
             return false;
