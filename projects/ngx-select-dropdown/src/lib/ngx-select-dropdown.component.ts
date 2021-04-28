@@ -380,6 +380,9 @@ export class NgxSelectDropdownComponent
     }
     this.selectedItems = [...this.selectedItems];
     this.availableItems = [...sortedItems];
+    if(!Array.isArray(this.value)){
+      this.value = [];
+    }
     this.valueChanged();
     this.resetArrowKeyActiveElement();
   }
