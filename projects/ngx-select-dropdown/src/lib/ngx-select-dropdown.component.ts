@@ -380,6 +380,7 @@ export class NgxSelectDropdownComponent
     }
     this.selectedItems = [...this.selectedItems];
     this.availableItems = [...sortedItems];
+    /* istanbul ignore else */
     if (!Array.isArray(this.value)) {
       this.value = [];
     }
