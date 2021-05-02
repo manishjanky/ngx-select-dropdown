@@ -26,6 +26,9 @@
     "ngx-dropdown",
     "ng2-dropdown"
   ],
+  "scripts": {
+    "postversion": "git push && git push --tags"
+  },
   "author": {
     "name": "Manish Kumar",
     "email": "manishjanky@gmail.com"
