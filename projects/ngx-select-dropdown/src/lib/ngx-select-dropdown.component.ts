@@ -257,7 +257,7 @@ export class NgxSelectDropdownComponent
    */
   public ngOnInit() {
     /* istanbul ignore else */
-    if (typeof this.options !== "undefined" && Array.isArray(this.options)) {
+    if (typeof this.options !== 'undefined' && typeof this.config !== 'undefined' && Array.isArray(this.options)) {
       this.availableItems = [
         ...this.options.sort(this.config.customComparator),
       ];
@@ -318,6 +318,7 @@ export class NgxSelectDropdownComponent
   }
 
   public reset() {
+    if (!this.config) return;
     this.selectedItems = [];
     this.availableItems = [...this.options.sort(this.config.customComparator)];
     this.initDropdownValuesAndOptions();
@@ -337,6 +338,7 @@ export class NgxSelectDropdownComponent
    * Component onchage i.e when any of the input properties change
    */
   public ngOnChanges(changes: SimpleChanges) {
+    if (!this.config) return;
     this.selectedItems = [];
     // this.searchText = null;
     this.options = this.options || [];
