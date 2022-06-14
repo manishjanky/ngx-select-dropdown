@@ -1,4 +1,5 @@
-import { FilterByPipe } from './pipes/filter-by.pipe';
+import { SelectDropDownService } from "./ngx-select-dropdown.service";
+import { FilterByPipe } from "./pipes/filter-by.pipe";
 import {
   Component,
   OnInit,
@@ -14,18 +15,19 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   forwardRef,
-} from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
+} from "@angular/core";
+import { NG_VALUE_ACCESSOR } from "@angular/forms";
 @Component({
-  selector: 'ngx-select-dropdown',
-  templateUrl: './ngx-select-dropdown.component.html',
-  styleUrls: ['./ngx-select-dropdown.component.scss'],
+  selector: "ngx-select-dropdown",
+  templateUrl: "./ngx-select-dropdown.component.html",
+  styleUrls: ["./ngx-select-dropdown.component.scss"],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => NgxSelectDropdownComponent),
       multi: true,
     },
+    SelectDropDownService,
   ],
 })
 export class NgxSelectDropdownComponent
@@ -91,7 +93,7 @@ export class NgxSelectDropdownComponent
   /**
    * Selection text to be Displayed
    */
-  public selectedDisplayText = 'Select';
+  public selectedDisplayText = "Select";
 
   /**
    * Search text
@@ -121,7 +123,7 @@ export class NgxSelectDropdownComponent
   /**
    * Hold the reference to available items in the list to focus on the item when scrolling
    */
-  @ViewChildren('availableOption')
+  @ViewChildren("availableOption")
   public availableOptions: QueryList<ElementRef>;
 
   get value() {
@@ -142,26 +144,26 @@ export class NgxSelectDropdownComponent
 
   public onChange: any = () => {
     // empty
-  }
+  };
   public onTouched: any = () => {
     // empty
-  }
+  };
 
   /**
    * click listener for host inside this component i.e
    * if many instances are there, this detects if clicked inside
    * this instance
    */
-  @HostListener('click')
+  @HostListener("click")
   public clickInsideComponent() {
     this.clickedInside = true;
   }
 
-  @HostListener('blur') public blur() {
+  @HostListener("blur") public blur() {
     this.toggleDropdown = false;
   }
 
-  @HostListener('focus') public focus() {
+  @HostListener("focus") public focus() {
     /* istanbul ignore else */
     if (!this.disabled) {
       this.toggleSelectDropdown();
@@ -170,7 +172,7 @@ export class NgxSelectDropdownComponent
   /**
    * click handler on documnent to hide the open dropdown if clicked outside
    */
-  @HostListener('document:click')
+  @HostListener("document:click")
   public clickOutsideComponent() {
     /* istanbul ignore else */
     if (!this.clickedInside) {
@@ -186,7 +188,7 @@ export class NgxSelectDropdownComponent
   /**
    * click handler on documnent to hide the open dropdown if clicked outside
    */
-  @HostListener('document:keydown')
+  @HostListener("document:keydown")
   public KeyPressOutsideComponent() {
     /* istanbul ignore else */
     if (!this.insideKeyPress) {
@@ -198,7 +200,7 @@ export class NgxSelectDropdownComponent
   /**
    * Event handler for key up and down event and enter press for selecting element
    */
-  @HostListener('keydown', ['$event'])
+  @HostListener("keydown", ["$event"])
   public handleKeyboardEvent($event: KeyboardEvent | any) {
     this.insideKeyPress = true;
     /* istanbul ignore else */
@@ -255,7 +257,7 @@ export class NgxSelectDropdownComponent
    */
   public ngOnInit() {
     /* istanbul ignore else */
-    if (typeof this.options !== 'undefined' && Array.isArray(this.options)) {
+    if (typeof this.options !== "undefined" && Array.isArray(this.options)) {
       this.availableItems = [
         ...this.options.sort(this.config.customComparator),
       ];
@@ -349,7 +351,7 @@ export class NgxSelectDropdownComponent
       /* istanbul ignore else */
       if (
         JSON.stringify(changes.value.currentValue) === JSON.stringify([]) ||
-        changes.value.currentValue === '' ||
+        changes.value.currentValue === "" ||
         changes.value.currentValue === null
       ) {
         this.availableItems = [
@@ -466,21 +468,21 @@ export class NgxSelectDropdownComponent
    */
   private initDropdownValuesAndOptions() {
     const config: any = {
-      displayKey: 'description',
-      height: 'auto',
+      displayKey: "description",
+      height: "auto",
       search: false,
-      placeholder: 'Select',
-      searchPlaceholder: 'Search...',
+      placeholder: "Select",
+      searchPlaceholder: "Search...",
       limitTo: 0,
       customComparator: undefined,
-      noResultsFound: 'No results found!',
-      moreText: 'more',
+      noResultsFound: "No results found!",
+      moreText: "more",
       searchOnKey: null,
       clearOnSelection: false,
-      inputDirection: 'ltr',
+      inputDirection: "ltr",
     };
     /* istanbul ignore else */
-    if (this.config === 'undefined' || Object.keys(this.config).length === 0) {
+    if (this.config === "undefined" || Object.keys(this.config).length === 0) {
       this.config = { ...config };
     }
     for (const key of Object.keys(config)) {
@@ -488,12 +490,12 @@ export class NgxSelectDropdownComponent
     }
     this.config = { ...this.config };
     // Adding placeholder in config as default param
-    this.selectedDisplayText = this.config['placeholder'];
+    this.selectedDisplayText = this.config["placeholder"];
     /* istanbul ignore else */
-    if (this.value !== '' && typeof this.value !== 'undefined') {
+    if (this.value !== "" && typeof this.value !== "undefined") {
       if (Array.isArray(this.value)) {
         this.selectedItems = this.value;
-      } else if (this.value !== '' && this.value !== null) {
+      } else if (this.value !== "" && this.value !== null) {
         this.selectedItems[0] = this.value;
       } else {
         this.selectedItems = [];
@@ -518,7 +520,7 @@ export class NgxSelectDropdownComponent
   private setSelectedDisplayText() {
     let text: string = this.selectedItems[0];
     /* istanbul ignore else */
-    if (typeof this.selectedItems[0] === 'object') {
+    if (typeof this.selectedItems[0] === "object") {
       text = this.config.displayFn
         ? this.config.displayFn(this.selectedItems[0])
         : this.selectedItems[0][this.config.displayKey];
