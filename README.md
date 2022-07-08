@@ -201,7 +201,7 @@ Add disabled class to different items based on item.disabled
 Angular library approach opted for development
 Angular Ivy compatibility
 ````
-* v2.0.0
+* v3.0.0
 ````
 Dropdown singleton service to interact with dropdown instances
 Instance identifier
