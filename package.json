@@ -41,11 +41,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build ngx-select-dropdown",
+    "build": "ng build ngx-select-dropdown --configuration production",
     "test": "ng test ngx-select-dropdown",
     "lint": "ng lint ngx-select-dropdown",
     "e2e": "ng e2e",
-    "publish": "ng build ngx-select-dropdown && cd dist/ngx-select-dropdown && npm publish",
+    "publish": "ng build ngx-select-dropdown --configuration production && cd dist/ngx-select-dropdown && npm publish",
     "ci": "npm run lint && npm run test && npm run build",
     "postversion": "git push && git push --tags"
   },

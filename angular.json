@@ -22,6 +22,10 @@
           "options": {
             "tsConfig": "projects/ngx-select-dropdown/tsconfig.lib.json",
             "project": "projects/ngx-select-dropdown/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+            }
           }
         },
         "test": {
