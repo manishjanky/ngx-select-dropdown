@@ -9,6 +9,14 @@
       "sourceRoot": "projects/ngx-select-dropdown/src",
       "prefix": "ngx",
       "architect": {
+        "lint":{
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/ngx-select-dropdown/src/**/*.ts"
+            ]
+          }
+        },
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
