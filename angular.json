@@ -144,6 +144,6 @@
           }
         }
       }
-    }},
-  "defaultProject": "ngx-select-dropdown"
+    }
+  }
 }

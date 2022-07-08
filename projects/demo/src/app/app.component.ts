@@ -1,7 +1,7 @@
 import { SelectDropDownService } from 'ngx-select-dropdown';
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -97,8 +97,8 @@ export class AppComponent implements OnInit {
     },
   ];
   resetOption: any;
-  selectForm: FormGroup;
-  constructor(private fromBuilder: FormBuilder, private drodownService: SelectDropDownService) {
+  selectForm: UntypedFormGroup;
+  constructor(private fromBuilder: UntypedFormBuilder, private drodownService: SelectDropDownService) {
     // this.selectForm = this.fromBuilder.group({
     //   selectDrop: [null, Validators.required]
     // });
