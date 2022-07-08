@@ -3,6 +3,9 @@
   "rulesDirectory": ["node_modules/codelyzer"],
   "rules": {
     "component-class-suffix": false,
+    "deprecation": {
+      "severity": "warning"
+    },
     "directive-class-suffix": false,
     "interface-name": false,
     "invoke-injectable": false,
