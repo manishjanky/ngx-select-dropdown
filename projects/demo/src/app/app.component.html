@@ -146,7 +146,7 @@
             [multiple]="false" [(ngModel)]="singleSelect" [config]="config" [options]="options"></ngx-select-dropdown>
         </div>
         <div class="col s12 l6 flow-text">
-          <p style="margin: 0;">Balance of selected user: {{singleSelect?singleSelect[0]?.balance:''}}</p>
+          <p style="margin: 0;">Balance of selected user: {{singleSelect? singleSelect?.balance : ''}}</p>
         </div>
       </div>
 
@@ -158,7 +158,7 @@
           </ngx-select-dropdown>
         </div>
         <div class="col s12 l6 flow-text">
-          <p style="margin: 0;">Balance of selected user: {{singleSelect?singleSelect[0]?.balance:''}}</p>
+          <p style="margin: 0;">Balance of selected user: {{singleSelect?singleSelect?.balance:''}}</p>
         </div>
       </div>
 
