@@ -6,13 +6,12 @@ import { EventEmitter, Injectable } from "@angular/core";
 export class SelectDropDownService {
   openDropdownInstance = new EventEmitter<string>();
   closeDropdownInstance = new EventEmitter<string>();
-  private _isOpen: boolean;
+  openInstances: string[] = [];
   constructor() {
     // constructor
-    this._isOpen = false;
   }
-  get isOpen() {
-    return this._isOpen;
+  public isOpen(instanceId) {
+    return this.openInstances.indexOf(instanceId);
   }
   /**
    * @summary: Open a specific dropdown instance based on the instance ID.

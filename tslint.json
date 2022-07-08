@@ -6,7 +6,7 @@
     "directive-class-suffix": false,
     "interface-name": false,
     "invoke-injectable": false,
-    "max-line-length": [false, 100],
+    "max-line-length": [false, 200],
     "no-access-missing-member": false,
     "no-attribute-parameter-decorator": false,
     "no-console": [false, "time", "timeEnd", "trace"],
@@ -23,6 +23,7 @@
     "use-input-property-decorator": false,
     "use-output-property-decorator": false,
     "use-pipe-transform-interface": false,
-    "variable-name": [false, "allow-leading-underscore", "ban-keywords", "check-format"]
+    "variable-name": [false, "allow-leading-underscore", "ban-keywords", "check-format"],
+    "member-access": false
   }
 }

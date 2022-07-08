@@ -26,12 +26,10 @@ import { NG_VALUE_ACCESSOR } from "@angular/forms";
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => NgxSelectDropdownComponent),
       multi: true,
-    },
-    SelectDropDownService,
+    }
   ],
 })
-export class NgxSelectDropdownComponent
-  implements OnInit, OnChanges, AfterViewInit {
+export class NgxSelectDropdownComponent implements OnInit, OnChanges, AfterViewInit {
   /** value of the dropdown */
   @Input() public _value: any;
 
@@ -54,6 +52,9 @@ export class NgxSelectDropdownComponent
    * Value
    */
   @Input() public disabled: boolean;
+
+   /** unique identifier to uniquely identify particular instance */
+   @Input() public instanceId: any;
 
   /**
    * change event when value changes to provide user to handle things in change event
@@ -137,17 +138,18 @@ export class NgxSelectDropdownComponent
 
   constructor(
     private cdref: ChangeDetectorRef,
-    public _elementRef: ElementRef
+    public _elementRef: ElementRef,
+    private dropdownService: SelectDropDownService
   ) {
     this.multiple = false;
   }
 
   public onChange: any = () => {
     // empty
-  };
+  }
   public onTouched: any = () => {
     // empty
-  };
+  }
 
   /**
    * click listener for host inside this component i.e
@@ -257,12 +259,34 @@ export class NgxSelectDropdownComponent
    */
   public ngOnInit() {
     /* istanbul ignore else */
-    if (typeof this.options !== 'undefined' && typeof this.config !== 'undefined' && Array.isArray(this.options)) {
+    if (
+      typeof this.options !== "undefined" &&
+      typeof this.config !== "undefined" &&
+      Array.isArray(this.options)
+    ) {
       this.availableItems = [
         ...this.options.sort(this.config.customComparator),
       ];
       this.initDropdownValuesAndOptions();
     }
+    this.serviceSubscriptions();
+  }
+
+  serviceSubscriptions() {
+    this.dropdownService.openDropdownInstance.subscribe((instanceId) => {
+      if (this.instanceId === instanceId) {
+        this.toggleDropdown = true;
+        this.openStateChange();
+        this.resetArrowKeyActiveElement();
+      }
+    });
+    this.dropdownService.closeDropdownInstance.subscribe((instanceId) => {
+      if (this.instanceId === instanceId) {
+        this.toggleDropdown = false;
+        this.openStateChange();
+        this.resetArrowKeyActiveElement();
+      }
+    });
   }
 
   /**
@@ -318,7 +342,9 @@ export class NgxSelectDropdownComponent
   }
 
   public reset() {
-    if (!this.config) return;
+    if (!this.config) {
+      return;
+    }
     this.selectedItems = [];
     this.availableItems = [...this.options.sort(this.config.customComparator)];
     this.initDropdownValuesAndOptions();
@@ -338,7 +364,9 @@ export class NgxSelectDropdownComponent
    * Component onchage i.e when any of the input properties change
    */
   public ngOnChanges(changes: SimpleChanges) {
-    if (!this.config) return;
+    if (!this.config) {
+      return;
+    }
     this.selectedItems = [];
     // this.searchText = null;
     this.options = this.options || [];
@@ -445,13 +473,22 @@ export class NgxSelectDropdownComponent
    */
   public toggleSelectDropdown() {
     this.toggleDropdown = !this.toggleDropdown;
+    this.openStateChange();
+    this.resetArrowKeyActiveElement();
+  }
+
+  public openStateChange() {
     if (this.toggleDropdown) {
+      this.dropdownService.openInstances.push(this.instanceId);
       this.open.emit();
     } else {
       this.searchText = null;
       this.close.emit();
+      this.dropdownService.openInstances.splice(
+        this.dropdownService.openInstances.indexOf(this.instanceId),
+        1
+      );
     }
-    this.resetArrowKeyActiveElement();
   }
 
   /**

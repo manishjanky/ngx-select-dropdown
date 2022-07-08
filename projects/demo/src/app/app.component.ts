@@ -1,3 +1,4 @@
+import { SelectDropDownService } from 'ngx-select-dropdown';
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -97,16 +98,16 @@ export class AppComponent implements OnInit {
   ];
   resetOption: any;
   selectForm: FormGroup;
-  constructor(private fromBuilder: FormBuilder) {
+  constructor(private fromBuilder: FormBuilder, private drodownService: SelectDropDownService) {
     // this.selectForm = this.fromBuilder.group({
     //   selectDrop: [null, Validators.required]
     // });
   }
   ngOnInit() {
     this.resetOption = [this.options[0]];
-    // setTimeout(() => {
-    //   this.selectForm.patchValue({ selectDrop: this.selectedOptions[0] });
-    // }, 7000);
+    setTimeout(() => {
+      this.drodownService.openDropdown('dropdown_1');
+    }, 10000);
   }
   changeValue($event: any) {
     // console.log(this.selectForm.getRawValue());

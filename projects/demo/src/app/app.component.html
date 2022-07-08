@@ -142,8 +142,8 @@
       <h5>Single Select Dropdown</h5>
       <div class="row">
         <div class="col s12 l6">
-          <ngx-select-dropdown (searchChange)="searchChange($event)" tabindex="0" [multiple]="false"
-            [(ngModel)]="singleSelect" [config]="config" [options]="options"></ngx-select-dropdown>
+          <ngx-select-dropdown [instanceId]="'dropdown_1'" (searchChange)="searchChange($event)" tabindex="0"
+            [multiple]="false" [(ngModel)]="singleSelect" [config]="config" [options]="options"></ngx-select-dropdown>
         </div>
         <div class="col s12 l6 flow-text">
           <p style="margin: 0;">Balance of selected user: {{singleSelect?singleSelect[0]?.balance:''}}</p>
@@ -153,8 +153,8 @@
       <h5>Disabled Dropdown</h5>
       <div class="row">
         <div class="col s12 l6">
-          <ngx-select-dropdown tabindex="0" [disabled]="true" [multiple]="false" [(ngModel)]="singleSelect"
-            [config]="config" [options]="options">
+          <ngx-select-dropdown [instanceId]="'dropdown_2'" tabindex="0" [disabled]="true" [multiple]="false"
+            [(ngModel)]="singleSelect" [config]="config" [options]="options">
           </ngx-select-dropdown>
         </div>
         <div class="col s12 l6 flow-text">
@@ -165,21 +165,23 @@
       <h5>Multi Select Dropdown</h5>
       <div class="row">
         <div class="col s12 l6">
-          <ngx-select-dropdown tabindex="0" (change)="changeValue($event)" [multiple]="true" [(ngModel)]="multiSelect"
-            [config]="config" [options]="options"></ngx-select-dropdown>
+          <ngx-select-dropdown [instanceId]="'dropdown_3'" tabindex="0" (change)="changeValue($event)" [multiple]="true"
+            [(ngModel)]="multiSelect" [config]="config" [options]="options"></ngx-select-dropdown>
         </div>
         <div class="col s12 l6 flow-text">
           <p style="margin: 0;">Selected Options:-</p>
           <p style="margin: 0;" *ngFor="let user of multiSelect"><strong>Name:</strong> {{user.name}} ,
             <strong>Balance:</strong>
-            {{user.balance}}</p>
+            {{user.balance}}
+          </p>
         </div>
       </div>
 
       <h5>Options as array of string</h5>
       <div class="row">
         <div class="col s12 l6">
-          <ngx-select-dropdown tabindex="0" [multiple]="true" [(ngModel)]="stringArray" [options]="stringOptions">
+          <ngx-select-dropdown [instanceId]="'dropdown_4'" tabindex="0" [multiple]="true" [(ngModel)]="stringArray"
+            [options]="stringOptions">
           </ngx-select-dropdown>
         </div>
         <div class="col s12 l6 flow-text">
@@ -210,7 +212,8 @@
           <p style="margin: 0;">Selected Options:-</p>
           <p style="margin: 0;" *ngFor="let user of selectedOptions"><strong>Name:</strong> {{user.name}} ,
             <strong>Balance:</strong>
-            {{user.balance}}</p>
+            {{user.balance}}
+          </p>
         </div>
       </div>
 
@@ -224,7 +227,8 @@
           <p style="margin: 0;">Selected Options:-</p>
           <p style="margin: 0;" *ngFor="let user of resetOption"><strong>Name:</strong> {{user.name}} ,
             <strong>Balance:</strong>
-            {{user.balance}}</p>
+            {{user.balance}}
+          </p>
         </div>
       </div>
       <div class="row">
