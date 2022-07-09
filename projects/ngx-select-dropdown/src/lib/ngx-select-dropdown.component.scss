@@ -43,6 +43,12 @@
 
       position: relative;
       float: right;
+      transition: transform 0.2s ease;
+
+      &.up {
+        transform: rotate(180deg);
+        transition: transform 0.2s ease
+      }
     }
   }
 
