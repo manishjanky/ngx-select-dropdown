@@ -2,7 +2,7 @@
     <button type="button" tabindex="-1" class="ngx-dropdown-button" [ngClass]="{ 'ngx-disabled': disabled }"
         [disabled]="disabled" (click)="toggleSelectDropdown()">
         <span class="display-text">{{ selectedDisplayText }} </span>
-        <span class="nsdicon-angle-down"></span>
+        <span class="nsdicon-angle-down" [ngClass]="{'up': toggleDropdown }"></span>
     </button>
     <div [attr.id]="instanceId" class="ngx-dropdown-list-container" *ngIf="toggleDropdown" 
     [style.maxHeight]="config.height" [style.top]="top">
@@ -10,7 +10,7 @@
             <input (change)="changeSearchText($event)" [style.direction]="config.inputDirection" name="search-text"
                 (input)="searchTextChanged()" [(ngModel)]="searchText" tabindex="-1" autocomplete="off" />
             <label [ngClass]="{ active: searchText }">
-                <span class="nsdicon-search"></span>
+                <span class="nsdicon-search" ></span>
                 {{ config.searchPlaceholder }}</label>
         </div>
         <!-- <div class="select-options">
