@@ -205,7 +205,12 @@ Angular Ivy compatibility
 ````
 Dropdown singleton service to interact with dropdown instances
 Instance identifier
-Upgraded to Angular v14 
+Upgraded to Angular v14 development environment
+````
+* v3.0.1
+````
+Auto drop based on the screen position
+Over-ride css styles for available and selected items using class names `selected-item(s)` and `available-item(s)`
 ````
 ## Help Improve
 

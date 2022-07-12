@@ -10,8 +10,8 @@ export class SelectDropDownService {
   constructor() {
     // constructor
   }
-  public isOpen(instanceId) {
-    return this.openInstances.indexOf(instanceId);
+  public isOpen(instanceId): boolean {
+    return this.openInstances.indexOf(instanceId) > -1;
   }
   /**
    * @summary: Open a specific dropdown instance based on the instance ID.

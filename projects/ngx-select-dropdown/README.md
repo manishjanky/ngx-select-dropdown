@@ -60,11 +60,11 @@ class YourModule { ... }
 * use `<ngx-select-dropdown></ngx-select-dropdown>` in your templates to add the custom dropdown in your view like below
 
 ````
-<ngx-select-dropdown (change)="selectionChanged($event)" [multiple]="true" [(ngModel)]="dataModel" [config]="config" [options]="dropdownOptions"></ngx-select-dropdown>
+<ngx-select-dropdown [instanceId]="'instance1'" (change)="selectionChanged($event)" [multiple]="true" [(ngModel)]="dataModel" [config]="config" [options]="dropdownOptions"></ngx-select-dropdown>
 ````
 * use with reactive form like
 ````
-<ngx-select-dropdown (change)="selectionChanged($event)" formControlName="selectData" [multiple]="true" [config]="config" [options]="dropdownOptions"></ngx-select-dropdown>
+<ngx-select-dropdown [instanceId]="'instance2'"  (change)="selectionChanged($event)" formControlName="selectData" [multiple]="true" [config]="config" [options]="dropdownOptions"></ngx-select-dropdown>
 ````
 
 ## Config
@@ -75,6 +75,8 @@ class YourModule { ... }
 * `options: Array` - Array of string/objects that are to be the dropdown options.
 * `disabled: boolean` - disabled attribute to disable the dropdown when required.
 * `config: Object` - configuration object.
+* `instanceId: any` - instanceId of the dropdwon component instance.
+
 ````
 config = {
         displayFn:(item: any) => { return item.hello.world; } //to support flexible text displaying for each item
@@ -99,6 +101,12 @@ config = {
 * `open: Event` - open event when the dropdown toogles on
 * `close: Event` - close event when the dropdown toogles off
 * `searchChange: Event` - search change event when the search text changes
+
+### Dropdown service (Injectable)
+* `openDropdown(instanceId:string)` - method to open a particular dropdown instance
+* `closeDropdown(instanceId:string)` - method to close a particular dropdown instance
+* `isOpen(instanceId:string)` - method to check if a particular instance dropdown is open
+* `openInstances: string[]` - instanceId list of all the open instances
 
 ### Change detection
 
@@ -192,6 +200,17 @@ Add disabled class to different items based on item.disabled
 ````
 Angular library approach opted for development
 Angular Ivy compatibility
+````
+* v3.0.0
+````
+Dropdown singleton service to interact with dropdown instances
+Instance identifier
+Upgraded to Angular v14 
+````
+* v3.0.1
+````
+Auto drop based on the screen position
+Over-ride css styles for available and selected items using class names `selected-item(s)` and `available-item(s)`
 ````
 ## Help Improve
 
