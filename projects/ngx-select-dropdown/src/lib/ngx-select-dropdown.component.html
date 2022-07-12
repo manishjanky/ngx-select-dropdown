@@ -4,7 +4,8 @@
         <span class="display-text">{{ selectedDisplayText }} </span>
         <span class="nsdicon-angle-down"></span>
     </button>
-    <div class="ngx-dropdown-list-container" *ngIf="toggleDropdown" [style.maxHeight]="config.height">
+    <div [attr.id]="instanceId" class="ngx-dropdown-list-container" *ngIf="toggleDropdown" 
+    [style.maxHeight]="config.height" [style.top]="top">
         <div class="search-container" *ngIf="config.search">
             <input (change)="changeSearchText($event)" [style.direction]="config.inputDirection" name="search-text"
                 (input)="searchTextChanged()" [(ngModel)]="searchText" tabindex="-1" autocomplete="off" />
@@ -12,6 +13,10 @@
                 <span class="nsdicon-search"></span>
                 {{ config.searchPlaceholder }}</label>
         </div>
+        <!-- <div class="select-options">
+            <div class="select-all">Select all</div>
+            <div class="clear-all">Clear all</div>
+        </div> -->
         <ul class="selected-items">
             <li class="selected-item" tabindex="-1" *ngFor="let selected of selectedItems; let i = index" (click)="deselectItem(selected, i)">
                 <span class="nsdicon-close">x</span>

@@ -1,3 +1,4 @@
+import { element } from "protractor";
 import { SelectDropDownService } from "./ngx-select-dropdown.service";
 import { FilterByPipe } from "./pipes/filter-by.pipe";
 import {
@@ -26,10 +27,12 @@ import { NG_VALUE_ACCESSOR } from "@angular/forms";
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => NgxSelectDropdownComponent),
       multi: true,
-    }
+    },
   ],
 })
-export class NgxSelectDropdownComponent implements OnInit, OnChanges, AfterViewInit {
+export class NgxSelectDropdownComponent
+  implements OnInit, OnChanges, AfterViewInit
+{
   /** value of the dropdown */
   @Input() public _value: any;
 
@@ -53,8 +56,8 @@ export class NgxSelectDropdownComponent implements OnInit, OnChanges, AfterViewI
    */
   @Input() public disabled: boolean;
 
-   /** unique identifier to uniquely identify particular instance */
-   @Input() public instanceId: any;
+  /** unique identifier to uniquely identify particular instance */
+  @Input() public instanceId: any;
 
   /**
    * change event when value changes to provide user to handle things in change event
@@ -121,6 +124,16 @@ export class NgxSelectDropdownComponent implements OnInit, OnChanges, AfterViewI
    */
 
   public showNotFound = false;
+
+  /**
+   * The height of the dropdown/items list
+   */
+  public dropDownHeight: string;
+
+  /**
+   * The position to drop according to the visibility in viewport
+   */
+  public top: string;
   /**
    * Hold the reference to available items in the list to focus on the item when scrolling
    */
@@ -146,10 +159,10 @@ export class NgxSelectDropdownComponent implements OnInit, OnChanges, AfterViewI
 
   public onChange: any = () => {
     // empty
-  }
+  };
   public onTouched: any = () => {
     // empty
-  }
+  };
 
   /**
    * click listener for host inside this component i.e
@@ -270,6 +283,20 @@ export class NgxSelectDropdownComponent implements OnInit, OnChanges, AfterViewI
       this.initDropdownValuesAndOptions();
     }
     this.serviceSubscriptions();
+  }
+
+  isVisible() {
+    if(!this.instanceId){
+      return { visible: false, element: null };
+    }
+    const el = document.getElementById(this.instanceId);
+    if (!el) {
+      return { visible: false, element: el };
+    }
+    const rect = el.getBoundingClientRect();
+    const topShown = rect.top >= 0;
+    const bottomShown = rect.bottom <= window.innerHeight;
+    return { visible: topShown && bottomShown, element: el };
   }
 
   serviceSubscriptions() {
@@ -473,8 +500,15 @@ export class NgxSelectDropdownComponent implements OnInit, OnChanges, AfterViewI
    */
   public toggleSelectDropdown() {
     this.toggleDropdown = !this.toggleDropdown;
+    this.top = '30px';
     this.openStateChange();
     this.resetArrowKeyActiveElement();
+    setTimeout(() => {
+      const { visible, element } = this.isVisible();
+      if (element) {
+        this.top = visible ? '30px' :  `-${element.getBoundingClientRect().height}px`;
+      }
+    }, 5);
   }
 
   public openStateChange() {
