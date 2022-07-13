@@ -16,6 +16,7 @@ import {
   ChangeDetectorRef,
   forwardRef,
   ViewChild,
+  HostBinding,
 } from "@angular/core";
 import { NG_VALUE_ACCESSOR } from "@angular/forms";
 @Component({
@@ -126,12 +127,7 @@ export class NgxSelectDropdownComponent
   public showNotFound = false;
 
   /**
-   * The height of the dropdown/items list
-   */
-  public dropDownHeight: string;
-
-  /**
-   * The position to drop according to the visibility in viewport
+   * The position from the top of the element in pixels to drop according to the visibility in viewport
    */
   public top: string;
 
@@ -193,7 +189,9 @@ export class NgxSelectDropdownComponent
    * Event listener for the blur event to hide the dropdown
    */
   @HostListener("blur") public blur() {
-    this.toggleDropdown = false;
+    if(!this.insideKeyPress){
+      this.toggleDropdown = false;
+    }
   }
 
   @HostListener("focus") public focus() {
@@ -230,6 +228,8 @@ export class NgxSelectDropdownComponent
     }
     this.insideKeyPress = false;
   }
+
+  @HostBinding('attr.tabindex') tabindex = 0;
   /**
    * Event handler for key up and down event and enter press for selecting element
    */

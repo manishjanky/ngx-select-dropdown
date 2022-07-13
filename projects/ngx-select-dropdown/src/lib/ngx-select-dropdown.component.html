@@ -1,16 +1,16 @@
-<div class="ngx-dropdown-container" tabindex="0">
+<div class="ngx-dropdown-container">
     <button type="button" tabindex="-1" class="ngx-dropdown-button" [ngClass]="{ 'ngx-disabled': disabled }"
         [disabled]="disabled" (click)="toggleSelectDropdown()">
         <span class="display-text">{{ selectedDisplayText }} </span>
         <span class="nsdicon-angle-down" [ngClass]="{'up': toggleDropdown }"></span>
     </button>
-    <div #dropdownList class="ngx-dropdown-list-container" *ngIf="toggleDropdown" 
-    [style.maxHeight]="config.height" [style.top]="top">
+    <div #dropdownList class="ngx-dropdown-list-container" *ngIf="toggleDropdown" [style.maxHeight]="config.height"
+        [style.top]="top">
         <div class="search-container" *ngIf="config.search">
             <input (change)="changeSearchText($event)" [style.direction]="config.inputDirection" name="search-text"
                 (input)="searchTextChanged()" [(ngModel)]="searchText" tabindex="-1" autocomplete="off" />
             <label [ngClass]="{ active: searchText }">
-                <span class="nsdicon-search" ></span>
+                <span class="nsdicon-search"></span>
                 {{ config.searchPlaceholder }}</label>
         </div>
         <!-- <div class="select-options">
@@ -18,7 +18,8 @@
             <div class="clear-all">Clear all</div>
         </div> -->
         <ul class="selected-items">
-            <li class="selected-item" tabindex="-1" *ngFor="let selected of selectedItems; let i = index" (click)="deselectItem(selected, i)">
+            <li class="selected-item" tabindex="-1" *ngFor="let selected of selectedItems; let i = index"
+                (click)="deselectItem(selected, i)">
                 <span class="nsdicon-close">x</span>
                 <span>
                     {{
