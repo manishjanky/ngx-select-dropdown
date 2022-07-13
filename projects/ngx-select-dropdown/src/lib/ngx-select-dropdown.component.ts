@@ -1,4 +1,3 @@
-import { element } from "protractor";
 import { SelectDropDownService } from "./ngx-select-dropdown.service";
 import { FilterByPipe } from "./pipes/filter-by.pipe";
 import {
@@ -16,6 +15,7 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   forwardRef,
+  ViewChild,
 } from "@angular/core";
 import { NG_VALUE_ACCESSOR } from "@angular/forms";
 @Component({
@@ -134,6 +134,12 @@ export class NgxSelectDropdownComponent
    * The position to drop according to the visibility in viewport
    */
   public top: string;
+
+  /**
+   * Element ref of the dropdown list DOM element
+   */
+  private dropdownList: ElementRef;
+
   /**
    * Hold the reference to available items in the list to focus on the item when scrolling
    */
@@ -173,7 +179,19 @@ export class NgxSelectDropdownComponent
   public clickInsideComponent() {
     this.clickedInside = true;
   }
+  /**
+   * View reference for the dorpdown list
+   */
+  @ViewChild("dropdownList") set dropDownElement(ref: ElementRef) {
+    if (ref) {
+      // initially setter gets called with undefined
+      this.dropdownList = ref;
+    }
+  }
 
+  /**
+   * Event listener for the blur event to hide the dropdown
+   */
   @HostListener("blur") public blur() {
     this.toggleDropdown = false;
   }
@@ -286,10 +304,10 @@ export class NgxSelectDropdownComponent
   }
 
   isVisible() {
-    if(!this.instanceId){
+    if (!this.dropdownList) {
       return { visible: false, element: null };
     }
-    const el = document.getElementById(this.instanceId);
+    const el = this.dropdownList.nativeElement;
     if (!el) {
       return { visible: false, element: el };
     }
@@ -500,13 +518,15 @@ export class NgxSelectDropdownComponent
    */
   public toggleSelectDropdown() {
     this.toggleDropdown = !this.toggleDropdown;
-    this.top = '30px';
+    this.top = "30px";
     this.openStateChange();
     this.resetArrowKeyActiveElement();
     setTimeout(() => {
       const { visible, element } = this.isVisible();
       if (element) {
-        this.top = visible ? '30px' :  `-${element.getBoundingClientRect().height}px`;
+        this.top = visible
+          ? "30px"
+          : `-${element.getBoundingClientRect().height}px`;
       }
     }, 5);
   }

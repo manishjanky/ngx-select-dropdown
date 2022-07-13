@@ -4,7 +4,7 @@
         <span class="display-text">{{ selectedDisplayText }} </span>
         <span class="nsdicon-angle-down" [ngClass]="{'up': toggleDropdown }"></span>
     </button>
-    <div [attr.id]="instanceId" class="ngx-dropdown-list-container" *ngIf="toggleDropdown" 
+    <div #dropdownList class="ngx-dropdown-list-container" *ngIf="toggleDropdown" 
     [style.maxHeight]="config.height" [style.top]="top">
         <div class="search-container" *ngIf="config.search">
             <input (change)="changeSearchText($event)" [style.direction]="config.inputDirection" name="search-text"
