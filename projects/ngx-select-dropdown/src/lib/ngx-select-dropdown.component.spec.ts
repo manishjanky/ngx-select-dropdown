@@ -234,19 +234,19 @@ describe('NgxSelectDropdownComponent', () => {
   });
 
   it('Should Toggle Dropdown', () => {
-    component.toggleSelectDropdown();
+    component.openSelectDropdown();
     expect(component.toggleDropdown).toBeTruthy();
   });
 
   it('Should Toggle Dropdown', () => {
     component.toggleDropdown = true;
-    component.toggleSelectDropdown();
+    component.closeSelectDropdown();
     expect(component.toggleDropdown).toBeFalsy();
   });
   it('Should Toggle Dropdown and emit open event', () => {
     component.toggleDropdown = false;
     spyOn(component.open, 'emit');
-    component.toggleSelectDropdown();
+    component.openSelectDropdown();
     expect(component.open.emit).toHaveBeenCalled();
   });
 
@@ -267,7 +267,7 @@ describe('NgxSelectDropdownComponent', () => {
   it('Should Toggle Dropdown and emit close event', () => {
     component.toggleDropdown = true;
     spyOn(component.close, 'emit');
-    component.toggleSelectDropdown();
+    component.closeSelectDropdown();
     expect(component.close.emit).toHaveBeenCalled();
   });
 
@@ -435,7 +435,7 @@ describe('NgxSelectDropdownComponent', () => {
 
   it('Should handle the arrow key event for down', () => {
     component.options = objOptions;
-    const event = new KeyboardEvent('Enter');
+    // const event = new KeyboardEvent('Enter');
     component.availableItems = [...objOptions];
     component.focusedItemIndex = 1;
     component.handleKeyboardEvent({ keyCode: 13, preventDefault: () => { return; } } as any);

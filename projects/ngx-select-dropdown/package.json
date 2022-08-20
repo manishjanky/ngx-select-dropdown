@@ -42,10 +42,8 @@
   },
   "homepage": "https://github.com/manishjanky/ngx-select-dropdown#readme",
   "dependencies": {
-    "tslib": "^2.0.0"
   },
   "peerDependencies": {
     "@angular/common": ">=4.0.0",
-    "@angular/core": ">=4.0.0"
-  }
+    "@angular/core": ">=4.0.0"  }
 }

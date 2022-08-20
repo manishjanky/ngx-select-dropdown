@@ -4,7 +4,7 @@
 [![npm](https://img.shields.io/npm/v/ngx-select-dropdown.svg)]()
 [![Build Status](https://travis-ci.org/manishjanky/ngx-select-dropdown.svg?branch=master)](https://travis-ci.org/manishjanky/ngx-select-dropdown)
 [![Codecov branch](https://codecov.io/gh/manishjanky/ngx-select-dropdown/branch/master/graphs/badge.svg)]()
-[![npm](https://img.shields.io/npm/dt/ngx-select-dropdown.svg)]()
+![npm](https://img.shields.io/npm/dy/ngx-select-dropdown)
 [![GitHub top language](https://img.shields.io/github/languages/top/manishjanky/ngx-select-dropdown.svg)]()
 [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/manishjanky/ngx-select-dropdown.svg)]()
 
@@ -67,16 +67,15 @@ class YourModule { ... }
 <ngx-select-dropdown [instanceId]="'instance2'"  (change)="selectionChanged($event)" formControlName="selectData" [multiple]="true" [config]="config" [options]="dropdownOptions"></ngx-select-dropdown>
 ````
 
-## Config
+## Configuration
 
 ### Input
 
 * `multiple: boolean` - `true/false` beased if multiple selection required or not `Defaults to false`.
 * `options: Array` - Array of string/objects that are to be the dropdown options.
 * `disabled: boolean` - disabled attribute to disable the dropdown when required.
-* `config: Object` - configuration object.
 * `instanceId: any` - instanceId of the dropdwon component instance.
-
+* `config: Object` - configuration object.
 ````
 config = {
         displayFn:(item: any) => { return item.hello.world; } //to support flexible text displaying for each item
@@ -102,11 +101,11 @@ config = {
 * `close: Event` - close event when the dropdown toogles off
 * `searchChange: Event` - search change event when the search text changes
 
-### Dropdown service (Injectable)
+### Dropdown service
 * `openDropdown(instanceId:string)` - method to open a particular dropdown instance
 * `closeDropdown(instanceId:string)` - method to close a particular dropdown instance
 * `isOpen(instanceId:string)` - method to check if a particular instance dropdown is open
-* `openInstances: string[]` - instanceId list of all the open instances
+* `openInstances` - instanceId list of all the open instances
 
 ### Change detection
 
@@ -205,7 +204,7 @@ Angular Ivy compatibility
 ````
 Dropdown singleton service to interact with dropdown instances
 Instance identifier
-Upgraded to Angular v14 
+Upgraded to Angular v14 development environment
 ````
 * v3.0.1
 ````

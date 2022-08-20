@@ -1,6 +1,12 @@
 <div class="ngx-dropdown-container">
-    <button type="button" tabindex="-1" class="ngx-dropdown-button" [ngClass]="{ 'ngx-disabled': disabled }"
-        [disabled]="disabled" (click)="toggleSelectDropdown()">
+    <button *ngIf="!toggleDropdown" type="button" tabindex="-1" class="ngx-dropdown-button"
+        [ngClass]="{ 'ngx-disabled': disabled }" [disabled]="disabled" (click)="openSelectDropdown()">
+        <span class="display-text">{{ selectedDisplayText }} </span>
+        <span class="nsdicon-angle-down"></span>
+
+    </button>
+    <button *ngIf="toggleDropdown" type="button" tabindex="-1" class="ngx-dropdown-button"
+        [ngClass]="{ 'ngx-disabled': disabled }" [disabled]="disabled" (click)="closeSelectDropdown()">
         <span class="display-text">{{ selectedDisplayText }} </span>
         <span class="nsdicon-angle-down" [ngClass]="{'up': toggleDropdown }"></span>
     </button>
@@ -19,7 +25,7 @@
         </div> -->
         <ul class="selected-items">
             <li class="selected-item" tabindex="-1" *ngFor="let selected of selectedItems; let i = index"
-                (click)="deselectItem(selected, i)">
+                (click)="deselectItem(selected, i)" (mousedown)="optionMouseDown = true">
                 <span class="nsdicon-close">x</span>
                 <span>
                     {{
@@ -40,7 +46,7 @@
           " tabindex="-1" [ngClass]="{
             active: focusedItemIndex == i && !item.disabled,
             disabled: item.disabled
-          }" (click)="selectItem(item, i)">
+          }" (click)="selectItem(item, i)" (mousedown)="optionMouseDown = true">
                 {{
                 config.displayFn
                 ? config.displayFn(item)

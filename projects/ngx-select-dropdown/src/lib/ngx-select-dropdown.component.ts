@@ -132,6 +132,12 @@ export class NgxSelectDropdownComponent
   public top: string;
 
   /**
+   * Flag to indicate is the click initiation was on one of the availabe or selected options
+   * This is to track the mouse down event especially in Safari.
+   */
+  public optionMouseDown: boolean;
+
+  /**
    * Element ref of the dropdown list DOM element
    */
   private dropdownList: ElementRef;
@@ -189,15 +195,20 @@ export class NgxSelectDropdownComponent
    * Event listener for the blur event to hide the dropdown
    */
   @HostListener("blur") public blur() {
-    if(!this.insideKeyPress){
+    if (!this.insideKeyPress && !this.optionMouseDown) {
       this.toggleDropdown = false;
+      this.openStateChange();
     }
   }
 
+  /**
+   * Event listener for the focus event to show the dropdown when using tab key
+   */
   @HostListener("focus") public focus() {
     /* istanbul ignore else */
     if (!this.disabled) {
-      this.toggleSelectDropdown();
+      this.toggleDropdown = true;
+      this.openStateChange();
     }
   }
   /**
@@ -208,6 +219,7 @@ export class NgxSelectDropdownComponent
     /* istanbul ignore else */
     if (!this.clickedInside) {
       this.toggleDropdown = false;
+      this.openStateChange();
       this.resetArrowKeyActiveElement();
       // clear searh on close
       this.searchText = null;
@@ -224,12 +236,16 @@ export class NgxSelectDropdownComponent
     /* istanbul ignore else */
     if (!this.insideKeyPress) {
       this.toggleDropdown = false;
+      this.openStateChange();
       this.resetArrowKeyActiveElement();
     }
     this.insideKeyPress = false;
   }
 
-  @HostBinding('attr.tabindex') tabindex = 0;
+  /**
+   * Binding to set the tabindex property to set to 0 for accessibilty
+   */
+  @HostBinding("attr.tabindex") tabindex = 0;
   /**
    * Event handler for key up and down event and enter press for selecting element
    */
@@ -239,6 +255,7 @@ export class NgxSelectDropdownComponent
     /* istanbul ignore else */
     if ($event.keyCode === 27 || this.disabled) {
       this.toggleDropdown = false;
+      this.openStateChange();
       this.insideKeyPress = false;
       return;
     }
@@ -246,6 +263,7 @@ export class NgxSelectDropdownComponent
     /* istanbul ignore else */
     if ($event.keyCode !== 9 && avaOpts.length === 0 && !this.toggleDropdown) {
       this.toggleDropdown = true;
+      this.openStateChange();
     }
     // Arrow Down
     /* istanbul ignore else */
@@ -516,8 +534,8 @@ export class NgxSelectDropdownComponent
   /**
    * Toggle the dropdownlist on/off
    */
-  public toggleSelectDropdown() {
-    this.toggleDropdown = !this.toggleDropdown;
+  public openSelectDropdown() {
+    this.toggleDropdown = true;
     this.top = "30px";
     this.openStateChange();
     this.resetArrowKeyActiveElement();
@@ -528,7 +546,13 @@ export class NgxSelectDropdownComponent
           ? "30px"
           : `-${element.getBoundingClientRect().height}px`;
       }
-    }, 5);
+    }, 3);
+  }
+
+  public closeSelectDropdown() {
+    this.toggleDropdown = false;
+    this.openStateChange();
+    this.resetArrowKeyActiveElement();
   }
 
   public openStateChange() {
@@ -537,6 +561,7 @@ export class NgxSelectDropdownComponent
       this.open.emit();
     } else {
       this.searchText = null;
+      this.optionMouseDown = false;
       this.close.emit();
       this.dropdownService.openInstances.splice(
         this.dropdownService.openInstances.indexOf(this.instanceId),
