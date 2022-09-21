@@ -14,7 +14,7 @@ import {
 })
 export class AppComponent implements OnInit {
   title = "app";
-  tab = 2;
+  tab = 1;
   singleSelect: any = [];
   multiSelect: any = [];
   stringArray: any = [];

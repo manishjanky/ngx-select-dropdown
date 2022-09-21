@@ -708,6 +708,9 @@ export class NgxSelectDropdownComponent
     this.focusedItemIndex = null;
   }
 
+  /**
+   * Toggle the select all option
+   */
   public toggleSelectAll(): void {
     this.selectAll = !this.selectAll;
     if (this.selectAll) {
@@ -720,7 +723,6 @@ export class NgxSelectDropdownComponent
     this.toggleDropdown = false;
     this.selectedItems.sort(this.config.customComparator);
     this.availableItems.sort(this.config.customComparator);
-    // this.searchText = null;
     this.valueChanged();
     this.resetArrowKeyActiveElement();
   }
