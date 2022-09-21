@@ -14,7 +14,7 @@ import {
 })
 export class AppComponent implements OnInit {
   title = "app";
-  tab = 1;
+  tab = 2;
   singleSelect: any = [];
   multiSelect: any = [];
   stringArray: any = [];
@@ -31,7 +31,9 @@ export class AppComponent implements OnInit {
   config = {
     displayKey: "name", // if objects array passed which key to be displayed defaults to description
     search: true,
-    limitTo: 3,
+    limitTo: 0,
+    height: '250px',
+    selectAll: 'test search'
   };
   selectedOptions = [
     {
