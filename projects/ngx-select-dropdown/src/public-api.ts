@@ -4,6 +4,7 @@
 
 export * from './lib/ngx-select-dropdown.service';
 export * from './lib/ngx-select-dropdown.component';
+export * from './lib/types/ngx-select-dropdown.types';
 export * from './lib/ngx-select-dropdown.module';
 export * from './lib/pipes/filter-by.pipe';
 export * from './lib/pipes/limit-to.pipe';

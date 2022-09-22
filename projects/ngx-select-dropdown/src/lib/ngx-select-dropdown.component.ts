@@ -1,3 +1,4 @@
+import { NgxDropdownConfig } from "./types/ngx-select-dropdown.types";
 import { SelectDropDownService } from "./ngx-select-dropdown.service";
 import { FilterByPipe } from "./pipes/filter-by.pipe";
 import {
@@ -19,6 +20,20 @@ import {
   HostBinding,
 } from "@angular/core";
 import { NG_VALUE_ACCESSOR } from "@angular/forms";
+const config: NgxDropdownConfig = {
+  displayKey: "description",
+  height: "auto",
+  search: false,
+  placeholder: "Select",
+  searchPlaceholder: "Search...",
+  limitTo: 0,
+  customComparator: undefined,
+  noResultsFound: "No results found!",
+  moreText: "more",
+  searchOnKey: null,
+  clearOnSelection: false,
+  inputDirection: "ltr",
+};
 @Component({
   selector: "ngx-select-dropdown",
   templateUrl: "./ngx-select-dropdown.component.html",
@@ -45,7 +60,7 @@ export class NgxSelectDropdownComponent
   /**
    * configuration options
    */
-  @Input() public config: any = {};
+  @Input() public config: NgxDropdownConfig = config;
 
   /**
    * Whether multiple selection or single selection allowed
@@ -585,22 +600,11 @@ export class NgxSelectDropdownComponent
    * initialize the config and other properties
    */
   private initDropdownValuesAndOptions() {
-    const config: any = {
-      displayKey: "description",
-      height: "auto",
-      search: false,
-      placeholder: "Select",
-      searchPlaceholder: "Search...",
-      limitTo: 0,
-      customComparator: undefined,
-      noResultsFound: "No results found!",
-      moreText: "more",
-      searchOnKey: null,
-      clearOnSelection: false,
-      inputDirection: "ltr",
-    };
     /* istanbul ignore else */
-    if (this.config === "undefined" || Object.keys(this.config).length === 0) {
+    if (
+      typeof this.config === "undefined" ||
+      Object.keys(this.config).length === 0
+    ) {
       this.config = { ...config };
     }
     for (const key of Object.keys(config)) {
