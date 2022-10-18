@@ -143,6 +143,11 @@ export class NgxSelectDropdownComponent
   private dropdownList: ElementRef;
 
   /**
+   * Flag for select all option
+   */
+  public selectAll: boolean;
+
+  /**
    * Hold the reference to available items in the list to focus on the item when scrolling
    */
   @ViewChildren("availableOption")
@@ -163,6 +168,7 @@ export class NgxSelectDropdownComponent
     private dropdownService: SelectDropDownService
   ) {
     this.multiple = false;
+    this.selectAll = false;
   }
 
   public onChange: any = () => {
@@ -598,6 +604,7 @@ export class NgxSelectDropdownComponent
       searchOnKey: null,
       clearOnSelection: false,
       inputDirection: "ltr",
+      selectAll: "Select All",
     };
     /* istanbul ignore else */
     if (this.config === "undefined" || Object.keys(this.config).length === 0) {
@@ -699,5 +706,24 @@ export class NgxSelectDropdownComponent
    */
   private resetArrowKeyActiveElement() {
     this.focusedItemIndex = null;
+  }
+
+  /**
+   * Toggle the select all option
+   */
+  public toggleSelectAll(): void {
+    this.selectAll = !this.selectAll;
+    if (this.selectAll) {
+      this.selectedItems = [...this.selectedItems, ...this.availableItems];
+      this.availableItems = [];
+    } else {
+      this.availableItems = [...this.selectedItems, ...this.availableItems];
+      this.selectedItems = [];
+    }
+    this.toggleDropdown = false;
+    this.selectedItems.sort(this.config.customComparator);
+    this.availableItems.sort(this.config.customComparator);
+    this.valueChanged();
+    this.resetArrowKeyActiveElement();
   }
 }
