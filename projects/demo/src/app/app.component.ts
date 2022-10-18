@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
     search: true,
     limitTo: 0,
     height: '250px',
-    selectAll: 'test search'
+    enableSelectAll: true
   };
   selectedOptions = [
     {

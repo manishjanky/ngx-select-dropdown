@@ -12,4 +12,6 @@ export interface NgxDropdownConfig {
   searchOnKey: string;
   clearOnSelection: boolean;
   inputDirection: string;
+  selectAllLabel?: string;
+  enableSelectAll?: boolean;
 }

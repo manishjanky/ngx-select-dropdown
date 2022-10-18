@@ -12,18 +12,20 @@
     </button>
     <div #dropdownList class="ngx-dropdown-list-container" *ngIf="toggleDropdown" [style.maxHeight]="config.height"
         [style.top]="top">
-        <div class="select-options" *ngIf="multiple">
-            <label (click)="toggleSelectAll()">
-                <input type="checkbox" class="filled-in" [(ngModel)]="selectAll"/>
-                <span>{{ config.selectAll }}</span>
-              </label>
-        </div>
         <div class="search-container" *ngIf="config.search">
             <input (change)="changeSearchText($event)" [style.direction]="config.inputDirection" name="search-text"
                 (input)="searchTextChanged()" [(ngModel)]="searchText" tabindex="-1" autocomplete="off" />
             <label [ngClass]="{ active: searchText }">
                 <span class="nsdicon-search"></span>
                 {{ config.searchPlaceholder }}</label>
+        </div>
+        <div *ngIf="config.enableSelectAll &&  multiple">
+            <div class="select-options">
+                <label (click)="toggleSelectAll(true, true)">
+                    <input type="checkbox" class="filled-in" [(ngModel)]="selectAll" />
+                    <span>{{ config.selectAllLabel }}</span>
+                </label>
+            </div>
         </div>
         <ul class="selected-items">
             <li class="selected-item" tabindex="-1" *ngFor="let selected of selectedItems; let i = index"

@@ -80,7 +80,7 @@
     overflow-y: auto;
 
     .select-options {
-      margin: 10px 0 0 0;
+      padding-top: 10px;
       .filled-in:checked + span:not(.lever):after,.filled-in:not(:checked) + span:not(.lever):after {
         height: 15px;
         width: 15px;

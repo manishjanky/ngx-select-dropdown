@@ -33,6 +33,8 @@ const config: NgxDropdownConfig = {
   searchOnKey: null,
   clearOnSelection: false,
   inputDirection: "ltr",
+  selectAllLabel: "Select all",
+  enableSelectAll: false,
 };
 @Component({
   selector: "ngx-select-dropdown",
@@ -437,7 +439,10 @@ export class NgxSelectDropdownComponent
    * function sets whether to show items not found text or not
    */
   public setNotFoundState() {
-    if (this.availableOptions.length === 0) {
+    if (
+      this.availableOptions.length === 0 &&
+      this.selectedItems.length !== this.options.length
+    ) {
       this.showNotFound = true;
     } else {
       this.showNotFound = false;
@@ -500,6 +505,9 @@ export class NgxSelectDropdownComponent
     if (!Array.isArray(this.value)) {
       this.value = [];
     }
+    if (!this.areAllSelected()) {
+      this.selectAll = false;
+    }
     this.valueChanged();
     this.resetArrowKeyActiveElement();
   }
@@ -538,6 +546,10 @@ export class NgxSelectDropdownComponent
     this.selectedItems.sort(this.config.customComparator);
     this.availableItems.sort(this.config.customComparator);
     // this.searchText = null;
+    /* istanbul ignore else */
+    if (this.areAllSelected()) {
+      this.selectAll = true;
+    }
     this.valueChanged();
     this.resetArrowKeyActiveElement();
   }
@@ -714,7 +726,7 @@ export class NgxSelectDropdownComponent
   /**
    * Toggle the select all option
    */
-  public toggleSelectAll(): void {
+  public toggleSelectAll(close?: boolean, emitChange?: boolean): void {
     this.selectAll = !this.selectAll;
     if (this.selectAll) {
       this.selectedItems = [...this.selectedItems, ...this.availableItems];
@@ -723,10 +735,18 @@ export class NgxSelectDropdownComponent
       this.availableItems = [...this.selectedItems, ...this.availableItems];
       this.selectedItems = [];
     }
-    this.toggleDropdown = false;
     this.selectedItems.sort(this.config.customComparator);
     this.availableItems.sort(this.config.customComparator);
     this.valueChanged();
+    this.closeSelectDropdown();
+    this.openStateChange();
     this.resetArrowKeyActiveElement();
+  }
+
+  /**
+   * Check if all options selected
+   */
+  areAllSelected() {
+    return this.selectedItems.length === this.options.length;
   }
 }
