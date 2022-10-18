@@ -68,7 +68,7 @@ export class NgxSelectDropdownComponent
   @Input() public multiple = false;
 
   /**
-   * Value
+   * Flag to disbale the dropdown
    */
   @Input() public disabled: boolean;
 
