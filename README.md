@@ -213,6 +213,10 @@ Upgraded to Angular v14 development environment
 Auto drop based on the screen position
 Over-ride css styles for available and selected items using class names `selected-item(s)` and `available-item(s)`
 ````
+* v3.2.0
+````
+Ability to select all available items using a select all checkbox
+````
 ## Help Improve
 
 Found a bug or an issue with this? [Open a new issue](https://github.com/manishjanky/ngx-select-dropdown/issues) here on GitHub.
