@@ -1,15 +1,10 @@
 <div class="ngx-dropdown-container">
-    <button *ngIf="!toggleDropdown" type="button" tabindex="-1" class="ngx-dropdown-button"
-        [ngClass]="{ 'ngx-disabled': disabled }" [disabled]="disabled" (click)="openSelectDropdown()">
-        <span class="display-text">{{ selectedDisplayText }} </span>
-        <span class="nsdicon-angle-down"></span>
-
-    </button>
-    <button *ngIf="toggleDropdown" type="button" tabindex="-1" class="ngx-dropdown-button"
-        [ngClass]="{ 'ngx-disabled': disabled }" [disabled]="disabled" (click)="closeSelectDropdown()">
-        <span class="display-text">{{ selectedDisplayText }} </span>
-        <span class="nsdicon-angle-down" [ngClass]="{'up': toggleDropdown }"></span>
-    </button>
+    <div [ngClass]="{ 'ngx-disabled': disabled }" *ngIf="!toggleDropdown" (click)="openSelectDropdown()">
+        <ng-container [ngTemplateOutlet]="dropdownButtonTemplate || dropdownButton"></ng-container>
+    </div>
+    <div [ngClass]="{ 'ngx-disabled': disabled }" *ngIf="toggleDropdown" (click)="closeSelectDropdown()">
+        <ng-container [ngTemplateOutlet]="dropdownButtonTemplate || dropdownButton"></ng-container>
+    </div>
     <div #dropdownList class="ngx-dropdown-list-container" *ngIf="toggleDropdown" [style.maxHeight]="config.height"
         [style.top]="top">
         <div class="search-container" *ngIf="config.search">
@@ -27,22 +22,17 @@
                 </label>
             </div>
         </div>
-        <ul class="selected-items">
-            <li class="selected-item" tabindex="-1" *ngFor="let selected of selectedItems; let i = index"
+        <div class="selected-items">
+            <div class="selected-item" tabindex="-1" *ngFor="let selected of selectedItems; let i = index"
                 (click)="deselectItem(selected, i)" (mousedown)="optionMouseDown = true">
-                <span class="nsdicon-close">x</span>
-                <span>
-                    {{
-                    config.displayFn
-                    ? config.displayFn(selected)
-                    : selected[config.displayKey] || selected
-                    }}
-                </span>
-            </li>
-        </ul>
+                <ng-container [ngTemplateOutlet]="selectedItemTemplate || selectedTemplate"
+                    [ngTemplateOutletContext]="{item: selected, config: config}"></ng-container>
+
+            </div>
+        </div>
         <hr *ngIf="selectedItems.length > 0 && availableItems.length > 0" />
-        <ul class="available-items">
-            <li class="available-item" #availableOption *ngFor="
+        <div class="available-items">
+            <div class="available-item" #availableOption *ngFor="
             let item of availableItems
               | filterBy: searchText:config.searchOnKey
               | limitTo: config.limitTo;
@@ -51,13 +41,42 @@
             active: focusedItemIndex == i && !item.disabled,
             disabled: item.disabled
           }" (click)="selectItem(item, i)" (mousedown)="optionMouseDown = true">
-                {{
-                config.displayFn
-                ? config.displayFn(item)
-                : item[config.displayKey] || item
-                }}
-            </li>
-            <li *ngIf="showNotFound">{{ config.noResultsFound }}</li>
-        </ul>
+                <ng-container [ngTemplateOutlet]="optionItemTemplate || availableItemTemplate"
+                    [ngTemplateOutletContext]="{item: item, config: config}"></ng-container>
+            </div>
+            <ng-container [ngTemplateOutlet]="notFoundTemplate || notFound"></ng-container>
+        </div>
     </div>
 </div>
+
+<ng-template #notFound>
+    <div *ngIf="showNotFound">{{ config.noResultsFound }}</div>
+</ng-template>
+
+<ng-template #availableItemTemplate let-item="item" let-config="config">
+    <span>
+        {{
+        config.displayFn
+        ? config.displayFn(item)
+        : item[config.displayKey] || item
+        }}
+    </span>
+</ng-template>
+<ng-template #selectedTemplate let-item="item" let-config="config">
+    <span class="nsdicon-close">x</span>
+    <span>
+        {{
+        config.displayFn
+        ? config.displayFn(item)
+        : item[config.displayKey] || item
+        }}
+    </span>
+</ng-template>
+
+<ng-template #dropdownButton>
+    <button type="button" tabindex="-1" class="ngx-dropdown-button" [ngClass]="{ 'ngx-disabled': disabled }"
+        [disabled]="disabled">
+        <span class="display-text">{{ selectedDisplayText }} </span>
+        <span class="nsdicon-angle-down" [ngClass]="{'up': toggleDropdown }"></span>
+    </button>
+</ng-template>

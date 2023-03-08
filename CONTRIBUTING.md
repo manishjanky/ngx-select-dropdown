@@ -137,7 +137,7 @@ project:
    ```
 
 7. [Open a Pull Request](https://help.github.com/articles/using-pull-requests/)
-    with a clear title and description.
+    with a clear title and description to the `dev` branch. Avoid direct pull requests to `master`
     
 ### Checklist before making a pull request
 - Make sure your code does not have nay linting errors.
