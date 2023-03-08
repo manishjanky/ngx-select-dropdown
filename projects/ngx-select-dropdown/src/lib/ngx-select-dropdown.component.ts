@@ -18,6 +18,7 @@ import {
   forwardRef,
   ViewChild,
   HostBinding,
+  TemplateRef,
 } from "@angular/core";
 import { NG_VALUE_ACCESSOR } from "@angular/forms";
 const config: NgxDropdownConfig = {
@@ -76,6 +77,18 @@ export class NgxSelectDropdownComponent
 
   /** unique identifier to uniquely identify particular instance */
   @Input() public instanceId: any;
+
+  /** Template ref for the selected item */
+  @Input() selectedItemTemplate: TemplateRef<any>;
+
+  /** Template ref for the avilable item */
+  @Input() optionItemTemplate: TemplateRef<any>;
+
+  /** Template ref for the no matched found case */
+  @Input() notFoundTemplate: TemplateRef<any>;
+
+  /** Template ref for the button */
+  @Input() dropdownButtonTemplate: TemplateRef<any>;
 
   /**
    * change event when value changes to provide user to handle things in change event
@@ -149,7 +162,7 @@ export class NgxSelectDropdownComponent
   public top: string;
 
   /**
-   * Flag to indicate is the click initiation was on one of the availabe or selected options
+   * Flag to indicate that the click initiation was on one of the availabe or selected options
    * This is to track the mouse down event especially in Safari.
    */
   public optionMouseDown: boolean;

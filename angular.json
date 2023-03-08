@@ -12,6 +12,7 @@
         "lint":{
           "builder": "@angular-eslint/builder:lint",
           "options": {
+            "eslintConfig":".eslintrc.js",
             "lintFilePatterns": [
               "projects/ngx-select-dropdown/src/**/*.ts"
             ]
@@ -33,7 +34,8 @@
           "options": {
             "main": "projects/ngx-select-dropdown/src/test.ts",
             "tsConfig": "projects/ngx-select-dropdown/tsconfig.spec.json",
-            "karmaConfig": "projects/ngx-select-dropdown/karma.conf.js"
+            "karmaConfig": "projects/ngx-select-dropdown/karma.conf.js",
+            "codeCoverage": true
           }
         }
       }

@@ -8,7 +8,7 @@
 [![GitHub top language](https://img.shields.io/github/languages/top/manishjanky/ngx-select-dropdown.svg)]()
 [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/manishjanky/ngx-select-dropdown.svg)]()
 
-`ngx-select-dropdown` Custom Dropdown component for Angular 4+ with multiple and single selection options
+`ngx-select-dropdown` Custom Dropdown component for Angular 4+ with multiple and single selection options, with customization options
 
 ## Features
 * single select dropdown
@@ -20,6 +20,7 @@
 * angular forms support
 * angular v4 and above supported
 * cross browser support
+* custom template options
 
 
 ## Examples
@@ -66,6 +67,18 @@ class YourModule { ... }
 ````
 <ngx-select-dropdown [instanceId]="'instance2'"  (change)="selectionChanged($event)" formControlName="selectData" [multiple]="true" [config]="config" [options]="dropdownOptions"></ngx-select-dropdown>
 ````
+* use custom templates options like below. `item` and `config` variables available in the template context
+````
+<ng-template #optionTemplate let-item="item" let-config="config">
+  <i class="fa fa-plus"></i>
+  {{item.name}}
+  <span class="new badge"></span>
+</ng-template>
+
+<ngx-select-dropdown [optionItemTemplate]="optionTemplate" [selectedItemTemplate]="optionTemplate" tabindex="0" [multiple]="true" [(ngModel)]="modelVar" [options]="options"
+[config]="config">
+</ngx-select-dropdown>
+````
 
 ## Configuration
 
@@ -75,7 +88,11 @@ class YourModule { ... }
 * `options: Array` - Array of string/objects that are to be the dropdown options.
 * `disabled: boolean` - disabled attribute to disable the dropdown when required.
 * `instanceId: any` - instanceId of the dropdwon component instance.
-* `config: Object` - configuration object.
+* `config: NgxDropdownConfig` - configuration object.
+* `selectedItemTemplate: TemplateRef` - Custom template ref for the selected item
+* `optionItemTemplate: TemplateRef` - Custom template ref for the options items(available options)
+* `dropdownButtonTemplate: TemplateRef` - Custom template ref for the dropdwon button element
+* `notFoundTemplate: TemplateRef` - Custom template ref for the no matched found message
 ````
 config = {
         displayFn:(item: any) => { return item.hello.world; } //to support flexible text displaying for each item
@@ -216,6 +233,11 @@ Over-ride css styles for available and selected items using class names `selecte
 * v3.2.0
 ````
 Ability to select all available items using a select all checkbox
+````
+* v3.3.0
+````
+Custom templates for available options, selected items and the dropdown button
+Other minor fixes
 ````
 ## Help Improve
 

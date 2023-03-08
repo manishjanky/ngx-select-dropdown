@@ -2,7 +2,7 @@
   width: 100%;
   position: relative;
 
-  button {
+  .ngx-dropdown-button {
     display: inline-block;
     margin-bottom: 0;
     font-weight: 400;
@@ -81,11 +81,12 @@
 
     .select-options {
       padding-top: 10px;
-      .filled-in:checked + span:not(.lever):after,.filled-in:not(:checked) + span:not(.lever):after {
+      .filled-in:checked + span:not(.lever):after,
+      .filled-in:not(:checked) + span:not(.lever):after {
         height: 15px;
         width: 15px;
       }
-      .filled-in:checked + span:not(.lever):after{
+      .filled-in:checked + span:not(.lever):after {
         border-color: #337ab7;
         background-color: #337ab7;
       }
@@ -95,13 +96,13 @@
         width: 5px;
         height: 11px;
       }
-      [type="checkbox"] + span:not(.lever){
+      [type="checkbox"] + span:not(.lever) {
         line-height: 15px;
         height: 15px;
         padding-left: 25px;
       }
     }
-    
+
     .search-container {
       position: relative;
       padding-top: 10px;
@@ -157,7 +158,8 @@
       }
     }
 
-    ul {
+    .available-items,
+    .selected-items {
       margin-top: 1rem;
       margin-bottom: 1rem;
       list-style-type: none;
@@ -185,7 +187,8 @@
         }
       }
 
-      li {
+      .available-item,
+      .selected-item {
         font-size: inherit;
         cursor: pointer;
         display: block;

@@ -12,14 +12,14 @@ export class FilterByPipe implements PipeTransform {
          return array;
       }
       if (typeof array[0] === 'string') {
-         return array.filter((item) => item.toLowerCase().indexOf(searchText.toLowerCase()) > -1);
+         return array.filter((item) => item.toLowerCase().indexOf(searchText.trim().toLowerCase()) > -1);
       }
       // filter array, items which match and return true will be
       // kept, false will be filtered out
       if (!keyName) {
          return array.filter((item: any) => {
             for (const key in item) {
-               if (typeof item[key] !== 'object' && item[key].toString().toLowerCase().indexOf(searchText.toLowerCase()) > -1) {
+               if (typeof item[key] !== 'object' && item[key].toString().toLowerCase().indexOf(searchText.trim().toLowerCase()) > -1) {
                   return true;
                }
             }
@@ -27,7 +27,7 @@ export class FilterByPipe implements PipeTransform {
          });
       } else {
          return array.filter((item: any) => {
-            if (typeof item[keyName] !== 'object' && item[keyName].toString().toLowerCase().indexOf(searchText.toLowerCase()) > -1) {
+            if (typeof item[keyName] !== 'object' && item[keyName].toString().toLowerCase().indexOf(searchText.trim().toLowerCase()) > -1) {
                return true;
             }
             return false;

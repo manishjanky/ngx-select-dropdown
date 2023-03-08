@@ -87,6 +87,7 @@
       <pre class="codeBlock">
           <strong>&lt;ngx-select-dropdown [config]="config" [options]="dropdownOptions"
             [(ngModel)]="dataModel" [multiple]="true" &gt;&lt;/ngx-select-dropdown&gt;</strong></pre>
+
     </div>
     <div class="col s12 pt-1">
       <h4>3.Config</h4>
@@ -120,6 +121,33 @@
             searchPlaceholder:'Search' // label thats displayed in search input,
             searchOnKey: 'name' // key on which search should be performed this will be selective search. if undefined this will be extensive search on all keys
             {{ '}' }}</pre>
+        <ul>
+          <li>
+            <strong>selectedItemTemplate: TemplateRef</strong> - a template reference for the selectedItems 
+          </li>
+          <li>
+            <strong>optionItemTemplate: TemplateRef</strong> - a template reference for the available options 
+          </li>
+          <li>
+            <strong>notFoundTemplate: TemplateRef</strong> - a template reference in case no matching items for search 
+          </li>
+          <li>
+            <strong>dropdownButtonTemplate: TemplateRef</strong> - a template reference for the dropdown action button
+          </li>
+        </ul>
+        See beloe on how to use the custom templates. The context contains two properties the <strong>item</strong> and <strong>config</strong> which can be used in the template.
+        <pre class="codeBlock"> <strong>
+          &lt;ng-template&gt; #optionTemplate let-item="item" let-config="config"&gt;
+            &lt;i class="fa fa-plus"&gt; &lt;/i&gt;
+              '{{' item.name '}}'
+            &lt;span&gt; class="new badge"&gt; &lt;/span&gt;
+          &lt;/ng-template&gt;
+
+          &lt;ngx-select-dropdown&gt; [optionItemTemplate]="optionTemplate" 
+            [selectedItemTemplate]="optionTemplate"
+            tabindex="0" [multiple]="true" [(ngModel)]="optTemplate" [options]="options"
+            [config]="config">&lt;/ngx-select-dropdown&gt;</strong>
+        </pre>
       <h6>Output</h6>
       <ul>
         <li>
@@ -236,7 +264,29 @@
           <button (click)="reset()" class="btn">Reset</button>
         </div>
       </div>
+
+      <h5>Custom option template</h5>
+      <div class="row">
+        <div class="col s12 l6">
+          <ngx-select-dropdown [optionItemTemplate]="optionTemplate" [selectedItemTemplate]="optionTemplate"
+            tabindex="0" [multiple]="true" [(ngModel)]="optTemplate" [options]="options"
+            [config]="config"></ngx-select-dropdown>
+        </div>
+        <div class="col s12 l6 flow-text">
+          <p style="margin: 0;">Selected Options:-</p>
+          <p style="margin: 0;" *ngFor="let user of optTemplate"><strong>Name:</strong> {{user.name}} ,
+            <strong>Balance:</strong>
+            {{user.balance}}
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 
 </div>
+
+<ng-template #optionTemplate let-item="item" let-config="config">
+  <i class="fa fa-plus"></i>
+  {{item.name}}
+  <span class="new badge"></span>
+</ng-template>

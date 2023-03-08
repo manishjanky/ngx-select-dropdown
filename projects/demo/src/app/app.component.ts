@@ -19,6 +19,7 @@ export class AppComponent implements OnInit {
   multiSelect: any = [];
   stringArray: any = [];
   objectsArray: any = [];
+  optTemplate: any = [];
   stringOptions = [
     "Burns Dalton",
     "Mcintyre Lawson",
@@ -32,8 +33,8 @@ export class AppComponent implements OnInit {
     displayKey: "name", // if objects array passed which key to be displayed defaults to description
     search: true,
     limitTo: 0,
-    height: '250px',
-    enableSelectAll: true
+    height: "250px",
+    enableSelectAll: true,
   };
   selectedOptions = [
     {
