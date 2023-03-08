@@ -1,6 +1,6 @@
 {
   "name": "ngx-select-dropdown",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "description": "A angular(4+) select dropdown for single select or multiselct module.",
   "license": "MIT",
   "keywords": [
