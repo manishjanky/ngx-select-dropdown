@@ -1752,6 +1752,7 @@ abbr[title] {
   text-decoration: underline;
   /* 2 */
   -webkit-text-decoration: underline dotted;
+     -moz-text-decoration: underline dotted;
           text-decoration: underline dotted;
   /* 2 */
 }
@@ -2560,8 +2561,7 @@ td, th {
   left: 0;
   bottom: 0;
   will-change: left, right;
-  -webkit-animation: indeterminate 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
-          animation: indeterminate 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+  animation: indeterminate 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
 }
 .progress .indeterminate:after {
   content: '';
@@ -2571,24 +2571,8 @@ td, th {
   left: 0;
   bottom: 0;
   will-change: left, right;
-  -webkit-animation: indeterminate-short 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
-          animation: indeterminate-short 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
-  -webkit-animation-delay: 1.15s;
-          animation-delay: 1.15s;
-}
-@-webkit-keyframes indeterminate {
-  0% {
-    left: -35%;
-    right: 100%;
-  }
-  60% {
-    left: 100%;
-    right: -90%;
-  }
-  100% {
-    left: 100%;
-    right: -90%;
-  }
+  animation: indeterminate-short 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+  animation-delay: 1.15s;
 }
 @keyframes indeterminate {
   0% {
@@ -2602,20 +2586,6 @@ td, th {
   100% {
     left: 100%;
     right: -90%;
-  }
-}
-@-webkit-keyframes indeterminate-short {
-  0% {
-    left: -200%;
-    right: 100%;
-  }
-  60% {
-    left: 107%;
-    right: -8%;
-  }
-  100% {
-    left: 107%;
-    right: -8%;
   }
 }
 @keyframes indeterminate-short {
@@ -5355,6 +5325,7 @@ textarea.materialize-textarea + label:after, .select-wrapper + label:after {
   cursor: text;
   transition: transform .2s ease-out, color .2s ease-out;
   transform-origin: 0% 100%;
+  text-align: left;
   text-align: initial;
   transform: translateY(12px);
 }
@@ -6228,6 +6199,7 @@ input[type=range]::-ms-thumb {
   margin: 8px 0 0 0;
 }
 .sidenav .subheader {
+  cursor: auto;
   cursor: initial;
   pointer-events: none;
   color: rgba(0, 0, 0, 0.54);
@@ -6375,13 +6347,7 @@ input[type=range]::-ms-thumb {
 }
 .preloader-wrapper.active {
   /* duration: 360 * ARCTIME / (ARCSTARTROT + (360-ARCSIZE)) */
-  -webkit-animation: container-rotate 1568ms linear infinite;
   animation: container-rotate 1568ms linear infinite;
-}
-@-webkit-keyframes container-rotate {
-  to {
-    -webkit-transform: rotate(360deg);
-  }
 }
 @keyframes container-rotate {
   to {
@@ -6426,22 +6392,18 @@ input[type=range]::-ms-thumb {
  */
 .active .spinner-layer.spinner-blue {
   /* durations: 4 * ARCTIME */
-  -webkit-animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, blue-fade-in-out 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
   animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, blue-fade-in-out 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
 }
 .active .spinner-layer.spinner-red {
   /* durations: 4 * ARCTIME */
-  -webkit-animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, red-fade-in-out 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
   animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, red-fade-in-out 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
 }
 .active .spinner-layer.spinner-yellow {
   /* durations: 4 * ARCTIME */
-  -webkit-animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, yellow-fade-in-out 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
   animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, yellow-fade-in-out 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
 }
 .active .spinner-layer.spinner-green {
   /* durations: 4 * ARCTIME */
-  -webkit-animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, green-fade-in-out 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
   animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, green-fade-in-out 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
 }
 .active .spinner-layer,
@@ -6451,42 +6413,7 @@ input[type=range]::-ms-thumb {
 .active .spinner-layer.spinner-green-only {
   /* durations: 4 * ARCTIME */
   opacity: 1;
-  -webkit-animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
   animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
-}
-@-webkit-keyframes fill-unfill-rotate {
-  12.5% {
-    -webkit-transform: rotate(135deg);
-  }
-  /* 0.5 * ARCSIZE */
-  25% {
-    -webkit-transform: rotate(270deg);
-  }
-  /* 1   * ARCSIZE */
-  37.5% {
-    -webkit-transform: rotate(405deg);
-  }
-  /* 1.5 * ARCSIZE */
-  50% {
-    -webkit-transform: rotate(540deg);
-  }
-  /* 2   * ARCSIZE */
-  62.5% {
-    -webkit-transform: rotate(675deg);
-  }
-  /* 2.5 * ARCSIZE */
-  75% {
-    -webkit-transform: rotate(810deg);
-  }
-  /* 3   * ARCSIZE */
-  87.5% {
-    -webkit-transform: rotate(945deg);
-  }
-  /* 3.5 * ARCSIZE */
-  to {
-    -webkit-transform: rotate(1080deg);
-  }
-  /* 4   * ARCSIZE */
 }
 @keyframes fill-unfill-rotate {
   12.5% {
@@ -6522,26 +6449,6 @@ input[type=range]::-ms-thumb {
   }
   /* 4   * ARCSIZE */
 }
-@-webkit-keyframes blue-fade-in-out {
-  from {
-    opacity: 1;
-  }
-  25% {
-    opacity: 1;
-  }
-  26% {
-    opacity: 0;
-  }
-  89% {
-    opacity: 0;
-  }
-  90% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 1;
-  }
-}
 @keyframes blue-fade-in-out {
   from {
     opacity: 1;
@@ -6562,23 +6469,6 @@ input[type=range]::-ms-thumb {
     opacity: 1;
   }
 }
-@-webkit-keyframes red-fade-in-out {
-  from {
-    opacity: 0;
-  }
-  15% {
-    opacity: 0;
-  }
-  25% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 1;
-  }
-  51% {
-    opacity: 0;
-  }
-}
 @keyframes red-fade-in-out {
   from {
     opacity: 0;
@@ -6596,23 +6486,6 @@ input[type=range]::-ms-thumb {
     opacity: 0;
   }
 }
-@-webkit-keyframes yellow-fade-in-out {
-  from {
-    opacity: 0;
-  }
-  40% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-  75% {
-    opacity: 1;
-  }
-  76% {
-    opacity: 0;
-  }
-}
 @keyframes yellow-fade-in-out {
   from {
     opacity: 0;
@@ -6627,23 +6500,6 @@ input[type=range]::-ms-thumb {
     opacity: 1;
   }
   76% {
-    opacity: 0;
-  }
-}
-@-webkit-keyframes green-fade-in-out {
-  from {
-    opacity: 0;
-  }
-  65% {
-    opacity: 0;
-  }
-  75% {
-    opacity: 1;
-  }
-  90% {
-    opacity: 1;
-  }
-  100% {
     opacity: 0;
   }
 }
@@ -6698,7 +6554,6 @@ input[type=range]::-ms-thumb {
   border-color: inherit;
   border-bottom-color: transparent !important;
   border-radius: 50%;
-  -webkit-animation: none;
   animation: none;
   position: absolute;
   top: 0;
@@ -6717,24 +6572,11 @@ input[type=range]::-ms-thumb {
 }
 .active .circle-clipper.left .circle {
   /* duration: ARCTIME */
-  -webkit-animation: left-spin 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
   animation: left-spin 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
 }
 .active .circle-clipper.right .circle {
   /* duration: ARCTIME */
-  -webkit-animation: right-spin 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
   animation: right-spin 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
-}
-@-webkit-keyframes left-spin {
-  from {
-    -webkit-transform: rotate(130deg);
-  }
-  50% {
-    -webkit-transform: rotate(-5deg);
-  }
-  to {
-    -webkit-transform: rotate(130deg);
-  }
 }
 @keyframes left-spin {
   from {
@@ -6745,17 +6587,6 @@ input[type=range]::-ms-thumb {
   }
   to {
     transform: rotate(130deg);
-  }
-}
-@-webkit-keyframes right-spin {
-  from {
-    -webkit-transform: rotate(-130deg);
-  }
-  50% {
-    -webkit-transform: rotate(5deg);
-  }
-  to {
-    -webkit-transform: rotate(-130deg);
   }
 }
 @keyframes right-spin {
@@ -6771,16 +6602,7 @@ input[type=range]::-ms-thumb {
 }
 #spinnerContainer.cooldown {
   /* duration: SHRINK_TIME */
-  -webkit-animation: container-rotate 1568ms linear infinite, fade-out 400ms cubic-bezier(0.4, 0, 0.2, 1);
   animation: container-rotate 1568ms linear infinite, fade-out 400ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-@-webkit-keyframes fade-out {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
 }
 @keyframes fade-out {
   from {
@@ -6966,8 +6788,7 @@ input[type=range]::-ms-thumb {
 }
 .tap-target-wrapper.open .tap-target-wave::after {
   visibility: visible;
-  -webkit-animation: pulse-animation 1s cubic-bezier(0.24, 0, 0.38, 1) infinite;
-          animation: pulse-animation 1s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+  animation: pulse-animation 1s cubic-bezier(0.24, 0, 0.38, 1) infinite;
   transition: opacity .3s, transform .3s, visibility 0s 1s;
 }
 .tap-target {
@@ -7040,23 +6861,8 @@ input[type=range]::-ms-thumb {
   background-color: inherit;
   border-radius: inherit;
   transition: opacity .3s, transform .3s;
-  -webkit-animation: pulse-animation 1s cubic-bezier(0.24, 0, 0.38, 1) infinite;
-          animation: pulse-animation 1s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+  animation: pulse-animation 1s cubic-bezier(0.24, 0, 0.38, 1) infinite;
   z-index: -1;
-}
-@-webkit-keyframes pulse-animation {
-  0% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0;
-    transform: scale(1.5);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(1.5);
-  }
 }
 @keyframes pulse-animation {
   0% {
