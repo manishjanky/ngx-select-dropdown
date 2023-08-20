@@ -529,7 +529,15 @@ describe("NgxSelectDropdownComponent", () => {
   });
 
   it("Should  blur", () => {
-    component.blur();
+    component.toggleDropdown = true;
+    component.blur(new KeyboardEvent("keydown"));
     expect(component.toggleDropdown).toBeFalsy();
   });
+
+  it("Should  blur not close", () => {
+    component.toggleDropdown = true;
+    component.blur(new MouseEvent('click'));
+    expect(component.toggleDropdown).toBeTruthy();
+  });
+  
 });
