@@ -230,8 +230,12 @@ export class NgxSelectDropdownComponent
   /**
    * Event listener for the blur event to hide the dropdown
    */
-  @HostListener("blur") public blur() {
-    if (!this.insideKeyPress && !this.optionMouseDown) {
+  @HostListener("blur") public blur($event: Event) {
+    if (
+      !this.insideKeyPress &&
+      !this.optionMouseDown &&
+      $event instanceof KeyboardEvent
+    ) {
       this.toggleDropdown = false;
       this.openStateChange();
     }
