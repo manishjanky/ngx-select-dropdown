@@ -36,6 +36,7 @@ const config: NgxDropdownConfig = {
   inputDirection: "ltr",
   selectAllLabel: "Select all",
   enableSelectAll: false,
+  dropDownClass: "ngx-dropdown-button",
 };
 @Component({
   selector: "ngx-select-dropdown",
