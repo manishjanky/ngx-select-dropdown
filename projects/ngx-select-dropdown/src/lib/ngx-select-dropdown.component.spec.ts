@@ -22,6 +22,7 @@ const config: NgxDropdownConfig = {
   searchOnKey: null,
   clearOnSelection: false,
   inputDirection: "ltr",
+  dropDownClass: "ngx-dropdown-button",
 };
 interface Account {
   _id: string;

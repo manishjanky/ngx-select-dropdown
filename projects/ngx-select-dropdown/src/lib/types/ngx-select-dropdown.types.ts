@@ -14,4 +14,5 @@ export interface NgxDropdownConfig {
   inputDirection?: string;
   selectAllLabel?: string;
   enableSelectAll?: boolean;
+  dropDownClass: string;
 }
