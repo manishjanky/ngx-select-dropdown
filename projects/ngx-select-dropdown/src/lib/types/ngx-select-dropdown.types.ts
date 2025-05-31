@@ -9,7 +9,7 @@ export interface NgxDropdownConfig {
   moreText?: string;
   noResultsFound?: string;
   searchPlaceholder?: string;
-  searchOnKey?: string;
+  searchOnKey?: string | string[];
   clearOnSelection?: boolean;
   inputDirection?: string;
   selectAllLabel?: string;

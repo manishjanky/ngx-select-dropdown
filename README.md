@@ -16,7 +16,7 @@
 * search dropdown list
 * arrows keys support
 * limit number of items displayed in dropdown
-* custom sort 
+* custom sort
 * angular forms support
 * angular v4 and above supported
 * cross browser support
@@ -105,7 +105,7 @@ config = {
         moreText: 'more' // text to be displayed whenmore than one items are selected like Option 1 + 5 more
         noResultsFound: 'No results found!' // text to be displayed when no items are found while searching
         searchPlaceholder:'Search' // label thats displayed in search input,
-        searchOnKey: 'name' // key on which search should be performed this will be selective search. if undefined this will be extensive search on all keys
+        searchOnKey: 'name' // key or array of keys on which search should be performed this will be selective search. if undefined this will be extensive search on all keys, you may also provide an object path (array objects are  not supported)
         clearOnSelection: false // clears search criteria when an option is selected if set to true, default is false
         inputDirection: 'ltr' // the direction of the search input can be rtl or ltr(default)
         selectAllLabel: 'Select all' // label that is displayed in multiple selection for select all

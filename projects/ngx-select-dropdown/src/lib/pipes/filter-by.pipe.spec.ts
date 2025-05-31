@@ -43,7 +43,11 @@ const testData = [
       email: 'holmes.ratliff@aclima.co.uk',
       phone: '+1 (977) 541-2880',
       address: '736 Dikeman Street, Vallonia, Wyoming, 1370',
-      about: 'Reprehenderit et sint eu sunt occaecat sint dolore minim aliqua aute enim incididunt. Labore officia qui proident esse cupidatat sint deserunt. Velit qui incididunt ullamco ullamco qui. Nostrud in sit laboris sit pariatur esse ea dolore elit enim.'
+      about: 'Reprehenderit et sint eu sunt occaecat sint dolore minim aliqua aute enim incididunt. Labore officia qui proident esse cupidatat sint deserunt. Velit qui incididunt ullamco ullamco qui. Nostrud in sit laboris sit pariatur esse ea dolore elit enim.',
+      otherDetails: {
+         firstName: 'Tea',
+         lastName: 'Pot'
+      }
    },
    {
       _id: '5ab9c820ad13b4f8707133e7',
@@ -153,5 +157,10 @@ describe('FilterByPipe', () => {
       const pipe = new FilterByPipe();
       const arr = ['star', 'galaxy', 'sun', 'moon', 'earth'];
       expect(pipe.transform(arr, 'ar')).toEqual(['star', 'earth']);
+   });
+
+   it('should return the filtered array of objects', () => {
+      const pipe = new FilterByPipe();
+      expect(pipe.transform(testData, 'Tea', ['firstName', 'otherDetails.firstName'])).toEqual([testData[2]]);
    });
 });

@@ -119,17 +119,17 @@
             moreText: 'more' // text to be displayed whenmore than one items are selected like Option 1 + 5 more
             noResultsFound: 'No results found!' // text to be displayed when no items are found while searching
             searchPlaceholder:'Search' // label thats displayed in search input,
-            searchOnKey: 'name' // key on which search should be performed this will be selective search. if undefined this will be extensive search on all keys
+            searchOnKey: 'name' // key or array of keys on which search should be performed this will be selective search. if undefined this will be extensive search on all keys, you may also provide an object path (array objects are  not supported)
             {{ '}' }}</pre>
         <ul>
           <li>
-            <strong>selectedItemTemplate: TemplateRef</strong> - a template reference for the selectedItems 
+            <strong>selectedItemTemplate: TemplateRef</strong> - a template reference for the selectedItems
           </li>
           <li>
-            <strong>optionItemTemplate: TemplateRef</strong> - a template reference for the available options 
+            <strong>optionItemTemplate: TemplateRef</strong> - a template reference for the available options
           </li>
           <li>
-            <strong>notFoundTemplate: TemplateRef</strong> - a template reference in case no matching items for search 
+            <strong>notFoundTemplate: TemplateRef</strong> - a template reference in case no matching items for search
           </li>
           <li>
             <strong>dropdownButtonTemplate: TemplateRef</strong> - a template reference for the dropdown action button
@@ -143,7 +143,7 @@
             &lt;span&gt; class="new badge"&gt; &lt;/span&gt;
           &lt;/ng-template&gt;
 
-          &lt;ngx-select-dropdown&gt; [optionItemTemplate]="optionTemplate" 
+          &lt;ngx-select-dropdown&gt; [optionItemTemplate]="optionTemplate"
             [selectedItemTemplate]="optionTemplate"
             tabindex="0" [multiple]="true" [(ngModel)]="optTemplate" [options]="options"
             [config]="config">&lt;/ngx-select-dropdown&gt;</strong>
