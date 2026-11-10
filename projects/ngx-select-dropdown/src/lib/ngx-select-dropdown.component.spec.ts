@@ -1,7 +1,7 @@
 import { NgxDropdownConfig } from "./types/ngx-select-dropdown.types";
 import { FilterByPipe } from "./pipes/filter-by.pipe";
 import { LimitToPipe } from "./pipes/limit-to.pipe";
-import { QueryList } from "@angular/core";
+import { QueryList, SimpleChange } from "@angular/core";
 import { ElementRef } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
@@ -100,6 +100,34 @@ describe("NgxSelectDropdownComponent", () => {
 
   it("should create", () => {
     expect(component).toBeTruthy();
+  });
+
+  it("should close an open dropdown when the disabled input changes", () => {
+    component.openSelectDropdown();
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector(".ngx-dropdown-list-container"))
+      .not.toBeNull();
+
+    const emit = spyOn(component.change, "emit");
+    component.disabled = true;
+    component.ngOnChanges({
+      disabled: new SimpleChange(false, true, false),
+    });
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector(".ngx-dropdown-list-container"))
+      .toBeNull();
+    expect(emit).not.toHaveBeenCalled();
+  });
+
+  it("should close an open dropdown when the form disables it", () => {
+    component.openSelectDropdown();
+
+    component.setDisabledState(true);
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector(".ngx-dropdown-list-container"))
+      .toBeNull();
   });
 
   it("should reinitialize options if data source changes", (done) => {
