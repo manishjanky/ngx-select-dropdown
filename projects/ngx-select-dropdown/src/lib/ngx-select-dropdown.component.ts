@@ -409,6 +409,9 @@ export class NgxSelectDropdownComponent
 
   public setDisabledState(isDisabled: boolean) {
     this.disabled = isDisabled;
+    if (isDisabled && this.toggleDropdown) {
+      this.closeSelectDropdown();
+    }
   }
 
   public writeValue(value: any, internal?: boolean) {
@@ -470,6 +473,9 @@ export class NgxSelectDropdownComponent
    * Component onchage i.e when any of the input properties change
    */
   public ngOnChanges(changes: SimpleChanges) {
+    if (changes.disabled) {
+      this.setDisabledState(changes.disabled.currentValue);
+    }
     if (!this.config) {
       return;
     }
